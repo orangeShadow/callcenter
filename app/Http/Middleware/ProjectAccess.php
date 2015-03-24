@@ -32,7 +32,6 @@ class ProjectAccess {
 	public function handle($request, Closure $next)
 	{
 
-        dd($request->segments());
 
         if($this->auth->guest()) return $next($request);
 
