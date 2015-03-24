@@ -109,7 +109,7 @@ class UserTableSeeder extends Seeder
         App\User::create([
             'email' => 'testClient@gmail.com',
             'password'=>bcrypt('123123'),
-            'name'=>'Тест',
+            'name'=>'Тест Клиент',
             'phone'=>'89003332200',
             'role_id'=>4
         ]);
@@ -117,7 +117,7 @@ class UserTableSeeder extends Seeder
         App\User::create([
             'email' => 'testManager@gmail.com',
             'password'=>bcrypt('123123'),
-            'name'=>'Тест Клиент',
+            'name'=>'Тест Менеджер',
             'phone'=>'89003332211',
             'role_id'=>3
         ]);

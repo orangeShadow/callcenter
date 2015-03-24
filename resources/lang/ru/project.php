@@ -9,7 +9,7 @@ return [
     'status'=>'Статус',
     'id'=>'Номер',
     'manager'=>'Менеджер',
-    'client'=> 'Клиент',
+    'client'=> 'Заказчик',
     'filterProjectNotFound'=>'Проектов по вашему запросу нет.',
     'filtering'=>'Искать',
     'text'=>'Описание',

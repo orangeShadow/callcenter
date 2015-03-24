@@ -18,7 +18,7 @@
                         <th>Клиент</th>
                         <th>Менеджер проекта</th>
                         <th>Статус</th>
-                        <th style="width:90px;"></th>
+                        <th style="width:135px;"><a href="{!! url('/project/create') !!}" style="display:block" class="btn btn-success btn-sm"> <i class="glyphicon glyphicon-plus"></i></a></th>
                     </tr>
                 </thead>
                 <tbody>
@@ -30,7 +30,7 @@
                         <td>{{ !empty($project->client()->first()->name) ? $project->client()->first()->name:'' }}</td>
                         <td>{{ !empty($project->manager()->first()->name) ? $project->manager()->first()->name:'' }}</td>
                         <td>{{$project->status}}</td>
-                        <th><a href="{!! url('project/'.$project->id) !!}" class="btn btn-sm btn-info"><i class="glyphicon glyphicon-eye-open"></i></a> <a href="{!! url('project/'.$project->id.'/edit') !!}" class="btn btn-sm btn-warning"><i class="glyphicon glyphicon-pencil"></i></a></th>
+                        <th><a class="btn btn-sm btn-primary" href="/claim?project_id={{$project->id}}"><i class="glyphicon glyphicon-star"></i></a> <a href="{!! url('project/'.$project->id) !!}" class="btn btn-sm btn-info"><i class="glyphicon glyphicon-eye-open"></i></a> <a href="{!! url('project/'.$project->id.'/edit') !!}" class="btn btn-sm btn-warning"><i class="glyphicon glyphicon-pencil"></i></a></th>
                     </tr>
                     @endforeach
                 </tbody>

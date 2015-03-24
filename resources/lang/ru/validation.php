@@ -89,6 +89,9 @@ return [
 		'attribute-name' => [
 			'rule-name' => 'custom-message',
 		],
+        'project_id'=>[
+            'numeric'=> 'Укажите проект'
+        ]
 	],
 
 	/*

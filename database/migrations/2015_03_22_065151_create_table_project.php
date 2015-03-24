@@ -21,6 +21,7 @@ class CreateTableProject extends Migration {
 			$table->text('note')->nullable();
 			$table->integer('client_id')->unsigned()->nullable();
 			$table->integer('manager_id')->unsigned()->nullable();
+            $table->integer('update_by')->unsigned()->nullable();
 			$table->timestamps();
 
 			$table->foreign('client_id')

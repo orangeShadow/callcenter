@@ -33,7 +33,8 @@
 
 			<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
 				<ul class="nav navbar-nav">
-					<li><a href="/"><?=Lang::get('app.home')?></a></li>
+					<li><a href="/project"><?=Lang::get('app.project')?></a></li>
+                    <li><a href="/claim"><?=Lang::get('app.claim')?></a></li>
 				</ul>
 
 				<ul class="nav navbar-nav navbar-right">

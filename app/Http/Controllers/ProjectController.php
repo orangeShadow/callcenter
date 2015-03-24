@@ -54,7 +54,7 @@ class ProjectController extends Controller {
 	public function store(Requests\CreateProjectRequest $request)
 	{
 
-        $request = Request::all();
+        $request = $request->all();
         $request['manager_id'] = Auth::user()->id;
         Project::create($request);
         return redirect('project');
@@ -92,8 +92,9 @@ class ProjectController extends Controller {
 	 */
 	public function update($id,Requests\CreateProjectRequest $request)
 	{
+        $request = $request->all();
         $project=Project::findOrFail($id);
-        //$request['manager_id'] = Auth::user()->id;
+        $request['update_by'] = Auth::user()->id;
         $project->update($request);
         return redirect("project/$id");
 	}
@@ -106,7 +107,9 @@ class ProjectController extends Controller {
 	 */
 	public function destroy($id)
 	{
-
+        $project =Project::findOrFail($id);
+        $project->delete();
+        return redirect('/project');
 	}
 
 }

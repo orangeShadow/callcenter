@@ -35,7 +35,7 @@
             <div class="col-lg-3">
                 <div class="form-group">
                     {!! Form::label('manager_id',Lang::get('project.manager')) !!}
-                    {!! Form::text('manager_id',Request::get('manager'),['class'=>'form-control']) !!}
+                    {!! Form::text('manager_id',Request::get('manager_id'),['class'=>'form-control']) !!}
 
                 </div>
             </div>

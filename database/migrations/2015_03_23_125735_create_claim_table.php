@@ -12,16 +12,18 @@ class CreateClaimTable extends Migration {
 	 */
 	public function up()
 	{
-        Schema::create('claim', function(Blueprint $table)
+        Schema::create('claims', function(Blueprint $table)
         {
             $table->increments('id');
             $table->string('name',120);
-            $table->char('phone',2);
+            $table->string('phone',50);
             $table->text('text')->nullable();
             $table->text('note')->nullable();
             $table->integer('project_id')->unsigned()->nullable();
+            $table->integer('operator_id')->unsigned()->nullable();
+            $table->integer('update_by')->unsigned()->nullable();
             $table->dateTime('backcall_at')->nullable();
-            $table->char('status',2);
+            $table->char('status',2)->default("N");
             $table->timestamps();
 
             $table->foreign('project_id')
@@ -39,7 +41,7 @@ class CreateClaimTable extends Migration {
 	 */
 	public function down()
 	{
-        Schema::drop('claim');
+        Schema::drop('claims');
     }
 
 }

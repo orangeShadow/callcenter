@@ -11,17 +11,18 @@
 |
 */
 
-Route::get('/', function(){
+Route::get('/', ['middleware'=>'auth',function(){
     if(Auth::user()->role()->first()->code=="client")
     {
-        return  redirect('claims');
+        return  redirect(url('/claim'));
     }else
     {
-       return  redirect('project');
+       return  redirect(url('/project'));
     }
-});
+}]);
 
 Route::resource('project','ProjectController');
+Route::resource('claim','ClaimController');
 
 Route::controllers([
 	'auth' => 'Auth\AuthController',

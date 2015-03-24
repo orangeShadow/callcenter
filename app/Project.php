@@ -9,11 +9,11 @@ class Project extends Model {
     protected $fillable=[
         'title',
         'status',
-        'backcall_dt',
         'text',
         'note',
         'client_id',
-        'manager_id'
+        'manager_id',
+        'update_by'
     ];
 
 
@@ -27,16 +27,7 @@ class Project extends Model {
             $dtTo = new \DateTime($request['created_at_to']);
             $query->whereBetween('created_at',[$dtFrom->format('Y-m-d 00:00:00'),$dtTo->format('Y-m-d 23:59:59')]);
         }
-        /*elseif()
-        {
 
-        }elseif()
-        {
-
-        }else
-        {
-
-        }*/
 
 
         if(!empty($request['id']))
@@ -46,7 +37,7 @@ class Project extends Model {
 
         if(!empty($request['title']))
         {
-            $query->where('title',$request['title']);
+            $query->where('title','like',"%".$request['title']."%");
         }
 
 
@@ -78,5 +69,10 @@ class Project extends Model {
     public function manager()
     {
         return $this->belongsTo('App\User','manager_id','id');
+    }
+
+    public function updateby()
+    {
+        return $this->belongsTo('App\User','update_by','id');
     }
 }

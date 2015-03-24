@@ -7,5 +7,7 @@ return [
     'forgotPassword'=>'Забыли пароль?',
     'toggleNavigation'=>'Переключатель Навигации',
     'home'=>'Главная',
-    'logout'=>'Выход'
+    'logout'=>'Выход',
+    'claim'=>'Заявки',
+    'project'=>'Проекты'
 ];
