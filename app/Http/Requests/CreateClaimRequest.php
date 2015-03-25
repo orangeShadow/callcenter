@@ -2,6 +2,7 @@
 
 use     Auth;
 use App\Http\Requests\Request;
+use \Illuminate\Validation\Validator;
 
 class CreateClaimRequest extends Request {
 
@@ -26,7 +27,7 @@ class CreateClaimRequest extends Request {
             'name'     =>'required',
             'phone'     =>'required',
             'text'      =>'required',
-            'project_id' =>'required|numeric',
+            'project_id' =>'required|regex:#[^0]#',
         ];
     }
 

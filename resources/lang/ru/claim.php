@@ -1,5 +1,6 @@
 <?php
 return [
+    'create'=>'Создать',
     'createClaim'=>'Создание заявки',
     'claimList'  =>'Список Заявок',
     'filter' => 'Фильтр',

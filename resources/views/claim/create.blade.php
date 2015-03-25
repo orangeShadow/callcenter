@@ -4,7 +4,7 @@
 
     <div class="row">
         <div class="col-lg-12">
-            <h1>{!! Lang::get('claim.createProject') !!}</h1>
+            <h1>{!! Lang::get('claim.createClaim') !!}</h1>
 
             @if($errors->any())
                 <div class="alert alert-danger">

@@ -17,6 +17,7 @@ class DatabaseSeeder extends Seeder {
 		$this->call('UserTableSeeder');
         $this->call('RoleTableSeeder');
         $this->call('StatusTableSeeder');
+        $this->call('StatusClaimTableSeeder');
 	}
 
 }
@@ -120,6 +121,22 @@ class UserTableSeeder extends Seeder
             'name'=>'Тест Менеджер',
             'phone'=>'89003332211',
             'role_id'=>3
+        ]);
+
+    }
+}
+
+
+class StatusClaimTableSeeder extends Seeder
+{
+    public function run()
+    {
+        DB::table('status_claim')->delete();
+
+        App\StatusClaim::create([
+            'code' =>'N',
+            'title'=>'Новая',
+            'sort'=>'1',
         ]);
 
     }

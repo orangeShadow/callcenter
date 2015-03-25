@@ -1,5 +1,6 @@
 <?php
 return [
+    'create'=>'Создать',
     'createProject'=>'Создание проекта',
     'projectList'  =>'Список проектов',
     'filter' => 'Фильтр',
