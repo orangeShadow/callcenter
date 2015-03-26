@@ -29,7 +29,7 @@ class CreateClaimTable extends Migration {
             $table->foreign('project_id')
                 ->references('id')
                 ->on('projects')
-                ->onDelete('SET NULL');
+                ->onDelete('CASCADE');
 
         });
 	}

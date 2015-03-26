@@ -16,7 +16,6 @@ class ProjectAccess {
      * Create a new filter instance.
      *
      * @param  Guard  $auth
-     * @return void
      */
     public function __construct(Guard $auth)
     {
@@ -35,14 +34,19 @@ class ProjectAccess {
 
         if($this->auth->guest()) return $next($request);
 
-        if($this->auth->user()->checkAccess(['admin'])) return $next($request);
+        if($this->auth->user()->checkRole(['admin'])) return $next($request);
 
-        if($request->segment(1)=="project" && !$this->auth->user()->checkAccess(['operator','manager']))
+        if($request->segment(1)=="project" && !$this->auth->user()->checkRole(['operator','manager']))
         {
             return redirect(url('/'));
         }
 
-        if($request->segment(1)=="project" && (in_array('create',$request->segments()) ||  in_array('edit',$request->segments()))  &&  $this->auth->user()->checkAccess(['operator']))
+        if($request->segment(1)=="project" && (in_array('create',$request->segments()) ||  in_array('edit',$request->segments()))  &&  !$this->auth->user()->checkRole(['manager']))
+        {
+            return redirect(url('/project'));
+        }
+
+        if($request->method()=='DELETE' &&  !$this->auth->user()->checkRole(['manager']))
         {
             return redirect(url('/project'));
         }

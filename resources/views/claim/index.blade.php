@@ -18,7 +18,11 @@
                         <th>Телефон</th>
                         <th>Статус обращения</th>
                         <th>Дата создания</th>
-                        <th style="width:130px;"><a href="{!! url('/claim/create') !!}" style="display:block" class="btn btn-success btn-sm"> <i class="glyphicon glyphicon-plus"></i></a></th>
+                        <th style="width:1px;">
+                            @if (Auth::user()->checkRole(['manager','admin']))
+                                <a href="{!! url('/claim/create') !!}" style="display:block" class="btn btn-success btn-sm"> <i class="glyphicon glyphicon-plus"></i></a>
+                            @endif
+                        </th>
                     </tr>
                     </thead>
                     <tbody>
@@ -31,9 +35,13 @@
                                 <td>{{$claim->status}}</td>
                                 <td>{{$claim->created_at->format("d.m.Y H:i:s")}}</td>
                                 <th>
-                                    <a href="{!! url('/claim/'.$claim->id) !!}" class="btn btn-sm btn-info"><i class="glyphicon glyphicon-eye-open"></i></a>
-                                    <a href="{!! url('/claim/'.$claim->id.'/edit') !!}" class="btn btn-sm btn-warning"><i class="glyphicon glyphicon-pencil"></i></a>
-                                    {!! Form::open(['method'=>'DELETE','action'=>["ClaimController@destroy",$claim->id],'style'=>'display:inline']) !!}<button  type="submit" class="btn btn-sm btn-danger"><i class="glyphicon glyphicon-remove"></i></button>{!!Form::close()!!}
+                                    <div style="white-space: nowrap;">
+                                        <a href="{!! url('/claim/'.$claim->id) !!}" class="btn btn-sm btn-info"><i class="glyphicon glyphicon-eye-open"></i></a>
+                                        @if (Auth::user()->checkRole(['manager','admin']))
+                                            <a href="{!! url('/claim/'.$claim->id.'/edit') !!}" class="btn btn-sm btn-warning"><i class="glyphicon glyphicon-pencil"></i></a>
+                                            {!! Form::open(['method'=>'DELETE','action'=>["ClaimController@destroy",$claim->id],'style'=>'display:inline']) !!}<button  type="submit" class="btn btn-sm btn-danger"><i class="glyphicon glyphicon-remove"></i></button>{!!Form::close()!!}
+                                        @endif
+                                    </div>
                                 </th>
                             </tr>
                         @endforeach
@@ -43,9 +51,11 @@
         </div>
     @else
         <div class="row">
+            @if (Auth::user()->checkRole(['manager','admin']))
             <div class="col-lg-2">
                 <a href="{!! url('/claim/create') !!}"  class="btn btn-success"> <i class="glyphicon glyphicon-plus"></i> {!! Lang::get("claim.create") !!}</a>
             </div>
+            @endif
         </div>
         <div class="row">
             <div class="col-lg-12">

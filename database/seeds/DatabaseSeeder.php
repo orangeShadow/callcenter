@@ -108,19 +108,36 @@ class UserTableSeeder extends Seeder
         ]);
 
         App\User::create([
-            'email' => 'testClient@gmail.com',
-            'password'=>bcrypt('123123'),
+            'email' => 'operator@goodline.ru',
+            'password'=>bcrypt('operator'),
+            'name'=>'Тест Оператор',
+            'phone'=>'88800',
+            'role_id'=>2
+        ]);
+
+
+        App\User::create([
+            'email' => 'manager@goodline.ru',
+            'password'=>bcrypt('manager'),
+            'name'=>'Тест Менеджер',
+            'phone'=>'89003332211',
+            'role_id'=>3
+        ]);
+
+        App\User::create([
+            'email' => 'client@goodline.ru',
+            'password'=>bcrypt('client'),
             'name'=>'Тест Клиент',
             'phone'=>'89003332200',
             'role_id'=>4
         ]);
 
         App\User::create([
-            'email' => 'testManager@gmail.com',
-            'password'=>bcrypt('123123'),
-            'name'=>'Тест Менеджер',
-            'phone'=>'89003332211',
-            'role_id'=>3
+            'email' => 'client2@goodline.ru',
+            'password'=>bcrypt('client2'),
+            'name'=>'Тест Клиент2',
+            'phone'=>'89003332200',
+            'role_id'=>4
         ]);
 
     }

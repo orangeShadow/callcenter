@@ -61,6 +61,7 @@ class Project extends Model {
 
     }
 
+
     public function client()
     {
         return $this->belongsTo('App\User','client_id','id');

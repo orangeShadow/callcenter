@@ -25,7 +25,12 @@ class ClaimController extends Controller {
 	public function index()
 	{
         $fluid = true;
-        $claims = Claim::search(Request::all())->get();
+        if(Auth::user()->checkRole('client')){
+            $claims = Claim::client(Request::all())->get();
+        }else{
+            $claims = Claim::search(Request::all())->get();
+        }
+
 		return view('claim.index',compact('claims','fluid'));
 	}
 
@@ -62,7 +67,11 @@ class ClaimController extends Controller {
 	 */
 	public function show($id)
 	{
+
 		$claim  = Claim::findOrFail($id);
+
+        if(Auth::user()->checkRole('client') && Auth::user()->id != $claim->project->client_id) abort(404);
+
         return view('claim.show',compact('claim'));
 	}
 

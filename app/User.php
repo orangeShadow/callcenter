@@ -47,10 +47,12 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
         return $this->belongsTo('App\Role','role_id','id');
     }
 
-    public function checkAccess($codeRoleArray)
+    public function checkRole($codeRoleArray)
     {
-        if($this->role_id == 1) return true;
-        if(in_array($this->role()->first()->code,$codeRoleArray)){
+
+        if(is_array($codeRoleArray) && in_array($this->role->code,$codeRoleArray)){
+            return true;
+        }elseif($this->role->code==$codeRoleArray){
             return true;
         }
         return false;

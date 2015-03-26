@@ -11,6 +11,10 @@
 |
 */
 
+Route::get('/home',function(){
+    redirect(url('/'));
+});
+
 Route::get('/', ['middleware'=>'auth',function(){
     if(Auth::user()->role()->first()->code=="client")
     {

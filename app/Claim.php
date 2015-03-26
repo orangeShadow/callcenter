@@ -31,6 +31,43 @@ class Claim extends Model {
         return $this->belongsTo('App\User','update_by','id');
     }
 
+    public function scopeClient($query,$request)
+    {
+        //$query->join('projects','claim.project_id','=','projects.id');
+        if(!empty($request['created_at_from']) && !empty($request['created_at_to']))
+        {
+            $dtFrom = new \DateTime($request['created_at_from']);
+            $dtTo = new \DateTime($request['created_at_to']);
+            $query->whereBetween('claims.created_at',[$dtFrom->format('Y-m-d 00:00:00'),$dtTo->format('Y-m-d 23:59:59')]);
+        }elseif(!empty($request['created_at_from']) && empty($request['created_at_to']))
+        {
+            $dtFrom = new \DateTime($request['created_at_from']);
+            $dtTo = new \DateTime();
+            $query->whereBetween('claims.created_at',[$dtFrom->format('Y-m-d 00:00:00'),$dtTo->format('Y-m-d 23:59:59')]);
+        }elseif(empty($request['created_at_from']) && !empty($request['created_at_to']))
+        {
+            $dtFrom = new \DateTime($request['created_at_to']);
+            $dtTo = new \DateTime('created_at_to');
+            $query->whereBetween('claims.created_at',[$dtFrom->format('Y-m-d 00:00:00'),$dtTo->format('Y-m-d 23:59:59')]);
+        }
+
+        if(!empty($request['status']))
+        {
+            $query->where('claims.status',$request['status']);
+        }
+
+        if(!empty($request['id']))
+        {
+            $query->where('id',(int)$request['id']);
+        }
+
+
+        $query->join('projects', function($join)
+        {
+            $join->on('claims.project_id', '=', 'projects.id')->where('projects.client_id','=',\Auth::user()->id);
+        });
+    }
+
     public function scopeSearch($query,$request)
     {
         if(!empty($request['created_at_from']) && !empty($request['created_at_to']))
@@ -38,6 +75,16 @@ class Claim extends Model {
 
             $dtFrom = new \DateTime($request['created_at_from']);
             $dtTo = new \DateTime($request['created_at_to']);
+            $query->whereBetween('created_at',[$dtFrom->format('Y-m-d 00:00:00'),$dtTo->format('Y-m-d 23:59:59')]);
+        }elseif(!empty($request['created_at_from']) && empty($request['created_at_to']))
+        {
+            $dtFrom = new \DateTime($request['created_at_from']);
+            $dtTo = new \DateTime();
+            $query->whereBetween('created_at',[$dtFrom->format('Y-m-d 00:00:00'),$dtTo->format('Y-m-d 23:59:59')]);
+        }elseif(empty($request['created_at_from']) && !empty($request['created_at_to']))
+        {
+            $dtFrom = new \DateTime($request['created_at_to']);
+            $dtTo = new \DateTime('created_at_to');
             $query->whereBetween('created_at',[$dtFrom->format('Y-m-d 00:00:00'),$dtTo->format('Y-m-d 23:59:59')]);
         }
 
@@ -71,6 +118,7 @@ class Claim extends Model {
         {
             $query->where('project_id',(int)$request['project_id']);
         }
+
 
         return $query;
     }
