@@ -40,18 +40,18 @@ app.controller('propertyController', function($scope, $http) {
         }
 
         var property = {
+            _token:$('input[name="_token"]').val(),
             title: $scope.property.title,
             type: $scope.property.type,
             model_initiator :$scope.model_initiator,
             model_goal: $scope.model_goal,
             link_id:$scope.link_id,
-            sort:$scope.property.sort,
-            _token:$('input[name="_token"]').val()
+            sort:$scope.property.sort
         }
         $http({
             method: 'POST',
             url:'/property/',
-            data: property,
+            data: JSON.stringify(property),
             headers: {'Content-Type': 'application/x-www-form-urlencoded'}
         }).success(function(data, status, headers, config) {
             $scope.properties.push(data);
