@@ -79,14 +79,14 @@ class PropertyController extends Controller {
             if($validator->fails()){
                 return Response::json(['error'=>1,'errors'=>$validator->errors()],500);
             }
-            $property= Property::create($request);
-            $property->type = $this->propertiesType[$property->type];
-            return $property->toJson();
+            //$property= Property::create($request);
+            //$property->type = $this->propertiesType[$property->type];
+            //return $property->toJson();
+            return Response::json($request);
         }catch(Exception $e)
         {
             dd($e);
         }
-
 	}
 
 	/**
