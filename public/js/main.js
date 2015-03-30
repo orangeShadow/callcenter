@@ -47,7 +47,7 @@ app.controller('propertyController', function($scope, $http) {
             link_id:$scope.link_id,
             sort:$scope.property.sort
         }
-        $http.post('/property/',property).success(function(data, status, headers, config) {
+        $http.post('/property/',JSON.stringify(property)).success(function(data, status, headers, config) {
             $scope.properties.push(data);
             $scope.property = '';
             $scope.loading = false;
