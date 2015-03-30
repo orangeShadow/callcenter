@@ -17,7 +17,7 @@ class CreatePropertiesTable extends Migration {
             $table->increments('id');
             $table->string('title');
             $table->string('description',250)->nullable();
-            $table->string('type');
+            $table->string('type')->default('text');
 
             $table->string('model_goal');
             $table->string('model_initiator');
@@ -25,7 +25,7 @@ class CreatePropertiesTable extends Migration {
 
             $table->integer('sort')->nullable();
             $table->boolean('multiple')->default(false);
-            $table->json('values');
+            $table->json('values')->nullable();
             $table->timestamps();
         });
 	}
