@@ -18,7 +18,6 @@ class CreateClaimTable extends Migration {
             $table->string('name',120);
             $table->string('phone',50);
             $table->text('text')->nullable();
-            $table->text('note')->nullable();
             $table->integer('project_id')->unsigned()->nullable();
             $table->integer('operator_id')->unsigned()->nullable();
             $table->integer('update_by')->unsigned()->nullable();

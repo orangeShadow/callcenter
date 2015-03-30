@@ -19,7 +19,6 @@
             {!! Form::model($claim,['method'=>'PATCH','action'=>['ClaimController@update',$claim->id],'class'=>'form-horizontal']) !!}
             @include('claim.form')
             {!! Form::close() !!}
-
         </div>
     </div>
 @stop

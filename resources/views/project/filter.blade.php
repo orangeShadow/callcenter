@@ -6,9 +6,9 @@
         <div class="row">
             <div class="col-lg-3">
                 <div class="form-group">
-                    {!! Form::text('created_at_from',Request::get('created_at_from'),['class'=>'form-control','placeholder'=>'Дата создания от']) !!}
+                    {!! Form::text('created_at_from',Request::get('created_at_from'),['class'=>'form-control datepicker','placeholder'=>'Дата создания от']) !!}
                     <br>
-                    {!! Form::text('created_at_to',Request::get('created_at_to'),['class'=>'form-control','placeholder'=>'Дата создания по']) !!}
+                    {!! Form::text('created_at_to',Request::get('created_at_to'),['class'=>'form-control datepicker','placeholder'=>'Дата создания по']) !!}
                 </div>
             </div>
             <div class="col-lg-3">

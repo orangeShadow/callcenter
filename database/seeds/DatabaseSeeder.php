@@ -18,6 +18,10 @@ class DatabaseSeeder extends Seeder {
         $this->call('RoleTableSeeder');
         $this->call('StatusTableSeeder');
         $this->call('StatusClaimTableSeeder');
+        $this->call('ProjectsSeeder');
+        $this->call('ClaimSeeder');
+        $this->call('PropertySeeder');
+
 	}
 
 }
@@ -154,6 +158,87 @@ class StatusClaimTableSeeder extends Seeder
             'code' =>'N',
             'title'=>'Новая',
             'sort'=>'1',
+        ]);
+
+    }
+}
+
+class ProjectsSeeder extends Seeder{
+    public function run()
+    {
+        DB::table('projects')->delete();
+        $faker = Faker\Factory::create();
+        for($k=0;$k<20;$k++)
+        {
+            App\Project::create([
+
+                'status'=>"N",
+                'text'=>$faker->paragraph(4),
+                'title'=>$faker->name(),
+                'manager_id'=>3,
+                'client_id'=>$faker->numberBetween(4,5)
+            ]);
+        }
+
+
+    }
+}
+
+
+class ClaimSeeder extends Seeder{
+    public function run()
+    {
+        DB::table('claims')->delete();
+        $faker = Faker\Factory::create();
+        for($k=0;$k<20;$k++)
+        {
+            App\Claim::create([
+
+                'status'=>"N",
+                'text'=>$faker->paragraph(4),
+                'name'=>$faker->name,
+                'phone'=>$faker->phoneNumber,
+                'operator_id'=>3,
+                'project_id'=>$faker->numberBetween(1,20)
+            ]);
+        }
+
+
+    }
+}
+
+class PropertySeeder extends Seeder{
+    public function run()
+    {
+        DB::table('properties')->delete();
+        App\Property::create([
+            "title"=>"Дата доставки",
+            "type"=>"date",
+            "model_goal"=>"Claim",
+            "model_initiator"=>"Project",
+            "link_id"=>1,
+            "sort"=>1,
+        ]);
+
+        App\Property::create([
+            "title"=>"Ширина",
+            "description"=>'вводить в мм',
+            "type"=>"number",
+            "model_goal"=>"Claim",
+            "model_initiator"=>"Project",
+            "link_id"=>1,
+            "sort"=>2,
+        ]);
+
+
+        App\Property::create([
+            "title"=>"Длинна",
+            "description"=>'вводить в мм',
+            "type"=>"number",
+            "model_goal"=>"Claim",
+            "model_initiator"=>"Project",
+            "link_id"=>1,
+            "sort"=>3,
         ]);
 
     }

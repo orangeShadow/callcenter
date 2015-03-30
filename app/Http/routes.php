@@ -27,6 +27,7 @@ Route::get('/', ['middleware'=>'auth',function(){
 
 Route::resource('project','ProjectController');
 Route::resource('claim','ClaimController');
+Route::resource('property','PropertyController');
 
 Route::controllers([
 	'auth' => 'Auth\AuthController',

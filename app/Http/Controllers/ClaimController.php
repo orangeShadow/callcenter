@@ -4,7 +4,11 @@ use App\Claim;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 
+use App\Property;
+use App\ACME\Model\PropertyTypes;
 use Auth;
+use Illuminate\Contracts\Validation\ValidationException;
+use Illuminate\Support;
 use Request;
 
 class ClaimController extends Controller {
@@ -42,7 +46,14 @@ class ClaimController extends Controller {
 	public function create()
 	{
 		$claim = new Claim();
-        return view('claim.create',compact('claim'));
+        $properties = [];
+        if(Request::get('project_id'))
+        {
+            $claim->project_id = (int)Request::get('project_id');
+            $properties  = Property::getPropertyByModel($claim);
+        }
+
+        return view('claim.create',compact('claim','properties'));
 	}
 
 	/**
@@ -55,7 +66,49 @@ class ClaimController extends Controller {
         $request = $request->all();
         $request['operator_id'] = Auth::user()->id;
         $request['status']='N';
-        Claim::create($request);
+        $claim = new Claim($request);
+        $propertyList = array();
+        $errors =new Support\MessageBag();
+        if(!empty($request["property"]))
+        {
+            $properties  = Property::getPropertyByModel($claim);
+
+            foreach($properties as $property)
+            {
+                try{
+                    if(isset($request["property"][$property->id]))
+                    {
+                        $attributes = [
+                            'value'=>$request["property"][$property->id],
+                            'property_id'=>$property->id
+                        ];
+                        if($property->type=='date')
+                        {
+                            $pr = new PropertyTypes\DateProperty($attributes,$property->title);
+                        }elseif($property->type=='number'){
+                            $pr = new PropertyTypes\NumberProperty($attributes,$property->title);
+                        }
+                        else{
+                            $pr = new PropertyTypes\TextProperty();
+                            $pr->value = $request["property"][$property->id];
+                            $pr->property_id = $property->id;
+                        }
+                    }
+                    $propertyList[] = $pr;
+                }catch(ValidationException $e){
+                    $errors->merge($e->errors());
+                }
+            }
+        }
+        if($errors->count()>0)
+        {
+            return \Redirect::back()->withInput($request)->withErrors($errors);
+        }
+        $claim->save($request);
+        foreach($propertyList as $pr){
+            $pr->element_id = $claim->id;
+            $pr->save();
+        }
         return redirect('claim');
 	}
 
@@ -84,7 +137,10 @@ class ClaimController extends Controller {
 	public function edit($id)
 	{
         $claim = Claim::findOrFail($id);
-        return view('claim.edit',compact('claim'));
+
+        $properties  = Property::getPropertyByModel($claim);
+
+        return view('claim.edit',compact('claim','properties'));
 	}
 
 	/**

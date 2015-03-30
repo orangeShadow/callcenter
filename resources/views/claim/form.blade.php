@@ -6,20 +6,30 @@
         </div>
         <div class="form-group">
             {!! Form::label('name',Lang::get('claim.name')) !!}
-            {!!Form::text('name',null,["class"=>"form-control"])!!}
+            {!!Form::text('name',$claim->name,["class"=>"form-control"])!!}
         </div>
         <div class="form-group">
             {!! Form::label('phone',Lang::get('claim.phone')) !!}
-            {!!Form::text('phone',null,["class"=>"form-control"])!!}
+            {!!Form::text('phone',$claim->phone,["class"=>"form-control"])!!}
         </div>
         <div class="form-group">
             {!! Form::label('text',Lang::get('claim.text')) !!}
-            {!! Form::textarea('text',null,["class"=>"form-control"]) !!}
+            {!! Form::textarea('text',$claim->text,["class"=>"form-control"]) !!}
         </div>
         <div class="form-group">
-            {!!Form::label('note',Lang::get('claim.note'))!!}
-            {!!Form::textarea('note',Request::get('note'),["class"=>"form-control"])!!}
+            {!! Form::label('text',Lang::get('claim.backcall_at')) !!}
+            {!! Form::text('backcall_at',$claim->backcall_at,["class"=>"form-control datepicker"]) !!}
         </div>
+        @foreach($properties as $property)
+            <div class="form-group">
+                {!! Form::label('title',$property->title) !!}
+                @if($property->type=='date')
+                    {!! Form::input('text','property['.$property->id.']',Request::get('property['.$property->id.']'),["class"=>"form-control datepicker"]) !!}
+                @else
+                    {!! Form::input('text','property['.$property->id.']',Request::get('property['.$property->id.']'),["class"=>"form-control"]) !!}
+                @endif
+            </div>
+        @endforeach
         <div class="form-group">
             {!! Form::label('status',Lang::get('claim.status')) !!}
             {!! Form::select('status',\App\StatusClaim::orderBy('sort','asc')->get(['code','title'])->lists('title','code'),Request::get('status'),['class'=>'form-control']) !!}

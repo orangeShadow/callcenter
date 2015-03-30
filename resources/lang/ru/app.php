@@ -9,5 +9,6 @@ return [
     'home'=>'Главная',
     'logout'=>'Выход',
     'claim'=>'Заявки',
-    'project'=>'Проекты'
+    'project'=>'Проекты',
+    'authenticationError'=>'E-mail или пароль заданы не верно'
 ];

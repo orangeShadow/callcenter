@@ -1,5 +1,7 @@
 <?php namespace App;
 
+use Carbon\Carbon;
+use Faker\Provider\cs_CZ\DateTime;
 use Illuminate\Database\Eloquent\Model;
 
 class Claim extends Model {
@@ -7,7 +9,7 @@ class Claim extends Model {
     protected $fillable=[
         'name',
         'phone',
-        'backcall_dt',
+        'backcall_at',
         'text',
         'note',
         'project_id',
@@ -15,6 +17,13 @@ class Claim extends Model {
         'update_by',
         'status'
     ];
+
+    protected $dates = ['backcall_at'];
+
+    public function setBackcallAtAttribute($date)
+    {
+        $this->attributes['backcall_at'] = Carbon::parse($date);
+    }
 
     public function project()
     {

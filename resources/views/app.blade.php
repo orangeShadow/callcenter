@@ -59,7 +59,6 @@
 		</div>
 	</nav>
     <div class="container{{ !empty($fluid) ? '-fluid':''}}">
-
 	    @yield('content')
     </div>
 	<!-- Scripts -->
@@ -67,6 +66,7 @@
 	<script src="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.1/js/bootstrap.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.3/jquery-ui.min.js"></script>
     <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.7.2/i18n/jquery-ui-i18n.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.12/angular.min.js"></script>
     <script src="/js/main.js"></script>
 </body>
 </html>

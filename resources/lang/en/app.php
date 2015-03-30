@@ -7,5 +7,6 @@ return [
     'forgotPassword'=>'Forgot Your Password?',
     'toggleNavigation'=>'Toggle Navigation',
     'home'=>'Home',
-    'logout'=>'Выход'
+    'logout'=>'Logout',
+    'authenticationError'=>'These credentials do not match our records.'
 ];

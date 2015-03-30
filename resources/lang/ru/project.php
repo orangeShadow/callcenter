@@ -17,6 +17,13 @@ return [
     'note'=>'Примечание',
     'editProject'=>'Редактирование проекта',
     'view' => 'Детально о проекте',
-    'remove'=>'Удаление проекта'
+    'remove'=>'Удаление проекта',
+    'edit'=>"Изменить",
+    'create'=>"Создать",
+    'propertyTitle'=>'Название свойства',
+    'propertyType' =>'Тип свойства',
+    'propertyText' => 'Текстовое',
+    'propertyNumber'=> 'Числовое',
+    'propertyDate' => 'Дата'
 ];
 ?>

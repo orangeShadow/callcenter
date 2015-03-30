@@ -21,7 +21,7 @@
             {!! Form::select('client_id',\App\User::where(['role_id'=>4])->get(['id','name'])->lists('name','id'),Request::get('client_id'),["class"=>"form-control"]) !!}
         </div>
         <div class="form-group">
-            {!! Form::submit('Создать',["class"=>"btn btn-default"]) !!}
+            {!! Form::submit($submit,["class"=>"btn btn-primary"]) !!}
         </div>
     </div>
 </div>
