@@ -82,7 +82,7 @@ class PropertyController extends Controller {
             $property= Property::create($request);
             $property->type = $this->propertiesType[$property->type];
             return $property->toJson();
-        }catch(Exceptopn $e)
+        }catch(Exception $e)
         {
             dd($e);
         }
