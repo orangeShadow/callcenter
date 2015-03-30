@@ -20,8 +20,6 @@ class DatabaseSeeder extends Seeder {
         $this->call('StatusClaimTableSeeder');
         $this->call('ProjectsSeeder');
         $this->call('ClaimSeeder');
-        $this->call('PropertySeeder');
-
 	}
 
 }
@@ -203,43 +201,6 @@ class ClaimSeeder extends Seeder{
             ]);
         }
 
-
-    }
-}
-
-class PropertySeeder extends Seeder{
-    public function run()
-    {
-        DB::table('properties')->delete();
-        App\Property::create([
-            "title"=>"Дата доставки",
-            "type"=>"date",
-            "model_goal"=>"Claim",
-            "model_initiator"=>"Project",
-            "link_id"=>1,
-            "sort"=>1,
-        ]);
-
-        App\Property::create([
-            "title"=>"Ширина",
-            "description"=>'вводить в мм',
-            "type"=>"number",
-            "model_goal"=>"Claim",
-            "model_initiator"=>"Project",
-            "link_id"=>1,
-            "sort"=>2,
-        ]);
-
-
-        App\Property::create([
-            "title"=>"Длинна",
-            "description"=>'вводить в мм',
-            "type"=>"number",
-            "model_goal"=>"Claim",
-            "model_initiator"=>"Project",
-            "link_id"=>1,
-            "sort"=>3,
-        ]);
 
     }
 }
