@@ -45,7 +45,8 @@ app.controller('propertyController', function($scope, $http) {
             model_initiator :$scope.model_initiator,
             model_goal: $scope.model_goal,
             link_id:$scope.link_id,
-            sort:$scope.property.sort
+            sort:$scope.property.sort,
+            _token:$('input[name="_token"]').val()
         }
         $http.post('/property/',property).success(function(data, status, headers, config) {
             $scope.properties.push(data);
