@@ -35,12 +35,12 @@ class PropertyController extends Controller {
         $model = \Request::get('model');
 		if(empty($model))
         {
-            return abort('404',Lang::get('property.existModel'));
+            return abort('404',\Lang::get('property.existModel'));
         }
         $link_id = \Request::get('link_id');
         if(empty($link_id))
         {
-            return abort('404',Lang::get('property.existLinkElement'));
+            return abort('404',\Lang::get('property.existLinkElement'));
         }
         $propties = Property::where('model_initiator','=',$model)->where('link_id','=',$link_id)->orderBy('sort')->get();
         $proptyList = [];
