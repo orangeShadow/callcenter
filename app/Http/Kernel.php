@@ -18,7 +18,7 @@ class Kernel extends HttpKernel {
         'App\Http\Middleware\ProjectAccess',
         'App\Http\Middleware\PropertyAccess',
         'App\Http\Middleware\ClaimAccess',
-		'App\Http\Middleware\VerifyCsrfToken',
+		//'App\Http\Middleware\VerifyCsrfToken',
 	];
 
 	/**
