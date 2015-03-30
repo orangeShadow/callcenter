@@ -52,6 +52,11 @@ class PropertyController extends Controller {
         return Response::json($proptyList);
 	}
 
+
+    public function create(){
+        return 'create property';
+    }
+
 	/**
 	 * Store a newly created resource in storage.
 	 *
@@ -59,8 +64,6 @@ class PropertyController extends Controller {
 	 */
 	public function store()
 	{
-        return "sdfsdfdsf";
-        /*
         $request = \Request::all();
 		$validator = \Validator::make($request,
                     [
@@ -77,7 +80,6 @@ class PropertyController extends Controller {
         $property= Property::create($request);
         $property->type = $this->propertiesType[$property->type];
         return $property->toJson();
-        */
 	}
 
 	/**
