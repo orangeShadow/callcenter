@@ -40,19 +40,19 @@ app.controller('propertyController', function($scope, $http) {
         }
 
         var property = {
-            _token:$('input[name="_token"]').val(),
             title: $scope.property.title,
             type: $scope.property.type,
             model_initiator :$scope.model_initiator,
             model_goal: $scope.model_goal,
             link_id:$scope.link_id,
-            sort:$scope.property.sort
+            sort:$scope.property.sort,
+            _token:$('input[name="_token"]').val()
         }
         $http({
-            method: 'POST',
-            url:'/property/',
-            data: JSON.stringify(property),
-            headers: {'Content-Type': 'application/x-www-form-urlencoded'}
+            method:'POST',
+            url:'http://callcenter1.roumingu.net/property/',
+            data:property,
+            'header':{'Content-Type': 'application/x-www-form-urlencoded'}
         }).success(function(data, status, headers, config) {
             $scope.properties.push(data);
             $scope.property = '';
