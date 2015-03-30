@@ -50,7 +50,7 @@ app.controller('propertyController', function($scope, $http) {
         }
         $http({
             method:'POST',
-            url:'http://callcenter1.roumingu.net/property/',
+            url:'http://callcenter1.roumingu.net/property',
             data:property,
             'header':{'Content-Type': 'application/x-www-form-urlencoded'}
         }).success(function(data, status, headers, config) {
