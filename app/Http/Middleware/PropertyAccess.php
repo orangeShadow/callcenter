@@ -43,12 +43,12 @@ class PropertyAccess {
 
         if($request->segment(1)=="property" && (in_array('create',$request->segments()) ||  in_array('edit',$request->segments()))  &&  !$this->auth->user()->checkRole(['manager']))
         {
-            return redirect(url('/'));
+            return redirect(url('/project'));
         }
 
         if($request->method()=='DELETE' &&  !$this->auth->user()->checkRole(['manager']))
         {
-            return redirect(url('/'));
+            return redirect(url('/project'));
         }
 
         return $next($request);

@@ -54,7 +54,8 @@ class PropertyController extends Controller {
 
 
     public function create(){
-        return 'create property';
+        $property = new Property();
+        return view('project.propertyform')->with(compact('property'));
     }
 
 	/**
