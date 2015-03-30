@@ -65,22 +65,28 @@ class PropertyController extends Controller {
 	 */
 	public function store()
 	{
-        $request = \Request::all();
-		$validator = \Validator::make($request,
-                    [
-                        'title'=>'required',
-                        'type'=>'required',
-                        'model_goal'=>'required',
-                        'model_initiator'=>'required',
-                        'link_id'=>'required|numeric',
-                        'sort'=>'required|numeric'
-                    ]);
-        if($validator->fails()){
-           return Response::json(['error'=>1,'errors'=>$validator->errors()],500);
+        try{
+            $request = \Request::all();
+            $validator = \Validator::make($request,
+                [
+                    'title'=>'required',
+                    'type'=>'required',
+                    'model_goal'=>'required',
+                    'model_initiator'=>'required',
+                    'link_id'=>'required|numeric',
+                    'sort'=>'required|numeric'
+                ]);
+            if($validator->fails()){
+                return Response::json(['error'=>1,'errors'=>$validator->errors()],500);
+            }
+            $property= Property::create($request);
+            $property->type = $this->propertiesType[$property->type];
+            return $property->toJson();
+        }catch(Exceptopn $e)
+        {
+            dd($e);
         }
-        $property= Property::create($request);
-        $property->type = $this->propertiesType[$property->type];
-        return $property->toJson();
+
 	}
 
 	/**
