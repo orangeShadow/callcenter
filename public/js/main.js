@@ -48,7 +48,12 @@ app.controller('propertyController', function($scope, $http) {
             sort:$scope.property.sort,
             _token:$('input[name="_token"]').val()
         }
-        $http.post('/property/',property).success(function(data, status, headers, config) {
+        $http({
+            method: 'POST',
+            url:'/property/',
+            data: property,
+            headers: {'Content-Type': 'application/x-www-form-urlencoded'}
+        }).success(function(data, status, headers, config) {
             $scope.properties.push(data);
             $scope.property = '';
             $scope.loading = false;

@@ -24,7 +24,7 @@
                 <div class="propertyProject row" data-model-goal="Claim" data-model-initiator="Project" data-link-id="{{$project->id}}" ng-app="project-property" ng-controller="propertyController">
                     <div class="col-lg-12">
                         <h4 >Создать свойства для проекта</h4>
-                        <form class="form-inline" style="margin-bottom:20px;">
+                        <form class="form-inline" style="margin-bottom:20px;" >
                             <div class="form-group">
                                 <label>{{Lang::get("project.propertyTitle")}}</label>
                                 <input name="property.title" ng-model="property.title" type="text" class="form-control">
@@ -39,12 +39,10 @@
                                     </select>
                                 </div>
                             </div>
-
                             <div class="form-group">
                                 <label>Сортировка</label>
                                 <input name="property.sort" ng-model="property.sort" style="width: 50px;" type="text" class="form-control">
                             </div>
-
                             <a class="btn btn-success btn-sm" ng-click="addProperty()"><i class="glyphicon glyphicon-plus"></i></a>
                         </form>
                         <div class="property-list row">
