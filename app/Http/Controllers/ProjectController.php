@@ -28,7 +28,13 @@ class ProjectController extends Controller {
         $fluid = true;
 
 
-        $projects = Project::search(Request::all())->get();
+        if(Auth::user()->checkRole(['operator']))
+        {
+            $projects = Project::operator(Request::all())->get();
+        }else{
+            $projects = Project::search(Request::all())->get();
+        }
+
 
         return view('project.index')->with(compact('projects','fluid'));
 	}

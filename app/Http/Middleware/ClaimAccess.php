@@ -35,24 +35,35 @@ class ClaimAccess {
 
         if($this->auth->user()->checkRole(['admin'])) return $next($request);
 
+
+        if($request->segment(1)=="claim" && in_array('create',$request->segments()) &&  !$this->auth->user()->checkRole(['operator','manager']) )
+        {
+
+            return redirect(url('/'));
+        }
+
+        if($request->segment(1)=="claim" && (count($request->segments())==1 && $request->method('POST') ) && $this->auth->user()->checkRole(['operator']))
+        {
+            return $next($request);
+        }
+
         if($request->segment(1)=="claim" && (count($request->segments())==1 || (count($request->segments())==2 && is_numeric($request->segment(2))) ) && !$this->auth->user()->checkRole(['client','manager']))
         {
+
             return redirect(url('/'));
         }
 
 
         if($request->segment(1)=="claim" && in_array('edit',$request->segments()) &&  !$this->auth->user()->checkRole(['manager']) )
         {
+
             return redirect(url('/'));
         }
 
-        if($request->segment(1)=="claim" && in_array('create',$request->segments()) &&  !$this->auth->user()->checkRole(['operator','manager']) )
-        {
-            return redirect(url('/'));
-        }
 
         if($request->method()=='DELETE' &&  !$this->auth->user()->checkRole(['manager']))
         {
+
             return redirect(url('/'));
         }
 

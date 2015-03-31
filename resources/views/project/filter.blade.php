@@ -20,16 +20,18 @@
             </div>
             <div class="col-lg-3">
                 <div class="form-group">
-                    {!! Form::text('client_id',Request::get('client_id'),['class'=>'form-control','placeholder'=>'Менеджер']) !!}
+                    {!! Form::select('client_id',["0"=>"Выберите клиента"]+\App\User::orderBy('name','asc')->where('role_id','4')->get(['id','name'])->lists('name','id'),null,['class'=>'form-control']) !!}
                     <br>
-                    {!! Form::text('manager_id',Request::get('manager_id'),['class'=>'form-control','placeholder'=>'Клиент']) !!}
+                    {!! Form::select('manager_id',["0"=>"Выберите менеджера"]+\App\User::orderBy('name','asc')->where('role_id','3')->get(['id','name'])->lists('name','id'),null,['class'=>'form-control']) !!}
                 </div>
             </div>
-            <div class="col-lg-3">
-                <div class="form-group">
-                    {!! Form::select('status',["0"=>"Укажите статус"]+\App\Status::orderBy('sort','asc')->get(['code','title'])->lists('title','code'),Request::get('status'),['class'=>'form-control']) !!}
+            @if (Auth::user()->checkRole(['manager','admin']))
+                <div class="col-lg-3">
+                    <div class="form-group">
+                        {!! Form::select('status',["0"=>"Укажите статус"]+\App\Status::orderBy('sort','asc')->get(['code','title'])->lists('title','code'),Request::get('status'),['class'=>'form-control']) !!}
+                    </div>
                 </div>
-            </div>
+            @endif
             {!! Form::hidden('filter',true) !!}
         </div>
 

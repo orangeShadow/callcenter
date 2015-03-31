@@ -14,7 +14,7 @@
         </div>
         <div class="form-group">
             {!! Form::label('role',Lang::get('user.role')) !!}
-            {!! Form::select('role',\App\Role::orderBy('sort','asc')->where('visible',true)->get(['id','title'])->lists('title','id'),null,['class'=>'form-control']) !!}
+            {!! Form::select('role_id',\App\Role::orderBy('sort','asc')->where('visible',true)->get(['id','title'])->lists('title','id'),null,['class'=>'form-control']) !!}
         </div>
         <div class="form-group">
             {!!Form::label('password',Lang::get('user.password'))!!}

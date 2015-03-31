@@ -49,7 +49,10 @@ class Property extends Model {
             else
                 $res = \App\PropertyValue::where('property_id','=',$property->id)->where('element_id',"=",$model->id)->first();
 
-            $propertyValues[$property->id] =['title'=>$property->title,'value'=>$res->value];
+            if(!empty($res))
+            {
+                $propertyValues[$property->id] =['title'=>$property->title,'value'=>$res->value];
+            }
         }
         return $propertyValues;
     }

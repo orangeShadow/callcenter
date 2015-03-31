@@ -154,7 +154,48 @@ class ClaimController extends Controller {
         $request = $request->all();
         $claim =Claim::findOrFail($id);
         $request['update_by'] = Auth::user()->id;
+        $propertyList = array();
+        $errors =new Support\MessageBag();
+        if(!empty($request["property"]))
+        {
+            $properties  = Property::getPropertyByModel($claim);
+
+            foreach($properties as $property)
+            {
+                try{
+                    if(isset($request["property"][$property->id]))
+                    {
+                        $attributes = [
+                            'value'=>$request["property"][$property->id],
+                            'property_id'=>$property->id
+                        ];
+                        if($property->type=='date')
+                        {
+                            $pr = new PropertyTypes\DateProperty($attributes,$property->title);
+                        }elseif($property->type=='number'){
+                            $pr = new PropertyTypes\NumberProperty($attributes,$property->title);
+                        }
+                        else{
+                            $pr = new PropertyTypes\TextProperty();
+                            $pr->value = $request["property"][$property->id];
+                            $pr->property_id = $property->id;
+                        }
+                    }
+                    $propertyList[] = $pr;
+                }catch(ValidationException $e){
+                    $errors->merge($e->errors());
+                }
+            }
+        }
+        if($errors->count()>0)
+        {
+            return \Redirect::back()->withInput($request)->withErrors($errors);
+        }
         $claim->update($request);
+        foreach($propertyList as $pr){
+            $pr->element_id = $claim->id;
+            $pr->save();
+        }
         return redirect("claim/$id");
 	}
 

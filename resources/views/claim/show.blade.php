@@ -46,7 +46,7 @@
             </div>
             <br>
 
-            @if(Auth::user()->checkRole('client'))
+
             {!! Form::model($claim,['method'=>'POST','url'=>['claim/statuschange'],'class'=>'form-horizontal']) !!}
             <div class="form-group">
                 {!! Form::input('hidden','id',$claim->id) !!}
@@ -57,7 +57,7 @@
                 <div class="col-sm-3">{!! Form::submit(Lang::get('claim.update'),["class"=>"btn btn-default"]) !!}</div>
             </div>
             {!! Form::close() !!}
-            @endif
+
         </div>
     </div>
     @foreach(\App\Property::showPropertyValue($claim) as $property)

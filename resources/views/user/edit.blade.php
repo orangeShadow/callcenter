@@ -18,7 +18,7 @@
 
 
             {!! Form::model($user,['method'=>'PATCH','action'=>['UserController@update',$user->id],'class'=>'form-horizontal']) !!}
-            @include('user.form',["submit"=>Lang::get("user.create")])
+            @include('user.form',["submit"=>Lang::get("user.edit")])
             {!! Form::close() !!}
         </div>
     </div>

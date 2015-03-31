@@ -32,7 +32,7 @@ class StatusTableSeeder extends Seeder
 
         App\Status::create([
             'code' =>'N',
-            'title'=>'Новая',
+            'title'=>'Новый',
             'sort'=>'1',
         ]);
 
@@ -44,7 +44,7 @@ class StatusTableSeeder extends Seeder
 
         App\Status::create([
             'code' =>'C',
-            'title'=>'Решена',
+            'title'=>'Завершен',
             'sort'=>'3',
         ]);
 
@@ -156,6 +156,24 @@ class StatusClaimTableSeeder extends Seeder
             'code' =>'N',
             'title'=>'Новая',
             'sort'=>'1',
+        ]);
+
+        App\StatusClaim::create([
+            'code' =>'P',
+            'title'=>'Обработанная',
+            'sort'=>'2',
+        ]);
+
+        App\StatusClaim::create([
+            'code' =>'С',
+            'title'=>'Выполнена',
+            'sort'=>'3',
+        ]);
+
+        App\StatusClaim::create([
+            'code' =>'Z',
+            'title'=>'Отменена',
+            'sort'=>'4',
         ]);
 
     }

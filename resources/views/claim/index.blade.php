@@ -32,7 +32,7 @@
                                 <td>{{ !empty($claim->project()->first()->title) ? $claim->project()->first()->title:'' }}</td>
                                 <td>{{$claim->name}}</td>
                                 <td>{{$claim->phone}}</td>
-                                <td>{{$claim->status}}</td>
+                                <td>{{$claim->statusT->title}}</td>
                                 <td>{{$claim->created_at->format("d.m.Y H:i:s")}}</td>
                                 <th>
                                     <div style="white-space: nowrap;">

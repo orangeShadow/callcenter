@@ -32,7 +32,7 @@
                         <td>{{$project->created_at->format("d.m.Y H:i:s")}}</td>
                         <td>{{ !empty($project->client()->first()->name) ? $project->client()->first()->name:'' }}</td>
                         <td>{{ !empty($project->manager()->first()->name) ? $project->manager()->first()->name:'' }}</td>
-                        <td>{{$project->status}}</td>
+                        <td>{{$project->statusT->title}}</td>
                         <th>
                             <div style="white-space: nowrap;">
                                 @if (Auth::user()->checkRole(['manager','admin']))

@@ -17,7 +17,7 @@
             {!! Form::select('status',\App\Status::orderBy('sort','asc')->get(['code','title'])->lists('title','code'),Request::get('status'),['class'=>'form-control']) !!}
         </div>
         <div class="form-group">
-            {!! Form::label('client_id',Lang::get('project.manager'))!!}
+            {!! Form::label('client_id',Lang::get('project.client'))!!}
             {!! Form::select('client_id',\App\User::where(['role_id'=>4])->get(['id','name'])->lists('name','id'),Request::get('client_id'),["class"=>"form-control"]) !!}
         </div>
         <div class="form-group">

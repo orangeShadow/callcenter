@@ -133,4 +133,9 @@ class Claim extends Model {
         return $query;
     }
 
+
+    public function statusT()
+    {
+        return $this->belongsTo('App\StatusClaim','status','code');
+    }
 }
