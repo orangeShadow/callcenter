@@ -35,7 +35,7 @@
             {!! Form::select('status',\App\StatusClaim::orderBy('sort','asc')->get(['code','title'])->lists('title','code'),Request::get('status'),['class'=>'form-control']) !!}
         </div>
         <div class="form-group">
-            {!! Form::submit('Создать',["class"=>"btn btn-default"]) !!}
+            {!! Form::submit($submit,["class"=>"btn btn-default"]) !!}
         </div>
     </div>
 </div>

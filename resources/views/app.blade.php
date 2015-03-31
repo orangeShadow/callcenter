@@ -40,6 +40,9 @@
                         @if(Auth::user()->checkRole(['manager','admin','client']))
                             <li><a href="/claim"><?=Lang::get('app.claim')?></a></li>
                         @endif
+                        @if(Auth::user()->checkRole(['manager','admin']))
+                            <li><a href="/user"><?=Lang::get('app.users')?></a></li>
+                        @endif
                     @endif
 				</ul>
 

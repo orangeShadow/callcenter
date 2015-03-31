@@ -4,7 +4,7 @@
 
     <div class="row">
         <div class="col-lg-12">
-            <h1>{!! Lang::get('claim.createClaim') !!}</h1>
+            <h1>{!! Lang::get('user.createUser') !!}</h1>
 
             @if($errors->any())
                 <div class="alert alert-danger">
@@ -17,8 +17,8 @@
             @endif
 
 
-            {!! Form::model($claim,['route'=>['claim.store'],'class'=>'form-horizontal']) !!}
-            @include('claim.form',["submit"=>Lang::get("claim.create")])
+            {!! Form::model($user,['route'=>['user.store'],'class'=>'form-horizontal']) !!}
+            @include('user.form',["submit"=>Lang::get("user.create")])
             {!! Form::close() !!}
         </div>
     </div>

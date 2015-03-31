@@ -1,6 +1,6 @@
 <?php namespace App\Http\Requests;
 
-use     Auth;
+use Auth;
 use App\Http\Requests\Request;
 use \Illuminate\Validation\Validator;
 
@@ -25,10 +25,17 @@ class CreateClaimRequest extends Request {
     {
         return [
             'name'     =>'required',
-            'phone'     =>'required',
+            'phone'     =>'required|regex:#^[-+()0-9]+$#',
             'text'      =>'required',
             'project_id' =>'required|regex:#[^0]#',
         ];
     }
 
+
+    public function messages()
+    {
+        return [
+            'phone.regex' => 'Неверный формат телефона',
+        ];
+    }
 }

@@ -3,7 +3,6 @@
 @section('content')
     <h1>{!!Lang::get('project.projectList')!!}</h1>
     @include('project.filter')
-
     <br>
 
     @if($projects->count())

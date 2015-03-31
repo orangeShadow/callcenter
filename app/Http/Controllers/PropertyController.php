@@ -52,10 +52,12 @@ class PropertyController extends Controller {
         return Response::json($proptyList);
 	}
 
-
+    /**
+     * Show the form for creating a new resource.
+     *
+     * @return Response
+     */
     public function create(){
-        $property = new Property();
-        return view('project.propertyform')->with(compact('property'));
     }
 
 	/**

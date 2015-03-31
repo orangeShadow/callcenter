@@ -10,5 +10,6 @@ return [
     'logout'=>'Выход',
     'claim'=>'Заявки',
     'project'=>'Проекты',
-    'authenticationError'=>'E-mail или пароль заданы не верно'
+    'authenticationError'=>'E-mail или пароль заданы не верно',
+    'users'=>'Пользователи'
 ];

@@ -17,7 +17,7 @@
             @endif
 
             {!! Form::model($claim,['method'=>'PATCH','action'=>['ClaimController@update',$claim->id],'class'=>'form-horizontal']) !!}
-            @include('claim.form')
+            @include('claim.form',["submit"=>Lang::get("claim.update")])
             {!! Form::close() !!}
         </div>
     </div>
