@@ -64,7 +64,7 @@
         <div class="row">
             <div class="col-lg-2"><b>{{$property["title"]}}</b></div>
             <div class="col-lg-5">
-                {{$property["value"]}}
+                {!! $property["value"] !!}
             </div>
         </div>
     @endforeach

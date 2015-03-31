@@ -140,6 +140,16 @@ class ClaimController extends Controller {
 
         $properties  = Property::getPropertyByModel($claim);
 
+        $propertiesValue= \App\Property::showPropertyValue($claim);
+
+        foreach($properties as $property)
+        {
+            if(!empty($propertiesValue[$property->id]["value"]))
+                $property->value = $propertiesValue[$property->id]["value"];
+            else
+                $property->value = '';
+        }
+
         return view('claim.edit',compact('claim','properties'));
 	}
 

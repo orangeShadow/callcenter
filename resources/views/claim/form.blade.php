@@ -24,9 +24,9 @@
             <div class="form-group">
                 {!! Form::label('title',$property->title) !!}
                 @if($property->type=='date')
-                    {!! Form::input('text','property['.$property->id.']',Request::get('property['.$property->id.']'),["class"=>"form-control datepicker"]) !!}
+                    {!! Form::input('text','property['.$property->id.']',Request::get('property['.$property->id.']',$property->value),["class"=>"form-control datepicker"]) !!}
                 @else
-                    {!! Form::input('text','property['.$property->id.']',Request::get('property['.$property->id.']'),["class"=>"form-control"]) !!}
+                    {!! Form::input('text','property['.$property->id.']',Request::get('property['.$property->id.']',$property->value),["class"=>"form-control"]) !!}
                 @endif
             </div>
         @endforeach
