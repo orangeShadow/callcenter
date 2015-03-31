@@ -46,17 +46,18 @@
             </div>
             <br>
 
-            {!! Form::model($claim,['method'=>'PATCH','action'=>['ClaimController@update',$claim->id],'class'=>'form-horizontal']) !!}
+            @if(Auth::user()->checkRole('client'))
+            {!! Form::model($claim,['method'=>'POST','url'=>['claim/statuschange'],'class'=>'form-horizontal']) !!}
             <div class="form-group">
+                {!! Form::input('hidden','id',$claim->id) !!}
                 {!! Form::label('status',Lang::get('claim.status'),["class"=>"col-sm-2 control-label"]) !!}
                 <div class="col-sm-2">
                 {!! Form::select('status',\App\StatusClaim::orderBy('sort','asc')->get(['code','title'])->lists('title','code'),Request::get('status'),['class'=>'form-control']) !!}
                 </div>
                 <div class="col-sm-3">{!! Form::submit(Lang::get('claim.update'),["class"=>"btn btn-default"]) !!}</div>
             </div>
-
             {!! Form::close() !!}
-
+            @endif
         </div>
     </div>
     @foreach(\App\Property::showPropertyValue($claim) as $property)

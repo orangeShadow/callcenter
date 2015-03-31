@@ -25,8 +25,19 @@ Route::get('/', ['middleware'=>'auth',function(){
     }
 }]);
 
+
 Route::resource('project','ProjectController');
+
 Route::resource('claim','ClaimController');
+Route::post('claim/statuschange',['middleware'=>'auth',function(){
+    $id  = Request::get('id');
+    $claim =App\Claim::findOrFail($id);
+    $claim->status = Request::get('status');
+    $claim->save();
+    return redirect("claim/$id");
+}]);
+
+
 
 Route::resource('user','UserController');
 
