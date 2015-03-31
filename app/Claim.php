@@ -1,7 +1,6 @@
 <?php namespace App;
 
 use Carbon\Carbon;
-use Faker\Provider\cs_CZ\DateTime;
 use Illuminate\Database\Eloquent\Model;
 
 class Claim extends Model {
@@ -67,7 +66,7 @@ class Claim extends Model {
 
         if(!empty($request['id']))
         {
-            $query->where('id',(int)$request['id']);
+            $query->where('claims.id',(int)$request['id']);
         }
 
 
@@ -75,6 +74,8 @@ class Claim extends Model {
         {
             $join->on('claims.project_id', '=', 'projects.id')->where('projects.client_id','=',\Auth::user()->id);
         });
+
+        $query->orderBy('claims.id','asc')->get(['claims.id','claims.project_id','claims.name','claims.phone','claims.created_at','claims.status']);
     }
 
     public function scopeSearch($query,$request)
