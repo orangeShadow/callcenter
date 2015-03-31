@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 
 use App\Property;
 use App\ACME\Model\PropertyTypes;
+use App\PropertyValue;
 use Auth;
 use Illuminate\Contracts\Validation\ValidationException;
 use Illuminate\Support;
@@ -175,20 +176,38 @@ class ClaimController extends Controller {
                 try{
                     if(isset($request["property"][$property->id]))
                     {
+
+
                         $attributes = [
                             'value'=>$request["property"][$property->id],
                             'property_id'=>$property->id
                         ];
+
+                        $pr = \App\PropertyValue::where('property_id',$property->id)->where('element_id',$claim->id)->first();
+
                         if($property->type=='date')
                         {
-                            $pr = new PropertyTypes\DateProperty($attributes,$property->title);
+                            if(empty($pr))
+                            {
+                                $pr = new PropertyTypes\DateProperty($attributes,$property->title);
+                            }else{
+                                $pr->value = $attributes["value"];
+                            }
                         }elseif($property->type=='number'){
-                            $pr = new PropertyTypes\NumberProperty($attributes,$property->title);
+                            if(empty($pr))
+                            {
+                                $pr = new PropertyTypes\NumberProperty($attributes,$property->title);
+                            }else{
+                                $pr->value = $attributes["value"];
+                            }
                         }
                         else{
-                            $pr = new PropertyTypes\TextProperty();
-                            $pr->value = $request["property"][$property->id];
-                            $pr->property_id = $property->id;
+                            if(empty($pr))
+                            {
+                                $pr = new PropertyTypes\TextProperty($attributes,$property->title);
+                            }else{
+                                $pr->value = $attributes["value"];
+                            }
                         }
                     }
                     $propertyList[] = $pr;
@@ -203,7 +222,6 @@ class ClaimController extends Controller {
         }
         $claim->update($request);
         foreach($propertyList as $pr){
-            $pr->element_id = $claim->id;
             $pr->save();
         }
         return redirect("claim/$id");
