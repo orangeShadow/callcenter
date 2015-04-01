@@ -18,7 +18,7 @@
 
 
             {!! Form::model($project,['route'=>['project.store'],'class'=>'form-horizontal']) !!}
-                @include('project.form',["submit"=>"project.create"])
+                @include('project.form',["submit"=>Lang::get("project.create")])
             {!! Form::close() !!}
         </div>
     </div>

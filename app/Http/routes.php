@@ -33,6 +33,7 @@ Route::post('claim/statuschange',['middleware'=>'auth',function(){
     $id  = Request::get('id');
     $claim =App\Claim::findOrFail($id);
     $claim->status = Request::get('status');
+    $claim->note = Request::get('note');
     $claim->save();
     return redirect("claim/$id");
 }]);

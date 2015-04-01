@@ -44,10 +44,25 @@
                     {{ !empty($claim->backcall_at)?$claim->backcall_at->format("d.m.Y"):''}}
                 </div>
             </div>
+            @if(!empty($claim->note))
+            <div class="row">
+                <div class="col-lg-2"><b>{{ Lang::get('claim.note') }}</b></div>
+                <div class="col-lg-5">
+                    {{$claim->note}}
+                </div>
+            </div>
+            @endif
             <br>
-
-
             {!! Form::model($claim,['method'=>'POST','url'=>['claim/statuschange'],'class'=>'form-horizontal']) !!}
+            @if(Auth::user()->checkRole(["client"]))
+                <div class="form-group">
+                    {!! Form::label('note',Lang::get('claim.note'),["class"=>"col-sm-2 control-label"]) !!}
+                    <div class="col-lg-5">
+                    {!! Form::textarea('note',$claim->note,["class"=>'form-control']) !!}
+                    </div>
+                </div>
+            @endif
+
             <div class="form-group">
                 {!! Form::input('hidden','id',$claim->id) !!}
                 {!! Form::label('status',Lang::get('claim.status'),["class"=>"col-sm-2 control-label"]) !!}
