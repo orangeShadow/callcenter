@@ -104,14 +104,14 @@ class UserTableSeeder extends Seeder
 
         App\User::create([
             'email' => 'alexeev.sker@gmail.com',
-            'password'=>bcrypt('password'),
+            'password'=>'password',
             'name'=>'Антон Алексеев',
             'role_id'=>1
         ]);
 
         App\User::create([
             'email' => 'operator@goodline.ru',
-            'password'=>bcrypt('operator'),
+            'password'=>'operator',
             'name'=>'Тест Оператор',
             'phone'=>'88800',
             'role_id'=>2
@@ -120,7 +120,7 @@ class UserTableSeeder extends Seeder
 
         App\User::create([
             'email' => 'manager@goodline.ru',
-            'password'=>bcrypt('manager'),
+            'password'=>'manager',
             'name'=>'Тест Менеджер',
             'phone'=>'89003332211',
             'role_id'=>3
@@ -128,7 +128,7 @@ class UserTableSeeder extends Seeder
 
         App\User::create([
             'email' => 'client@goodline.ru',
-            'password'=>bcrypt('client'),
+            'password'=>'client',
             'name'=>'Тест Клиент',
             'phone'=>'89003332200',
             'role_id'=>4
@@ -136,7 +136,7 @@ class UserTableSeeder extends Seeder
 
         App\User::create([
             'email' => 'client2@goodline.ru',
-            'password'=>bcrypt('client2'),
+            'password'=>'client2',
             'name'=>'Тест Клиент2',
             'phone'=>'89003332200',
             'role_id'=>4
