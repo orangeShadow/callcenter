@@ -49,6 +49,7 @@
                 </table>
             </div>
         </div>
+        {!! $claims->render() !!}
     @else
         <div class="row">
             @if (Auth::user()->checkRole(['manager','admin']))

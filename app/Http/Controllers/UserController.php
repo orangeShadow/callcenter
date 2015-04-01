@@ -22,7 +22,7 @@ class UserController extends Controller {
 	 */
 	public function index()
 	{
-        $users = User::all();
+        $users = User::paginate(50);
         return view('user.index')->with(compact('users'));
 	}
 

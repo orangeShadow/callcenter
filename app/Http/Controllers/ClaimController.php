@@ -4,6 +4,8 @@ use App\Claim;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 
+use App\Events\ClaimCreate;
+
 use App\Property;
 use App\ACME\Model\PropertyTypes;
 use App\PropertyValue;
@@ -31,9 +33,9 @@ class ClaimController extends Controller {
 	{
         $fluid = true;
         if(Auth::user()->checkRole('client')){
-            $claims = Claim::client(Request::all())->get();
+            $claims = Claim::client(Request::all())->paginate(50);
         }else{
-            $claims = Claim::search(Request::all())->get();
+            $claims = Claim::search(Request::all())->paginate(50);
         }
 
 		return view('claim.index',compact('claims','fluid'));
@@ -110,6 +112,8 @@ class ClaimController extends Controller {
             $pr->element_id = $claim->id;
             $pr->save();
         }
+
+        \Event::fire(new ClaimCreate($claim));
         return redirect('claim');
 	}
 
