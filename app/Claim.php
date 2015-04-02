@@ -75,14 +75,13 @@ class Claim extends Model {
             $join->on('claims.project_id', '=', 'projects.id')->where('projects.client_id','=',\Auth::user()->id);
         });
 
-        $query->orderBy('claims.id','asc')->get(['claims.id','claims.project_id','claims.name','claims.phone','claims.created_at','claims.status']);
+        $query->orderBy('claims.id','asc');
     }
 
     public function scopeSearch($query,$request)
     {
         if(!empty($request['created_at_from']) && !empty($request['created_at_to']))
         {
-
             $dtFrom = new \DateTime($request['created_at_from']);
             $dtTo = new \DateTime($request['created_at_to']);
             $query->whereBetween('created_at',[$dtFrom->format('Y-m-d 00:00:00'),$dtTo->format('Y-m-d 23:59:59')]);

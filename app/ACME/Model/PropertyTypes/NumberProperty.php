@@ -19,7 +19,7 @@ class NumberProperty extends PropertyValue{
 
     public function setValueAttribute($value)
     {
-        $v = Validator::make(['value'=>$value],['value'=>'numeric|required'],['value.numeric'=>"Поле {$this->propertyTitle} должно быть цисловым",'value.required'=>"Поле {$this->propertyTitle} обязательно для заполнения"]);
+        $v = Validator::make(['value'=>$value],['value'=>'numeric|required'],['value.numeric'=>"Поле {$this->propertyTitle} должно быть числовым",'value.required'=>"Поле {$this->propertyTitle} обязательно для заполнения"]);
         if($v->fails())
         {
             throw new ValidationException($v);

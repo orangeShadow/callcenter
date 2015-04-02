@@ -1,9 +1,12 @@
 <div class="row">
     <div class="col-lg-12">
+        {{--
         <div class="form-group">
             {!! Form::label('project_id',Lang::get('claim.project'))!!}
             {!! Form::select('project_id',[0=>"-"]+\App\Project::where("status","<>","Z")->get(["id","title"])->lists('title','id'),Request::get('project_id'),['class'=>'form-control']) !!}
         </div>
+        --}}
+        {!! Form::hidden('project_id',Request::get('project_id')) !!}
         <div class="form-group">
             {!! Form::label('name',Lang::get('claim.name')) !!}
             {!!Form::text('name',$claim->name,["class"=>"form-control"])!!}
@@ -30,10 +33,14 @@
                 @endif
             </div>
         @endforeach
-        <div class="form-group">
-            {!! Form::label('status',Lang::get('claim.status')) !!}
-            {!! Form::select('status',\App\StatusClaim::orderBy('sort','asc')->get(['code','title'])->lists('title','code'),Request::get('status'),['class'=>'form-control']) !!}
-        </div>
+        @if(isset($createStatus))
+            {!! Form::hidden('status','N') !!}
+        @else
+            <div class="form-group">
+                {!! Form::label('status',Lang::get('claim.status')) !!}
+                {!! Form::select('status',\App\StatusClaim::orderBy('sort','asc')->get(['code','title'])->lists('title','code'),Request::get('status'),['class'=>'form-control']) !!}
+            </div>
+        @endif
         <div class="form-group">
             {!! Form::submit($submit,["class"=>"btn btn-default"]) !!}
         </div>

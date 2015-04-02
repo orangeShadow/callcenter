@@ -12,4 +12,13 @@ class TextProperty extends PropertyValue{
         parent::__construct($attributes);
     }
 
+    public function setValueAttribute($value)
+    {
+        $v = Validator::make(['value'=>$value],['value'=>'required'],['value.required'=>"Поле {$this->propertyTitle} обязательно для заполнения"]);
+        if($v->fails())
+        {
+            throw new ValidationException($v);
+        }
+        $this->attributes['value'] = $value;
+    }
 }

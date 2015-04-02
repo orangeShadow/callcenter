@@ -18,7 +18,7 @@
 
 
             {!! Form::model($claim,['route'=>['claim.store'],'class'=>'form-horizontal']) !!}
-            @include('claim.form',["submit"=>Lang::get("claim.create")])
+            @include('claim.form',["submit"=>Lang::get("claim.create"),'createStatus'=>true])
             {!! Form::close() !!}
         </div>
     </div>

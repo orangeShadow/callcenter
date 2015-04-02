@@ -95,6 +95,8 @@ class UserController extends Controller {
 	 */
 	public function destroy($id)
 	{
+        //TODO SET NULL OR CHANGE PROJECT AND CLAIM related user
+
 		User::destroy($id);
         return redirect (url('user'));
 	}

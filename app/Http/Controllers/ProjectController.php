@@ -111,6 +111,9 @@ class ProjectController extends Controller {
 	 */
 	public function destroy($id)
 	{
+        //TODO: Delete Properties related by Project
+
+
         $project =Project::findOrFail($id);
         $project->delete();
         return redirect('/project');

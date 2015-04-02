@@ -54,8 +54,10 @@ class ClaimController extends Controller {
         {
             $claim->project_id = (int)Request::get('project_id');
             $properties  = Property::getPropertyByModel($claim);
-        }
 
+        }else{
+            abort(404);
+        }
         return view('claim.create',compact('claim','properties'));
 	}
 
@@ -114,7 +116,7 @@ class ClaimController extends Controller {
         }
 
         \Event::fire(new ClaimCreate($claim));
-        return redirect('claim');
+        return redirect('project');
 	}
 
 	/**
@@ -167,53 +169,57 @@ class ClaimController extends Controller {
 	public function update($id,Requests\CreateClaimRequest $request)
 	{
         $request = $request->all();
+
         $claim =Claim::findOrFail($id);
         $request['update_by'] = Auth::user()->id;
         $propertyList = array();
         $errors =new Support\MessageBag();
-        if(!empty($request["property"]))
+        if(isset($request["property"]))
         {
             $properties  = Property::getPropertyByModel($claim);
 
             foreach($properties as $property)
             {
                 try{
-                    if(isset($request["property"][$property->id]))
+                    //if(isset($request["property"][$property->id]))
+                    //{
+                    $attributes = [
+                        'value'=>$request["property"][$property->id],
+                        'property_id'=>$property->id,
+                        'element_id'=>$claim->id
+                    ];
+
+                    if($property->type=='date')
                     {
-
-
-                        $attributes = [
-                            'value'=>$request["property"][$property->id],
-                            'property_id'=>$property->id
-                        ];
-
-                        $pr = \App\PropertyValue::where('property_id',$property->id)->where('element_id',$claim->id)->first();
-
-                        if($property->type=='date')
+                        $pr = PropertyTypes\DateProperty::where('property_id',$property->id)->where('element_id',$claim->id)->first();
+                        $pr->setPropertyTitle($property->title);
+                        if(empty($pr))
                         {
-                            if(empty($pr))
-                            {
-                                $pr = new PropertyTypes\DateProperty($attributes,$property->title);
-                            }else{
-                                $pr->value = $attributes["value"];
-                            }
-                        }elseif($property->type=='number'){
-                            if(empty($pr))
-                            {
-                                $pr = new PropertyTypes\NumberProperty($attributes,$property->title);
-                            }else{
-                                $pr->value = $attributes["value"];
-                            }
+                            $pr = new PropertyTypes\DateProperty($attributes,$property->title);
+                        }else{
+                            $pr->value = $attributes["value"];
                         }
-                        else{
-                            if(empty($pr))
-                            {
-                                $pr = new PropertyTypes\TextProperty($attributes,$property->title);
-                            }else{
-                                $pr->value = $attributes["value"];
-                            }
+                    }elseif($property->type=='number'){
+                        $pr = PropertyTypes\NumberProperty::where('property_id',$property->id)->where('element_id',$claim->id)->first();
+                        $pr->setPropertyTitle($property->title);
+                        if(empty($pr))
+                        {
+                            $pr = new PropertyTypes\NumberProperty($attributes,$property->title);
+                        }else{
+                            $pr->value = $attributes["value"];
                         }
                     }
+                    else{
+                        $pr = PropertyTypes\TextProperty::where('property_id',$property->id)->where('element_id',$claim->id)->first();
+                        $pr->setPropertyTitle($property->title);
+                        if(empty($pr))
+                        {
+                            $pr = new PropertyTypes\TextProperty($attributes,$property->title);
+                        }else{
+                            $pr->value = $attributes["value"];
+                        }
+                    }
+                    //}
                     $propertyList[] = $pr;
                 }catch(ValidationException $e){
                     $errors->merge($e->errors());

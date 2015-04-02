@@ -17,6 +17,11 @@ class PropertyValue extends Model
         return $this->propertyTitle;
     }
 
+    public function setPropertyTitle($title)
+    {
+        $this->propertyTitle = $title;
+    }
+
     public function scopePropertiesClaim($query,$model)
     {
         $function = new \ReflectionClass($model);

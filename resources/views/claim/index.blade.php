@@ -13,16 +13,18 @@
                     <thead>
                     <tr>
                         <th>№</th>
-                        <th>Проект</th>
-                        <th>Имя клиента</th>
-                        <th>Телефон</th>
-                        <th>Статус обращения</th>
-                        <th>Дата создания</th>
+                        <th>{{Lang::get('claim.project')}}</th>
+                        <th>{{Lang::get('claim.client')}}</th>
+                        <th>{{Lang::get('claim.phone')}}</th>
+                        <th>{{Lang::get('claim.status')}}</th>
+                        <th>{{Lang::get('claim.created_at')}}</th>
                         <th style="width:1px;">
+                         {{--
                             @if (Auth::user()->checkRole(['manager','admin']))
                                 <a href="{!! url('/claim/create') !!}" style="display:block" class="btn btn-success btn-sm"> <i class="glyphicon glyphicon-plus"></i></a>
                             @endif
                         </th>
+                        --}}
                     </tr>
                     </thead>
                     <tbody>
@@ -51,13 +53,6 @@
         </div>
         {!! $claims->render() !!}
     @else
-        <div class="row">
-            @if (Auth::user()->checkRole(['manager','admin']))
-            <div class="col-lg-2">
-                <a href="{!! url('/claim/create') !!}"  class="btn btn-success"> <i class="glyphicon glyphicon-plus"></i> {!! Lang::get("claim.create") !!}</a>
-            </div>
-            @endif
-        </div>
         <div class="row">
             <div class="col-lg-12">
                 <div class="alert alert-warning">

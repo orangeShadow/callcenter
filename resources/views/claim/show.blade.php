@@ -4,19 +4,40 @@
     <h1>Заявка №{{ $claim->id }}</h1>
     <div class="row">
         <div class="col-lg-12">
-            <div class="row">
-                <div class="col-lg-2"><b>{{ Lang::get('claim.operator') }}</b></div>
-                <div class="col-lg-5">
-                    {{ $claim->operator()->first()->name }}
+            @if(!Auth::user()->checkRole(['client']))
+                <div class="row">
+                    <div class="col-lg-2"><b>{{ Lang::get('claim.operator') }}</b></div>
+                    <div class="col-lg-5">
+                        {{ $claim->operator()->first()->name }}
+                    </div>
                 </div>
-            </div>
-            <br>
+                <br>
+
+                @if($claim->updateby)
+                    <div class="row">
+                        <div class="col-lg-2"><b>{{ Lang::get('claim.update_by') }}</b></div>
+                        <div class="col-lg-5">
+                            {{ $claim->updateby->name }}
+                        </div>
+                    </div>
+                    <br>
+                @endif
+
+                <div class="row">
+                    <div class="col-lg-2"><b>{{ Lang::get('claim.update_at') }}</b></div>
+                    <div class="col-lg-5">
+                        {{ $claim->updated_at->format('d.m.Y H:i') }}
+                    </div>
+                </div>
+                <br>
+            @endif
             <div class="row">
                 <div class="col-lg-2"><b>{{ Lang::get('claim.project') }}</b></div>
                 <div class="col-lg-5">
-                    {{ $claim->project()->first()->title }},
+                    {{ $claim->project()->first()->title }}
                 </div>
             </div>
+            <br>
             <div class="row">
                 <div class="col-lg-2"><b>{{ Lang::get('claim.name') }}</b></div>
                 <div class="col-lg-5">
@@ -52,6 +73,7 @@
                 </div>
             </div>
             @endif
+
             <br>
             {!! Form::model($claim,['method'=>'POST','url'=>['claim/statuschange'],'class'=>'form-horizontal']) !!}
             @if(Auth::user()->checkRole(["client"]))
