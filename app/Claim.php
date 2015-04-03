@@ -69,6 +69,15 @@ class Claim extends Model {
             $query->where('claims.id',(int)$request['id']);
         }
 
+        if(!empty($request['name']))
+        {
+            $query->where('name','like',"%".$request['name']."%");
+        }
+
+        if(!empty($request['phone']))
+        {
+            $query->where('phone','like',"%".$request['phone']."%");
+        }
 
         $query->join('projects', function($join)
         {

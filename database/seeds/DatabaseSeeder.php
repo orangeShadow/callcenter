@@ -160,7 +160,7 @@ class StatusClaimTableSeeder extends Seeder
 
         App\StatusClaim::create([
             'code' =>'P',
-            'title'=>'Обработанная',
+            'title'=>'Принята',
             'sort'=>'2',
         ]);
 

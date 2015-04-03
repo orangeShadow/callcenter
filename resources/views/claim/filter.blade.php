@@ -17,19 +17,19 @@
                         {!! Form::select('status',[0=>'Укажите статус']+\App\StatusClaim::orderBy('sort','asc')->get(['code','title'])->lists('title','code'),Request::get('status'),['class'=>'form-control']) !!}
                     </div>
                 </div>
+                <div class="@if(\Auth::user()->checkRole(['manager','admin'])) col-lg-3 @else col-lg-6 @endif">
+                    <div class="form-group">
+                        {!! Form::text('name',Request::get('name'),['class'=>'form-control','placeholder'=>Lang::get('claim.name')]) !!}
+                        <br>
+                        {!! Form::text('phone',Request::get('phone'),['class'=>'form-control','placeholder'=>Lang::get('claim.phone')]) !!}
+                    </div>
+                </div>
                 @if(\Auth::user()->checkRole(['manager','admin']))
                 <div class="@if(\Auth::user()->checkRole(['manager','admin'])) col-lg-3 @else col-lg-6 @endif">
                     <div class="form-group">
                         {!! Form::select('operator_id',[0=>'Кем создана']+\App\User::whereIn('role_id',[2,3])->orderBy('name','asc')->get(['id','name'])->lists('name','id'),Request::get('operator_id'),['class'=>'form-control']) !!}
                         <br>
                         {!! Form::select('project_id',[0=>'Выберите проект']+\App\Project::orderBy('title','asc')->get(['id','title'])->lists('title','id'),Request::get('project_id'),['class'=>'form-control']) !!}
-                    </div>
-                </div>
-                <div class="@if(\Auth::user()->checkRole(['manager','admin'])) col-lg-3 @else col-lg-6 @endif">
-                    <div class="form-group">
-                        {!! Form::text('name',Request::get('name'),['class'=>'form-control','placeholder'=>Lang::get('claim.name')]) !!}
-                        <br>
-                        {!! Form::text('phone',Request::get('phone'),['class'=>'form-control','placeholder'=>Lang::get('claim.phone')]) !!}
                     </div>
                 </div>
                 @endif
