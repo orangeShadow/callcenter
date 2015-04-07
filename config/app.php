@@ -148,6 +148,7 @@ return [
          * Vendor service Provider
          */
         'Barryvdh\Debugbar\ServiceProvider',
+        'Laracasts\Flash\FlashServiceProvider',
 	],
 
 	/*
@@ -198,6 +199,7 @@ return [
         'Form'      => 'Illuminate\Html\FormFacade',
         'Html'      => 'Illuminate\Html\HtmlFacade',
         'Debugbar' => 'Barryvdh\Debugbar\Facade',
+        'Flash'    => 'Laracasts\Flash\Flash'
 	],
 
 ];

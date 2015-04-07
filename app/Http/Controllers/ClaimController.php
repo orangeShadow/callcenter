@@ -109,12 +109,15 @@ class ClaimController extends Controller {
         {
             return \Redirect::back()->withInput($request)->withErrors($errors);
         }
+
+
+
         $claim->save($request);
         foreach($propertyList as $pr){
             $pr->element_id = $claim->id;
             $pr->save();
         }
-
+        flash()->success('Обращение Создано, № '.$claim->id);
         \Event::fire(new ClaimCreate($claim));
         return redirect('project');
 	}
