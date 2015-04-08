@@ -19,11 +19,7 @@ class Claim extends Model {
 
     //protected $dates = [];
 
-    public function setBackcallAtAttribute($date)
-    {
-        if(!empty($date))
-            $this->attributes['backcall_at'] = Carbon::parse($date);
-    }
+
 
     public function project()
     {
