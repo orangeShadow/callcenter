@@ -17,7 +17,7 @@ class Claim extends Model {
         'status'
     ];
 
-    protected $dates = ['backcall_at'];
+    //protected $dates = [];
 
     public function setBackcallAtAttribute($date)
     {

@@ -62,7 +62,7 @@
             <div class="row">
                 <div class="col-lg-2"><b>{{ Lang::get('claim.backcall_at') }}</b></div>
                 <div class="col-lg-5">
-                    {{ !empty($claim->backcall_at)?$claim->backcall_at->format("d.m.Y"):''}}
+                    {{ $claim->backcall_at }}
                 </div>
             </div>
             @if(!empty($claim->note))

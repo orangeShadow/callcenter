@@ -21,7 +21,7 @@
         </div>
         <div class="form-group">
             {!! Form::label('text',Lang::get('claim.backcall_at')) !!}
-            {!! Form::text('backcall_at',$claim->backcall_at,["class"=>"form-control datepicker"]) !!}
+            {!! Form::text('backcall_at',$claim->backcall_at,["class"=>"form-control"]) !!}
         </div>
         @foreach($properties as $property)
             <div class="form-group">

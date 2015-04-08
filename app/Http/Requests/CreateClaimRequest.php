@@ -28,7 +28,7 @@ class CreateClaimRequest extends Request {
             'phone'     =>'required|regex:#^[-+()0-9]+$#',
             'text'      =>'required',
             'project_id' =>'required|regex:#[^0]#',
-            'backcall_at'=>'date'
+            'backcall_at'=>'required'
         ];
     }
 
@@ -37,7 +37,7 @@ class CreateClaimRequest extends Request {
     {
         return [
             'phone.regex' => 'Неверный формат телефона',
-            'backcall_at.date'=>'Дата обратного звонка должно быть датой'
+            'backcall_at.required'=>'Дата обратного звонка должно быть заполнено',
         ];
     }
 }
