@@ -54,7 +54,7 @@ return [
 	|
 	*/
 
-	'from' => ['address' => null, 'name' => null],
+	'from' => ['address' => "callcenter1@roumingu.net", 'name' => "CallCenter№1"],
 
 	/*
 	|--------------------------------------------------------------------------
