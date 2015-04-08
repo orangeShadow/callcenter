@@ -72,12 +72,12 @@ class Claim extends Model {
 
         if(!empty($request['name']))
         {
-            $query->where('name','like',"%".$request['name']."%");
+            $query->where('claims.name','like',"%".$request['name']."%");
         }
 
         if(!empty($request['phone']))
         {
-            $query->where('phone','like',"%".$request['phone']."%");
+            $query->where('claims.phone','like',"%".$request['phone']."%");
         }
 
         $query->join('projects', function($join)
@@ -85,7 +85,7 @@ class Claim extends Model {
             $join->on('claims.project_id', '=', 'projects.id')->where('projects.client_id','=',\Auth::user()->id);
         });
 
-        $query->orderBy('claims.id','asc');
+        $query->orderBy('claims.id','asc')->get(["claims.*"]);
     }
 
     public function scopeSearch($query,$request)
