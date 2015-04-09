@@ -3,6 +3,8 @@
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 
+use Illuminate\Database\Eloquent\ModelNotFoundException;
+
 use Auth;
 use \App\Project;
 use Illuminate\Support\Facades\View;
@@ -72,7 +74,15 @@ class ProjectController extends Controller {
 	 */
 	public function show($id)
 	{
-		$project=Project::findOrFail($id);
+        try
+        {
+            $project=Project::findOrFail($id);
+        }
+        catch(ModelNotFoundException $e)
+        {
+            abort(404);
+        }
+
         return view('project.show',compact('project'));
 	}
 
@@ -84,7 +94,14 @@ class ProjectController extends Controller {
 	 */
 	public function edit($id)
 	{
-        $project=Project::findOrFail($id);
+        try
+        {
+            $project=Project::findOrFail($id);
+        }
+        catch(ModelNotFoundException $e)
+        {
+            abort(404);
+        }
         return view('project.edit',compact('project'));
 	}
 
@@ -111,10 +128,26 @@ class ProjectController extends Controller {
 	 */
 	public function destroy($id)
 	{
-        //TODO: Delete Properties related by Project
+        try
+        {
+            $project=Project::findOrFail($id);
+        }
+        catch(ModelNotFoundException $e)
+        {
+            abort(404);
+        }
 
+        $props = \App\Property::where('model_initiator','=','Project')->where('link_id','=',$id)->get();
+        if(!$props->isEmpty())
+        {
+            foreach($props as $prop)
+            {
+                \App\PropertyValue::where('property_id',"=",$prop->id)->delete();
+            }
+        }
 
-        $project =Project::findOrFail($id);
+        \App\Claim::where('project_id','=',$id)->delete();
+
         $project->delete();
         return redirect('/project');
 	}

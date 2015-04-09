@@ -9,6 +9,10 @@
             {!! Form::text('email',null,["class"=>"form-control"]) !!}
         </div>
         <div class="form-group">
+            {!! Form::label('text',Lang::get('user.send_email')) !!}
+            {!! Form::text('send_email',null,["class"=>"form-control"]) !!}
+        </div>
+        <div class="form-group">
             {!!Form::label('phone',Lang::get('user.phone'))!!}
             {!!Form::text('phone',null,["class"=>"form-control"])!!}
         </div>

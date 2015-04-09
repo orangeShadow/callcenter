@@ -34,6 +34,11 @@ class UpdateClaimBackcallToText extends Migration {
         {
             $table->dropColumn("backcall_at");
         });
+
+        Schema::table('claims', function($table)
+        {
+            $table->dateTime('backcall_at')->nullable();
+        });
 	}
 
 }

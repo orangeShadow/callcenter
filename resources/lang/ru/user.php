@@ -13,4 +13,6 @@ return [
     'role'=>'Роль',
     'password'=>'Пароль',
     'confirm_password'=>'Подтверждение пароля',
+    'send_email'=>'E-mail для оповещения',
+    'create_at'=>'Дата регистрации'
 ];

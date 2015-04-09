@@ -4,6 +4,8 @@ use App\Claim;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 
+use Illuminate\Database\Eloquent\ModelNotFoundException;
+
 use App\Events\ClaimCreate;
 
 use App\Property;
@@ -130,8 +132,15 @@ class ClaimController extends Controller {
 	 */
 	public function show($id)
 	{
+        try
+        {
+            $claim  = Claim::findOrFail($id);
+        }
+        catch (ModelNotFoundException $e)
+        {
+            abort(404);
+        }
 
-		$claim  = Claim::findOrFail($id);
 
         if(Auth::user()->checkRole('client') && Auth::user()->id != $claim->project->client_id) abort(404);
 
@@ -146,7 +155,14 @@ class ClaimController extends Controller {
 	 */
 	public function edit($id)
 	{
-        $claim = Claim::findOrFail($id);
+        try
+        {
+            $claim  = Claim::findOrFail($id);
+        }
+        catch (ModelNotFoundException $e)
+        {
+            abort(404);
+        }
 
         $properties  = Property::getPropertyByModel($claim);
 
@@ -195,7 +211,7 @@ class ClaimController extends Controller {
                     if($property->type=='date')
                     {
                         $pr = PropertyTypes\DateProperty::where('property_id',$property->id)->where('element_id',$claim->id)->first();
-                        $pr->setPropertyTitle($property->title);
+                        //$pr->setPropertyTitle($property->title);
                         if(empty($pr))
                         {
                             $pr = new PropertyTypes\DateProperty($attributes,$property->title);
@@ -204,7 +220,7 @@ class ClaimController extends Controller {
                         }
                     }elseif($property->type=='number'){
                         $pr = PropertyTypes\NumberProperty::where('property_id',$property->id)->where('element_id',$claim->id)->first();
-                        $pr->setPropertyTitle($property->title);
+                        //$pr->setPropertyTitle($property->title);
                         if(empty($pr))
                         {
                             $pr = new PropertyTypes\NumberProperty($attributes,$property->title);
@@ -214,7 +230,7 @@ class ClaimController extends Controller {
                     }
                     else{
                         $pr = PropertyTypes\TextProperty::where('property_id',$property->id)->where('element_id',$claim->id)->first();
-                        $pr->setPropertyTitle($property->title);
+                        //$pr->setPropertyTitle($property->title);
                         if(empty($pr))
                         {
                             $pr = new PropertyTypes\TextProperty($attributes,$property->title);

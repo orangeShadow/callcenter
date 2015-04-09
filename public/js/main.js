@@ -2,6 +2,18 @@ $(function(){
     $(function() {
         $( ".datepicker" ).datepicker($.datepicker.regional[ "ru" ]);
     });
+
+    $('button.btn-danger').click(function(e){
+        e.preventDefault();
+        if(confirm('Вы уверены что хотите удалить этот объект?'))
+        {
+            $(this).parents('form').submit();
+        }
+        else
+        {
+            return false;
+        }
+    })
 });
 
 var app = angular.module('project-property', [], function($interpolateProvider) {

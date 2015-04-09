@@ -28,7 +28,12 @@ class SendMailToClient {
         $claim = $event->claim;
         \Mail::send('emails.claimcreate',compact('claim'), function($message) use ($event)
         {
-            $message->to($event->claim->project->client->email, 'Callcenter №1')->subject('Круглосуточный call-центр №1');
+            $emails = [];
+            $emails[] = $event->claim->project->client->email;
+            if(!empty($event->claim->project->client->send_email)){
+                $emails[] = $event->claim->project->client->send_email;
+            }
+            $message->to($emails, 'Callcenter №1')->subject('Круглосуточный call-центр №1');
         });
 	}
 
