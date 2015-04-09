@@ -24,7 +24,7 @@ class UserUpdateRequest extends Request {
 		return [
 			'name'=>'required',
             'phone'     =>'required|regex:#^[-+()0-9]+$#',
-            'email'     =>'email|required|unique:users',
+            'email'     =>'email|required|unique:users,id,'.$this->get('id'),
             'send_email'=>'email',
             'role'      =>'numeric|regex:#[^1]#',
             'password'  =>'min:6|confirmed',
