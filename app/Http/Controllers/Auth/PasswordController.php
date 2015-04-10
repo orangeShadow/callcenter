@@ -4,6 +4,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Contracts\Auth\Guard;
 use Illuminate\Contracts\Auth\PasswordBroker;
 use Illuminate\Foundation\Auth\ResetsPasswords;
+use Illuminate\Http\Request;
 
 class PasswordController extends Controller {
 
@@ -18,7 +19,9 @@ class PasswordController extends Controller {
 	|
 	*/
 
-	use ResetsPasswords;
+	use ResetsPasswords{
+        postReset as pR;
+    }
 
 	/**
 	 * Create a new password controller instance.
@@ -35,4 +38,43 @@ class PasswordController extends Controller {
 		$this->middleware('guest');
 	}
 
+
+    /**
+     * Reset the given user's password.
+     *
+     * @param  Request  $request
+     * @return Response
+     */
+    public function postReset(Request $request)
+    {
+        $this->validate($request, [
+            'token' => 'required',
+            'email' => 'required|email',
+            'password' => 'required|confirmed',
+        ]);
+
+        $credentials = $request->only(
+            'email', 'password', 'password_confirmation', 'token'
+        );
+
+        $response = $this->passwords->reset($credentials, function($user, $password)
+        {
+            $user->password = $password;
+
+            $user->save();
+
+            $this->auth->login($user);
+        });
+
+        switch ($response)
+        {
+            case PasswordBroker::PASSWORD_RESET:
+                return redirect($this->redirectPath());
+
+            default:
+                return redirect()->back()
+                    ->withInput($request->only('email'))
+                    ->withErrors(['email' => trans($response)]);
+        }
+    }
 }

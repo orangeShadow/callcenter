@@ -17,7 +17,11 @@ Route::controllers([
 ]);
 
 
-Route::get('/', function(Request $request){
+Route::get('/home',function(){
+   return redirect('/');
+});
+
+Route::get('/',function(Request $request){
     if (Auth::guest())
     {
         if ($request::ajax())
