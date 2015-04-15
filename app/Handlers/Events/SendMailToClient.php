@@ -26,7 +26,10 @@ class SendMailToClient {
 	public function handle(ClaimCreate $event)
 	{
         $claim = $event->claim;
-        \Mail::send('emails.claimcreate',compact('claim'), function($message) use ($event)
+        $properties = \App\Property::showPropertyValue($claim);
+
+
+        \Mail::send('emails.claimcreate',compact('claim','properties'), function($message) use ($event)
         {
             $emails = [];
             $emails[] = $event->claim->project->client->email;
