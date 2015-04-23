@@ -35,7 +35,10 @@ class SendMailToClient {
             $emails[] = $event->claim->project->client->email;
             if(!empty($event->claim->project->client->send_email)){
                 $emailsSplit  = explode(",",$event->claim->project->client->send_email);
-                $emails = $emails+$emailsSplit;
+                foreach($emailsSplit as $item)
+                {
+                    $emails[] = trim($item);
+                }
             }
             $message->to($emails, 'Callcenter №1')->subject('Круглосуточный call-центр №1');
         });
