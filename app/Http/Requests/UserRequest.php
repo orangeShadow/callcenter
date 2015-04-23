@@ -25,7 +25,7 @@ class UserRequest extends Request {
 			'name'=>'required',
             'phone'     =>'required|regex:#^[-+()0-9]+$#',
             'email'     =>'email|required|unique:users',
-            'send_email'=>'email',
+            //'send_email'=>'email',
             'role'      =>'numeric|regex:#[^1]#',
             'password'  =>'required|min:6|confirmed',
 		];
