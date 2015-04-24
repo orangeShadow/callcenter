@@ -79,7 +79,9 @@ Route::get('externform',function(){
 
     return "(function(){
             $(document).ready(function(){
-                $('body').append('<div style=\"position:absolute;width:500px;height:500px; top:50%; left:50%; margin-left: -250px;margin-top:-250px;background-color: orangered;\"><h1>Hallo</h1></div>');
+                window.setTimeout(function(){
+                    $('body').append('<div style=\"position:absolute;width:500px;height:500px; top:50%; left:50%; margin-left: -250px;margin-top:-250px;background-color: orangered;\"><h1>Hallo</h1></div>');
+                , 3000)
             });
     })()";
 });
