@@ -76,7 +76,15 @@ Route::resource('property','PropertyController');
  * Тестовая форма
  **/
 Route::get('externform',function(){
-    return '(function(){alert("Hello")})()';
+
+    return "(function(){
+        if(!window.jQuery){
+            document.write('<script type=\"text/javascript\" src=\"https://code.jquery.com/jquery-1.11.2.min.js\"></script>');
+            $(document).ready(function(){
+                $(body).appEnd('<h1>Hallo</h1');
+            });
+        }
+    })()";
 });
 
 /**
