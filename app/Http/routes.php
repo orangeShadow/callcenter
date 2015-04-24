@@ -78,11 +78,9 @@ Route::resource('property','PropertyController');
 Route::get('externform',function(){
 
     return "(function(){
-        if(!window.jQuery){
             $(document).ready(function(){
                 $(body).appEnd('<h1>Hallo</h1>');
             });
-        }
     })()";
 });
 
