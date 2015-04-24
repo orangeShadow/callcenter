@@ -68,10 +68,42 @@ Route::post('claim/statuschange',function(Request $request){
 });
 
 
-
 Route::resource('user','UserController');
 
 Route::resource('property','PropertyController');
 
+/**
+ * Тестовая форма
+ **/
+Route::get('externform',function(){
+    return '(function(){alert("Hello")})()';
+});
 
+/**
+ * Тестоввый звонок
+ **/
+Route::get('externcall',function(){
+    $errnum = null;
+    $errdesc = null;
+    $callerId = "79094342294";
+    $oSocket = fsockopen(env('Asterisk_host'), env('Asterisk_port'), $errnum, $errdesc,50) or die("Connection to host failed");
 
+    fputs($oSocket, "Action: login\r\n");
+    fputs($oSocket, "Username: ".env('Asterisk_user')."\r\n");
+    fputs($oSocket, "Secret: ".env('Asterisk_secret')."\r\n");
+    fputs($oSocket, "Events: off\r\n");
+    fputs($oSocket, "Action: originate\r\n");
+    fputs($oSocket, "Channel: ".env('Asterisk_channel')."\r\n");
+    fputs($oSocket, "Timeout: ".env('Asterisk_timeout')."\r\n");
+    fputs($oSocket, "CallerId: ".$callerId."\r\n");
+    fputs($oSocket, "Exten: ".env('Asterisk_exten')."\r\n");
+    fputs($oSocket, "Context: ".env('Asterisk_context')."\r\n");
+    fputs($oSocket, "Priority: ".env('Asterisk_priority')."\r\n\r\n");
+    fputs($oSocket, "Action: Logon\r\n\r\n");
+    sleep (1);
+    fclose($oSocket);
+
+    xdebug_var_dump($errnum);
+    xdebug_var_dump($errdesc);
+    return '';
+});
