@@ -112,8 +112,8 @@ Route::get('externcall',function(){
     sleep (1);
     fclose($oSocket);
 
-    xdebug_var_dump($errnum);
-    xdebug_var_dump($errdesc);
+    //xdebug_var_dump($errnum);
+    //xdebug_var_dump($errdesc);
     return '';
 
 });
