@@ -77,10 +77,78 @@ Route::resource('property','PropertyController');
  **/
 Route::get('externform',function(){
     \Debugbar::disable();
+    $style="
+        <style>
+            #ccPhoneCall
+            {
+                text-decoration: none;
+                font-size: 16pt;
+                padding: 7px;
+                padding-bottom: 8px;
+                background-color:#FF3404;
+                color:#fff;
+            }
+            #ccPhoneCall:hover{
+                background-color: #BF4D32
+            }
+            #ccPopup{
+                position:absolute;
+                width:500px;
+                height:500px;
+                top:50%;
+                left:50%;
+                margin-left: -250px;
+                margin-top:-250px;
+                text-align: center;
+            }
+            #ccClose{
+                position:absolute;
+                right:10px;
+                top:10px;
+                text-decoration:none;
+            }
+            #ccContainer{
+                border-radius:100%;
+                width:100%;
+                height:100%;
+                background-color: #0EA2E2;
+                padding-top:150px;
+                color:#fff;
+            }
+            #ccContainer p{
+                margin-top: 20px;
+            }
+            #ccContainer input{
+                color:#000;
+            }
+            #ccPhone{
+                font-size:16pt;
+                padding:5px;
+                border:none;
+                width: 240px;
+            }
+
+        </style>";
+    $style = trim(preg_replace('/\s\s+/', '', $style));
+    $script = "
+        <script>
+            function cpopupClose(){
+                document.getElementById(\"ccPopup\").style.display=\"none\";
+            }
+            function sendCall(){
+                var phone =document.getElementById(\"ccPhone\").value;
+                var r = new XMLHttpRequest();
+                r.open(\"GET\",\"".url('externcall')."?phone=\"+phone, true);
+                r.onreadystatechange = function () {
+                    if (r.readyState != 4 || r.status != 200) return;
+                    alert(r.responseText);};  r.send();
+            }
+        </script>";
+    $script = trim(preg_replace('/\s\s+/', '', $script));
     return "(function(){
             $(document).ready(function(){
                 window.setTimeout(function(){
-                    $('body').append('<style>#cPhoneCall{text-decoration: none;font-size: 16pt; padding: 7px;padding-bottom: 8px;background-color:#FF3404;color:#fff;}#cPhoneCall:hover{background-color: #BF4D32}</style><div id=\"callcenter-popup\" style=\"position:absolute;width:500px;height:500px; top:50%; left:50%; margin-left: -250px;margin-top:-250px;text-align: center;\"><a href=\"#\" onclick=\"cpopupClose()\" style=\"position:absolute;right:10px;top:10px;text-decoration:none;\">X</a><div style=\"border-radius:250px; width:100%;height:100%; background-color: #0EA2E2;padding-top:150px;\"><h1 style=\"color:#fff;\">Есть вопрос?</h1><p style=\"margin-top: 20px;\"><input style=\"font-size:16pt;padding:5px;border:none;width: 240px;\" placeholder=\"введите номер\" type=\"text\" id=\"cPhone\"><a onclick=\"sendCall()\" id=\"cPhoneCall\" href=\"#\" >позвоните мне</a></p><img style=\"margin-top:20px\" src=\"http://shop.goodline.ru/bitrix/templates/s1/i/logo.png\"></div></div><script>function cpopupClose(){document.getElementById(\"callcenter-popup\").style.display=\"none\";}function sendCall(){var phone =document.getElementById(\"cPhone\").value; var r = new XMLHttpRequest();r.open(\"GET\",\"".url('externcall')."?phone=\"+phone, true);r.onreadystatechange = function () {if (r.readyState != 4 || r.status != 200) return;alert(r.responseText);};  r.send();}</script>');
+                    $('body').append('".$style."<div id=\"ccPopup\" style=\"\"><a id=\"ccClose\" href=\"#\" onclick=\"cpopupClose()\">X</a><div id=\"ccContainer\" ><h1>Есть вопрос?</h1><p><input placeholder=\"введите номер\" type=\"text\" id=\"ccPhone\"><a onclick=\"sendCall()\" id=\"ccPhoneCall\" href=\"#\" >позвоните мне</a></p><img style=\"margin-top:20px\" src=\"http://shop.goodline.ru/bitrix/templates/s1/i/logo.png\"></div></div>".$script."');
                 }, 3000);
             });
     })()";
