@@ -93,13 +93,14 @@ Route::get('externform',function(){
             }
             #ccPopup{
                 position:absolute;
-                width:500px;
+                width:350px;
                 height:500px;
                 top:50%;
                 left:50%;
                 margin-left: -250px;
                 margin-top:-250px;
                 text-align: center;
+                padding:0;
             }
             #ccClose{
                 position:absolute;
