@@ -94,13 +94,14 @@ Route::get('externform',function(){
             #ccPopup{
                 position:absolute;
                 width:500px;
-                height:350px;
+                height:500px;
                 top:50%;
                 left:50%;
                 margin-left: -250px;
                 margin-top:-250px;
                 text-align: center;
                 padding:0;
+
             }
             #ccClose{
                 position:absolute;
@@ -113,8 +114,11 @@ Route::get('externform',function(){
                 width:100%;
                 height:100%;
                 background-color: #0EA2E2;
-                padding-top:150px;
+                vertical-align: middle;
                 color:#fff;
+            }
+            #ccContainer .ccMiddle{
+                padding-top: 150px;
             }
             #ccContainer p{
                 margin-top: 20px;
@@ -149,7 +153,7 @@ Route::get('externform',function(){
     return "(function(){
             $(document).ready(function(){
                 window.setTimeout(function(){
-                    $('body').append('".$style."<div id=\"ccPopup\" style=\"\"><a id=\"ccClose\" href=\"#\" onclick=\"cpopupClose()\">X</a><div id=\"ccContainer\" ><h1>Есть вопрос?</h1><p><input placeholder=\"введите номер\" type=\"text\" id=\"ccPhone\"><a onclick=\"sendCall()\" id=\"ccPhoneCall\" href=\"#\" >позвоните мне</a></p><img style=\"margin-top:20px\" src=\"http://shop.goodline.ru/bitrix/templates/s1/i/logo.png\"></div></div>".$script."');
+                    $('body').append('".$style."<div id=\"ccPopup\" style=\"\"><a id=\"ccClose\" href=\"#\" onclick=\"cpopupClose()\">X</a><div id=\"ccContainer\" ><div class=\"ccMiddle\"><h1>Есть вопрос?</h1><p><input placeholder=\"введите номер\" type=\"text\" id=\"ccPhone\"><a onclick=\"sendCall()\" id=\"ccPhoneCall\" href=\"#\" >позвоните мне</a></p><img style=\"margin-top:20px\" src=\"http://shop.goodline.ru/bitrix/templates/s1/i/logo.png\"></div></div></div>".$script."');
                 }, 3000);
             });
     })()";
@@ -167,28 +171,32 @@ Route::get('getform',function(){
  **/
 Route::get('externcall',function(){
     \Debugbar::disable();
-    /*
-    $callerId = "101";
-    $oSocket = fsockopen(env('Asterisk_host'), env('Asterisk_port'), $errnum, $errdesc,50) or die("Connection to host failed");
+    if(!empty(Request::input('phone')))
+    {
+        $callerId = "101";
+        $oSocket = fsockopen(env('Asterisk_host'), env('Asterisk_port'), $errnum, $errdesc,50) or die("Connection to host failed");
 
-    fputs($oSocket, "Action: Login\r\n");
-    fputs($oSocket, "Username: ".env('Asterisk_user')."\r\n");
-    fputs($oSocket, "Secret: ".env('Asterisk_secret')."\r\n\r\n");
+        fputs($oSocket, "Action: Login\r\n");
+        fputs($oSocket, "Username: ".env('Asterisk_user')."\r\n");
+        fputs($oSocket, "Secret: ".env('Asterisk_secret')."\r\n\r\n");
 
 
-    fputs($oSocket, "Action: originate\r\n");
-    fputs($oSocket, "Channel: ".env('Asterisk_channel')."\r\n");
-    fputs($oSocket, "Timeout: ".env('Asterisk_timeout')."\r\n");
-    fputs($oSocket, "CallerId: ".$callerId."\r\n");
-    fputs($oSocket, "Exten: ".env('Asterisk_exten')."\r\n");
-    fputs($oSocket, "Context: ".env('Asterisk_context')."\r\n");
-    fputs($oSocket, "Priority: ".env('Asterisk_priority')."\r\n\r\n");
-    fputs($oSocket, "Action: Logoff\r\n\r\n");
+        fputs($oSocket, "Action: originate\r\n");
+        fputs($oSocket, "Channel: ".env('Asterisk_channel')."\r\n");
+        fputs($oSocket, "Timeout: ".env('Asterisk_timeout')."\r\n");
+        fputs($oSocket, "CallerId: ".$callerId."\r\n");
+        fputs($oSocket, "Exten: ".Request::input('phone')."\r\n");
+        fputs($oSocket, "Context: ".env('Asterisk_context')."\r\n");
+        fputs($oSocket, "Priority: ".env('Asterisk_priority')."\r\n\r\n");
+        fputs($oSocket, "Action: Logoff\r\n\r\n");
 
-    sleep (1);
-    fclose($oSocket);
+        sleep (1);
+        fclose($oSocket);
+        return response(Request::input('phone'))->header('Access-Control-Allow-Origin', 'http://shop.goodline.ru');
+    }else{
+        return response('Не введен номер')->header('Access-Control-Allow-Origin', 'http://shop.goodline.ru');
+    }
 
-    return '';
-    */
-    return response(Request::input('phone'))->header('Access-Control-Allow-Origin', 'http://shop.goodline.ru');
+
+
 });
