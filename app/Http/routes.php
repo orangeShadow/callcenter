@@ -196,7 +196,7 @@ Route::get('externcall',function(){
         fclose($oSocket);
         return response(Request::input('phone'))->header('Access-Control-Allow-Origin', 'http://shop.goodline.ru');
         */
-        return response(Request::input('phone')+"Тут пойдет звонок")->header('Access-Control-Allow-Origin', 'http://shop.goodline.ru');
+        return response(Request::input('phone')."Тут пойдет звонок")->header('Access-Control-Allow-Origin', 'http://shop.goodline.ru');
     }else{
         return response('Не введен номер')->header('Access-Control-Allow-Origin', 'http://shop.goodline.ru');
     }
