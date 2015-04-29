@@ -93,8 +93,8 @@ Route::get('externform',function(){
             }
             #ccPopup{
                 position:absolute;
-                width:350px;
-                height:500px;
+                width:500px;
+                height:350px;
                 top:50%;
                 left:50%;
                 margin-left: -250px;
