@@ -174,6 +174,7 @@ Route::get('externcall',function(){
     $phone = Request::input('phone');
     if(!empty($phone))
     {
+        /*
         $callerId = "101";
         $oSocket = fsockopen(env('Asterisk_host'), env('Asterisk_port'), $errnum, $errdesc,50) or die("Connection to host failed");
 
@@ -194,6 +195,8 @@ Route::get('externcall',function(){
         sleep (1);
         fclose($oSocket);
         return response(Request::input('phone'))->header('Access-Control-Allow-Origin', 'http://shop.goodline.ru');
+        */
+        return response(Request::input('phone')+"Тут пойдет звонок")->header('Access-Control-Allow-Origin', 'http://shop.goodline.ru');
     }else{
         return response('Не введен номер')->header('Access-Control-Allow-Origin', 'http://shop.goodline.ru');
     }
