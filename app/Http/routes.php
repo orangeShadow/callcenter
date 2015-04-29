@@ -80,7 +80,7 @@ Route::get('externform',function(){
     return "(function(){
             $(document).ready(function(){
                 window.setTimeout(function(){
-                    $('body').append('<style>#cPhoneCall{text-decoration: none;font-size: 16pt; padding: 7px;padding-bottom: 8px;background-color:#FF3404;color:#fff;}#cPhoneCall:hover{background-color: #BF4D32}</style><div id=\"callcenter-popup\" style=\"position:absolute;width:500px;height:500px; top:50%; left:50%; margin-left: -250px;margin-top:-250px;text-align: center;\"><a href=\"#\" onclick=\"cpopupClose()\" style=\"position:absolute;right:10px;top:10px;text-decoration:none;\">X</a><div style=\"border-radius:250px; width:100%;height:100%; background-color: #0EA2E2;padding-top:150px;\"><h1 style=\"color:#fff;\">Есть вопрос?</h1><p style=\"margin-top: 20px;\"><input style=\"font-size:16pt;padding:5px;border:none;width: 240px;\" placeholder=\"введите номер\" type=\"text\" id=\"cPhone\"><a onclick=\"sendCall()\" id=\"cPhoneCall\" href=\"#\" >позвоните мне</a></p><img style=\"margin-top:20px\" src=\"http://shop.goodline.ru/bitrix/templates/s1/i/logo.png\"></div></div><script>function cpopupClose(){document.getElementById(\"callcenter-popup\").style.display=\"none\";}function sendCall(){var r = new XMLHttpRequest();r.open(\"POST\",\"".url('externcall')."\", true);r.onreadystatechange = function () {if (r.readyState != 4 || r.status != 200) return;alert(r.responseText);};var phone =document.getElementById(\"cPhone\").value;r.send(\"phone=\"+phone);}</script>');
+                    $('body').append('<style>#cPhoneCall{text-decoration: none;font-size: 16pt; padding: 7px;padding-bottom: 8px;background-color:#FF3404;color:#fff;}#cPhoneCall:hover{background-color: #BF4D32}</style><div id=\"callcenter-popup\" style=\"position:absolute;width:500px;height:500px; top:50%; left:50%; margin-left: -250px;margin-top:-250px;text-align: center;\"><a href=\"#\" onclick=\"cpopupClose()\" style=\"position:absolute;right:10px;top:10px;text-decoration:none;\">X</a><div style=\"border-radius:250px; width:100%;height:100%; background-color: #0EA2E2;padding-top:150px;\"><h1 style=\"color:#fff;\">Есть вопрос?</h1><p style=\"margin-top: 20px;\"><input style=\"font-size:16pt;padding:5px;border:none;width: 240px;\" placeholder=\"введите номер\" type=\"text\" id=\"cPhone\"><a onclick=\"sendCall()\" id=\"cPhoneCall\" href=\"#\" >позвоните мне</a></p><img style=\"margin-top:20px\" src=\"http://shop.goodline.ru/bitrix/templates/s1/i/logo.png\"></div></div><script>function cpopupClose(){document.getElementById(\"callcenter-popup\").style.display=\"none\";}function sendCall(){var phone =document.getElementById(\"cPhone\").value; var r = new XMLHttpRequest();r.open(\"GET\",\"".url('externcall')."?phone=\"+phone, true);r.onreadystatechange = function () {if (r.readyState != 4 || r.status != 200) return;alert(r.responseText);};  r.send();}</script>');
                 }, 3000);
             });
     })()";
@@ -97,6 +97,7 @@ Route::get('getform',function(){
  * Тестоввый звонок
  **/
 Route::get('externcall',function(){
+    \Debugbar::disable();
     /*
     $callerId = "101";
     $oSocket = fsockopen(env('Asterisk_host'), env('Asterisk_port'), $errnum, $errdesc,50) or die("Connection to host failed");
@@ -120,5 +121,5 @@ Route::get('externcall',function(){
 
     return '';
     */
-    return response()->view('hello')->header('Access-Control-Allow-Origin', 'http://shop.goodline.ru');
+    return response(Request::input('phone'))->header('Access-Control-Allow-Origin', 'http://shop.goodline.ru');
 });
