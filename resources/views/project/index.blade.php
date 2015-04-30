@@ -7,6 +7,12 @@
     <h1>{!!Lang::get('project.projectList')!!}</h1>
     @include('project.filter')
     <br>
+    <div class="row">
+        <div class="col-lg-6">
+            Всего найдено: {{$projects->total()}}, на этой странице: {{$projects->count()}}
+        </div>
+    </div>
+    <br>
     @if($projects->count())
     <div class="row">
         <div class="col-lg-12">
@@ -54,7 +60,7 @@
             </table>
         </div>
     </div>
-    {!! $projects->render() !!}
+    {!! $projects->appends(Input::all())->render() !!}
     @else
         @if (Auth::user()->checkRole(['manager','admin']))
         <div class="row">

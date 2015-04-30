@@ -43,7 +43,7 @@
                 </table>
             </div>
         </div>
-        {!! $users->render() !!}
+        {!! $users->appends(Input::all())->render() !!}
     @else
         @if (Auth::user()->checkRole(['manager','admin']))
             <div class="row">

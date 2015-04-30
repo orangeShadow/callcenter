@@ -3,9 +3,13 @@
 @section('content')
     <h1>{!!Lang::get('claim.claimList')!!}</h1>
     @include('claim.filter')
-
     <br>
-
+    <div class="row">
+        <div class="col-lg-6">
+            Всего найдено: {{$claims->total()}}, на этой странице: {{$claims->count()}}
+        </div>
+    </div>
+    <br>
     @if($claims->count())
         <div class="row">
             <div class="col-lg-12">
@@ -51,7 +55,7 @@
                 </table>
             </div>
         </div>
-        {!! $claims->render() !!}
+        {!! $claims->appends(Input::all())->render() !!}
     @else
         <div class="row">
             <div class="col-lg-12">

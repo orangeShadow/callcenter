@@ -20,9 +20,9 @@
             </div>
             <div class="col-lg-3">
                 <div class="form-group">
-                    {!! Form::select('client_id',["0"=>"Выберите клиента"]+\App\User::orderBy('name','asc')->where('role_id','4')->get(['id','name'])->lists('name','id'),null,['class'=>'form-control']) !!}
+                    {!! Form::select('client_id',["0"=>"Выберите клиента"]+\App\User::orderBy('name','asc')->where('role_id','4')->get(['id','name'])->lists('name','id'),Request::get('client_id'),['class'=>'form-control']) !!}
                     <br>
-                    {!! Form::select('manager_id',["0"=>"Выберите менеджера"]+\App\User::orderBy('name','asc')->where('role_id','3')->get(['id','name'])->lists('name','id'),null,['class'=>'form-control']) !!}
+                    {!! Form::select('manager_id',["0"=>"Выберите менеджера"]+\App\User::orderBy('name','asc')->where('role_id','3')->get(['id','name'])->lists('name','id'),Request::get('manager_id'),['class'=>'form-control']) !!}
                 </div>
             </div>
             @if (Auth::user()->checkRole(['manager','admin']))
