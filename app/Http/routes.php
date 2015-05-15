@@ -247,7 +247,6 @@ Route::get('externform',function(){
                 document.getElementById(\"cc-call\").style.display = \"none\";
                 document.getElementById(\"cc-call1\").style.display = \"inline-block\";
                 setTimeout(timerDown,1000);
-                /*
                 var r = new XMLHttpRequest();
                 r.open(\"GET\",\"".url('externcall')."?phone=\"+phone, true);
                 r.onreadystatechange = function () {
@@ -255,7 +254,6 @@ Route::get('externform',function(){
 
                 };
                 r.send();
-                */
             }
 
             function timerDown(){
