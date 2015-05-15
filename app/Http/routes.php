@@ -145,7 +145,7 @@ Route::get('externform',function(){
             }
 
 
-            #cc-popup input[type=\"text\"] !important{
+            #cc-popup input[type=\"text\"] {
                 border-radius: 3px;
                 padding: 10px;;
                 font-size: 18px;
