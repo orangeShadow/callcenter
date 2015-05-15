@@ -127,15 +127,6 @@ Route::get('externform',function(){
                 text-align: center;
                 padding: 50px 0 ;
                 color: #566473;
-                line-height: inherit;
-                letter-spacing: normal;
-                word-spacing: normal;
-                text-transform: none;
-                text-indent: 0px;
-                text-shadow: none;
-                display: inline-block;
-                text-align: start;
-                box-sizing: border-box;
             }
 
             #cc-popup a#cc-call{
@@ -161,6 +152,15 @@ Route::get('externform',function(){
                 font-size: 18px;
                 border: 1px solid #b2b2b2;
                 width:244px;
+                line-height: inherit;
+                letter-spacing: normal;
+                word-spacing: normal;
+                text-transform: none;
+                text-indent: 0px;
+                text-shadow: none;
+                display: inline-block;
+                text-align: start;
+                box-sizing: border-box;
             }
 
             #cc-popup .wrapper{
