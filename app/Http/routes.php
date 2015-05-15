@@ -87,7 +87,6 @@ Route::get('externform',function(){
                 height: 100%;
                 z-index: 10000;
                 background: rgba(0, 0, 0, 0.8);
-                font-family: arial, Helvetica, sans-serif;
             }
             #cc-popup{
                 width:700px;
@@ -101,6 +100,9 @@ Route::get('externform',function(){
                 margin-top:-150px;
                 margin-left: -351px;
                 overflow: hidden;
+                font-family: arial, Helvetica, sans-serif;
+                line-height:normal;
+                box-sizing: border-box;
             }
             #cc-popup .cc-content{
                 height:259px;
@@ -175,7 +177,7 @@ Route::get('externform',function(){
                 padding-top:8px;
                 padding-right: 41px;
                 background-color:#fff;
-                height:31px;
+                height:37px;
             }
         </style>
        ";
@@ -184,6 +186,7 @@ Route::get('externform',function(){
         <script>
             function cpopupClose(){
                 document.getElementById(\"cc-popup\").style.display=\"none\";
+                document.getElementById(\"cc-popup-shadow\").style.display=\"none\";
             }
             function cSendCall(){
                 var phone =document.getElementById(\"cc-phone\").value;
@@ -195,10 +198,18 @@ Route::get('externform',function(){
                 };
                 r.send();
             }
+            ;(function(){
+                var body = document.body;
+                var html = document.documentElement;
+                var height = Math.max( body.scrollHeight, body.offsetHeight,html.clientHeight, html.scrollHeight, html.offsetHeight );
+                $(\"#cc-popup-shadow\").css(\"height\",height);
+                console.log(height);
+            })()
         </script>
         ";
 
     $html = '
+        <div id="cc-popup-shadow"></div>
         <div id="cc-popup">
         <div class="cc-close" onclick="cpopupClose()"></div>
         <div class="cc-content">
@@ -218,13 +229,11 @@ Route::get('externform',function(){
     $html = trim(preg_replace('/\s\s+/', '', $html));
     $script = trim(preg_replace('/\s\s+/', '', $script));
 
-    return "(function(){
-            $(document).ready(function(){
+    return ";(function(){
                 window.setTimeout(function(){
                     $('body').append('".$style.$html.$script."');
                 }, 3000);
-            });
-    })()";
+            })();";
 });
 
 /**
