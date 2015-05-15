@@ -87,6 +87,7 @@ Route::get('externform',function(){
                 height: 100%;
                 z-index: 10000;
                 background: rgba(0, 0, 0, 0.8);
+                font-family: arial, Helvetica, sans-serif;
             }
             #cc-popup{
                 width:700px;
@@ -125,7 +126,16 @@ Route::get('externform',function(){
                 font-size: 24px;
                 text-align: center;
                 padding: 50px 0 ;
-                color: #90979f;
+                color: #566473;
+                line-height: inherit;
+                letter-spacing: normal;
+                word-spacing: normal;
+                text-transform: none;
+                text-indent: 0px;
+                text-shadow: none;
+                display: inline-block;
+                text-align: start;
+                box-sizing: border-box;
             }
 
             #cc-popup a#cc-call{
