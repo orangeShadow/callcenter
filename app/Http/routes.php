@@ -99,6 +99,7 @@ Route::get('externform',function(){
                 top:50%;
                 margin-top:-150px;
                 margin-left: -351px;
+                overflow: hidden;
             }
             #cc-popup .cc-content{
                 height:259px;
@@ -163,6 +164,7 @@ Route::get('externform',function(){
                 padding-top:8px;
                 padding-right: 41px;
                 background-color:#fff;
+                height:31px;
             }
         </style>
        ";
