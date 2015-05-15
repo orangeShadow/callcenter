@@ -259,7 +259,7 @@ Route::get('externform',function(){
             function timerDown(){
                 var time = document.getElementById(\"cc-timer\").innerText;
                 document.getElementById(\"cc-timer\").innerText = time-1;
-                if(time>=0) setTimeout(timerDown,1000);
+                if(time>1) setTimeout(timerDown,1000);
             }
             ;(function(){
                 window.setTimeout(function(){
