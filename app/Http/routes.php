@@ -183,6 +183,13 @@ Route::get('externform',function(){
                 width:100%;
             }
 
+            #cc-error{
+                margin-left:122px;
+                text-align:left;
+                color:red;
+                padding:10px;
+            }
+
             #cc-popup .cc-footer{
                 font-size: 14px;
                 text-align: right;
@@ -202,7 +209,12 @@ Route::get('externform',function(){
                 document.getElementById(\"cc-popup-shadow\").style.display=\"none\";
             }
             function cSendCall(){
+                document.getElementById(\"cc-error\").innerText=\"\";
                 var phone =document.getElementById(\"cc-phone\").value;
+                if(!/^\\\\+?[0-9]{11,12}$/.test(phone)){
+                    document.getElementById(\"cc-error\").innerText=\"Неверный формат телефона, должны быть только цифры\";
+                    return false;
+                }
                 document.getElementById(\"cc-call\").style.display = \"none\";
                 document.getElementById(\"cc-call1\").style.display = \"inline-block\";
                 var r = new XMLHttpRequest();
@@ -230,6 +242,7 @@ Route::get('externform',function(){
             <h1>Оставьте свой номер и мы перезвоним Вам<br> в течении <strong>30</strong> секунд!</h1>
             <div class="wrapper">
                 <input id="cc-phone" type = "text" value="+7" placeholder="+7"> <a id="cc-call" onClick="cSendCall()" href="#">Жду звонка</a><a id="cc-call1" href="#">Жду звонка</a>
+                <div id="cc-error"></div>
             </div>
         </div>
         <div class="cc-footer">
