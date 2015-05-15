@@ -79,13 +79,22 @@ Route::get('externform',function(){
     \Debugbar::disable();
     $style="
         <style>
+            #cc-popup-shadow{
+                position: fixed;
+                left: 0;
+                top: 0;
+                width: 100%;
+                height: 100%;
+                z-index: 10000;
+                background: rgba(0, 0, 0, 0.8);
+            }
             #cc-popup{
                 width:700px;
                 height:298px;
                 border: 1px solid #ccc;
                 border-radius: 5px;
                 position: fixed;
-                z-index:100000;
+                z-index:10005;
                 left: 50%;
                 top:50%;
                 margin-top:-150px;
@@ -151,7 +160,7 @@ Route::get('externform',function(){
                 font-size: 14px;
                 text-align: right;
                 color: #566473;
-                line-height:40px;
+                padding-top:8px;
                 padding-right: 41px;
                 background-color:#fff;
             }
