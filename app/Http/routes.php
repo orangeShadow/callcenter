@@ -79,81 +79,125 @@ Route::get('externform',function(){
     \Debugbar::disable();
     $style="
         <style>
-            #ccPhoneCall
-            {
-                text-decoration: none;
-                font-size: 16pt;
-                padding: 7px;
-                padding-bottom: 8px;
-                background-color:#FF3404;
-                color:#fff;
-            }
-            #ccPhoneCall:hover{
-                background-color: #BF4D32
-            }
-            #ccPopup{
-                position:absolute;
-                width:500px;
-                height:500px;
+            #cc-popup{
+                width:700px;
+                height:298px;
+                border: 1px solid #ccc;
+                border-radius: 5px;
+                position: fixed;
+                z-index:100000;
+                left: 50%;
                 top:50%;
-                left:50%;
-                margin-left: -250px;
-                margin-top:-250px;
+                margin-top:-150px;
+                margin-left: -351px;
+            }
+            #cc-popup .cc-content{
+                height:259px;
+                background-color: #ededed;
+            }
+
+            #cc-popup .cc-close{
+                position: absolute;
+                right: 0;
+                top: 0;
+                width: 41px;
+                height:41px;
+                background: #566473 url(\"http://".$_SERVER['SERVER_NAME']."/i/close.png\") no-repeat center;
+                cursor: pointer;
+            }
+
+            #cc-popup .cc-close:hover{
+                background-color:#009321;
+            }
+
+            #cc-popup .cc-content h1{
+                margin: 0px;
+                font-size: 24px;
                 text-align: center;
-                padding:0;
-
-            }
-            #ccClose{
-                position:absolute;
-                right:10px;
-                top:10px;
-                text-decoration:none;
-            }
-            #ccContainer{
-                border-radius:100%;
-                width:100%;
-                height:100%;
-                background-color: #0EA2E2;
-                vertical-align: middle;
-                color:#fff;
-            }
-            #ccContainer .ccMiddle{
-                padding-top: 150px;
-            }
-            #ccContainer p{
-                margin-top: 20px;
-            }
-            #ccContainer input{
-                color:#000;
-            }
-            #ccPhone{
-                font-size:16pt;
-                padding:5px;
-                border:none;
-                width: 240px;
+                padding: 50px 0 ;
             }
 
-        </style>";
-    $style = trim(preg_replace('/\s\s+/', '', $style));
+            #cc-popup a#cc-call{
+                font-size: 18px;
+                color: #fff;
+                border: 1px solid #b2b2b2;
+                background-color: #33a94d;
+                text-decoration: none;
+                border-radius: 3px;
+                padding: 10px 0;
+                width:188px;
+                display: inline-block;
+            }
+
+            #cc-popup a#cc-call:hover{
+                background-color: #009321;
+            }
+
+
+            #cc-popup input[type=\"text\"]{
+                border-radius: 3px;
+                padding: 10px;;
+                font-size: 18px;
+                border: 1px solid #b2b2b2;
+                width:244px;
+            }
+
+            #cc-popup .wrapper{
+                text-align: center;
+            }
+
+            #cc-popup .cc-footer{
+                font-size: 14px;
+                text-align: right;
+                color: #566473;
+                line-height:40px;
+                padding-right: 41px;
+            }
+        </style>
+       ";
+
     $script = "
         <script>
             function cpopupClose(){
-                document.getElementById(\"ccPopup\").style.display=\"none\";
+                document.getElementById(\"cc-popup\").style.display=\"none\";
             }
-            function sendCall(){
-                var phone =document.getElementById(\"ccPhone\").value;
+            function cSendCall(){
+                var phone =document.getElementById(\"cc-phone\").value;
+                console.log(phone);
                 var r = new XMLHttpRequest();
                 r.open(\"GET\",\"".url('externcall')."?phone=\"+phone, true);
                 r.onreadystatechange = function () {
                     if (r.readyState != 4 || r.status != 200) return;
-                    alert(r.responseText);};  r.send();
+                };
+                r.send();
             }
-        </script>";
+        </script>
+        ";
+
+    $html = '
+        <div id="cc-popup">
+        <div class="cc-close" onclick="cpopupClose()"></div>
+        <div class="cc-content">
+            <h1>Оставьте свой номер и мы перезвоним Вам<br> в течении <strong>30</strong> секунд!</h1>
+            <div class="wrapper">
+                <input id="cc-phone" type = "text" value="+7" placeholder="+7"> <a id="cc-call" onClick="cSendCall()" href="#">Жду звонка</a>
+            </div>
+        </div>
+        <div class="cc-footer">
+            Call-центр №1
+        </div>
+    </div>
+    ';
+
+
+    $style = trim(preg_replace('/\s\s+/', '', $style));
+    $html = trim(preg_replace('/\s\s+/', '', $html));
     $script = trim(preg_replace('/\s\s+/', '', $script));
+
     return "(function(){
             $(document).ready(function(){
                 window.setTimeout(function(){
-                    $('body').append('".$style."<div id=\"ccPopup\" style=\"\"><a id=\"ccClose\" href=\"#\" onclick=\"cpopupClose()\">X</a><div id=\"ccContainer\" ><div class=\"ccMiddle\"><h1>Есть вопрос?</h1><p><input placeholder=\"введите номер\" type=\"text\" id=\"ccPhone\"><a onclick=\"sendCall()\" id=\"ccPhoneCall\" href=\"#\" >позвоните мне</a></p><img style=\"margin-top:20px\" src=\"http://shop.goodline.ru/bitrix/templates/s1/i/logo.png\"></div></div></div>".$script."');
+                    $('body').append('".$style.$html.$script."');
                 }, 3000);
             });
     })()";
