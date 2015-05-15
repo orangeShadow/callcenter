@@ -143,12 +143,25 @@ Route::get('externform',function(){
                 display: inline-block;
             }
 
+            #cc-popup a#cc-call1{
+                font-size: 18px;
+                color: #fff;
+                border: 1px solid #b2b2b2;
+                background-color: #566473;
+                text-decoration: none;
+                border-radius: 3px;
+                padding: 10px 0;
+                width:188px;
+                display: none;
+            }
+
             #cc-popup a#cc-call:hover{
                 background-color: #009321;
             }
 
 
             #cc-popup input[type=\"text\"] {
+                color:#566473;
                 border-radius: 3px;
                 padding: 10px;;
                 font-size: 18px;
@@ -190,7 +203,8 @@ Route::get('externform',function(){
             }
             function cSendCall(){
                 var phone =document.getElementById(\"cc-phone\").value;
-                console.log(phone);
+                document.getElementById(\"cc-call\").style.display = \"none\";
+                document.getElementById(\"cc-call1\").style.display = \"inline-block\";
                 var r = new XMLHttpRequest();
                 r.open(\"GET\",\"".url('externcall')."?phone=\"+phone, true);
                 r.onreadystatechange = function () {
@@ -215,7 +229,7 @@ Route::get('externform',function(){
         <div class="cc-content">
             <h1>Оставьте свой номер и мы перезвоним Вам<br> в течении <strong>30</strong> секунд!</h1>
             <div class="wrapper">
-                <input id="cc-phone" type = "text" value="+7" placeholder="+7"> <a id="cc-call" onClick="cSendCall()" href="#">Жду звонка</a>
+                <input id="cc-phone" type = "text" value="+7" placeholder="+7"> <a id="cc-call" onClick="cSendCall()" href="#">Жду звонка</a><a id="cc-call1" href="#">Жду звонка</a>
             </div>
         </div>
         <div class="cc-footer">
