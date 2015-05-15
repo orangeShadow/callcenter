@@ -144,6 +144,7 @@ Route::get('externform',function(){
 
             #cc-popup .wrapper{
                 text-align: center;
+                width:100%;
             }
 
             #cc-popup .cc-footer{
@@ -152,6 +153,7 @@ Route::get('externform',function(){
                 color: #566473;
                 line-height:40px;
                 padding-right: 41px;
+                background-color:#fff;
             }
         </style>
        ";
