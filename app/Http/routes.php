@@ -123,15 +123,23 @@ Route::get('externform',function(){
                 background-color:#009321;
             }
 
-            #cc-popup .cc-content h1{
+            #cc-popup .cc-content span.cc-head{
+                font-family: arial, Helvetica, sans-serif;
                 margin: 0px;
                 font-size: 24px;
                 text-align: center;
                 padding: 50px 0 ;
                 color: #566473;
+                font-weight: normal;
+                display:block;
             }
 
-            #cc-popup a#cc-call{
+            #cc-popup .cc-content .cc-head .cc-bold{
+                font-weight: bold;
+            }
+
+            #cc-popup span#cc-call{
+                font-family: arial, Helvetica, sans-serif;
                 font-size: 18px;
                 color: #fff;
                 border: 1px solid #b2b2b2;
@@ -141,9 +149,11 @@ Route::get('externform',function(){
                 padding: 10px 0;
                 width:188px;
                 display: inline-block;
+                vertical-align:top;
             }
 
-            #cc-popup a#cc-call1{
+            #cc-popup span#cc-call1{
+                font-family: arial, Helvetica, sans-serif;
                 font-size: 18px;
                 color: #fff;
                 border: 1px solid #b2b2b2;
@@ -153,9 +163,10 @@ Route::get('externform',function(){
                 padding: 10px 0;
                 width:188px;
                 display: none;
+                vertical-align:top;
             }
 
-            #cc-popup a#cc-call:hover{
+            #cc-popup span#cc-call:hover{
                 background-color: #009321;
             }
 
@@ -176,9 +187,10 @@ Route::get('externform',function(){
                 display: inline-block;
                 text-align: start;
                 box-sizing: border-box;
+                vertical-align:top;
             }
 
-            #cc-popup .wrapper{
+            #cc-popup .cc-wrapper{
                 text-align: center;
                 width:100%;
             }
@@ -191,6 +203,7 @@ Route::get('externform',function(){
             }
 
             #cc-popup .cc-footer{
+                font-family: arial, Helvetica, sans-serif;
                 font-size: 14px;
                 text-align: right;
                 color: #566473;
@@ -214,9 +227,9 @@ Route::get('externform',function(){
         <div id="cc-popup">
         <div class="cc-close" onclick="cpopupClose()"></div>
         <div class="cc-content">
-            <h1>Оставьте свой номер и мы перезвоним Вам<br> в течении <strong id="cc-timer">30</strong> <strong>секунд</strong>!</h1>
-            <div class="wrapper">
-                <input id="cc-phone" type = "text" value="+7" placeholder="+7"> <a id="cc-call" onClick="cSendCall()" href="#">Жду звонка</a><a id="cc-call1" href="#">Жду звонка</a>
+            <span class="cc-head">Оставьте свой номер и мы перезвоним Вам<br> в течении <span class="cc-bold" id="cc-timer">30</span> <span class="cc-bold">секунд</span>!</span>
+            <div class="cc-wrapper">
+                <input id="cc-phone" type = "text" value="+7" placeholder="+7"> <span id="cc-call" onClick="cSendCall()" href="#">Жду звонка</span><span id="cc-call1" href="#">Жду звонка</span>
                 <div id="cc-error"></div>
             </div>
         </div>
@@ -231,7 +244,7 @@ Route::get('externform',function(){
     $html = trim(preg_replace('/\s\s+/', '', $html));
     $script = trim(preg_replace('/\s\s+/', '', $script));
 
-    return "
+    $result = "
             function cpopupClose(){
                 document.getElementById(\"cc-popup\").style.display=\"none\";
                 document.getElementById(\"cc-popup-shadow\").style.display=\"none\";
@@ -263,10 +276,13 @@ Route::get('externform',function(){
             }
             ;(function(){
                 window.setTimeout(function(){
-                    document.body.innerHTML+='".$style.$html."';
+                    document.body.insertAdjacentHTML('afterend','".$style.$html."');
                 }, 3000);
                 ".$script.";
             })();";
+    $result = trim(preg_replace('/\s\s+/', '', $result));
+
+    return response ($result)->header('Content-Type','text/javascript');
 });
 
 /**
