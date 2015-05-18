@@ -442,13 +442,12 @@ Route::get('externform',function(){
                 document.getElementById(\"cc-call\").style.display = \"none\";
                 document.getElementById(\"cc-call1\").style.display = \"inline-block\";
                 setTimeout(cTimerDown,1000);
-                /*var r = new XMLHttpRequest();
+                var r = new XMLHttpRequest();
                 r.open(\"GET\",\"".url('externcall')."?phone=\"+phone, true);
                 r.onreadystatechange = function () {
                     if (r.readyState != 4 || r.status != 200) return;
                 };
                 r.send();
-                */
             }
 
             function cTimerDown(){
