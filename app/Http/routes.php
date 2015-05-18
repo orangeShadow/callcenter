@@ -333,7 +333,7 @@ Route::get('externform',function(){
             function cTimerDown(){
                 var time = document.getElementById(\"cc-timer\").innerText;
                 document.getElementById(\"cc-timer\").innerText = time-1;
-                if(time>1) setTimeout(timerDown,1000);
+                if(time>1) setTimeout(cTimerDown,1000);
             }
             ;(function(){
                 document.body.insertAdjacentHTML('afterend','".$style.$html."');
