@@ -469,7 +469,7 @@ Route::get('externform',function(){
                 if(timer>1) setTimeout(cTimerDown,1000);
             }
             ;(function(){
-                document.body.insertAdjacentHTML('afterend','".$style.$html."');
+                document.body.insertAdjacentHTML('beforeend','".$style.$html."');
                 window.setTimeout(function(){
                     cPopupOpen();
                 }, 30000);
