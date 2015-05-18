@@ -279,6 +279,7 @@ Route::get('externform',function(){
                 height:41px;
                 background: #566473 url(\"http://".$_SERVER['SERVER_NAME']."/i/close.png\") no-repeat center;
                 cursor: pointer;
+                z-index:2000;
             }
 
             #cc-popup .cc-close:hover{
