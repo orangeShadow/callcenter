@@ -79,6 +79,58 @@ Route::get('externform',function(){
     \Debugbar::disable();
     $style="
         <style>
+            #cc-phone-button-wrap{
+                width:70px;
+                height:70px;
+                border-radius: 100%;
+                position: fixed;
+                top:50%;
+                right:10px;
+                margin-top: -35px;
+                text-align: center;
+                vertical-align: middle;
+                line-height: 70px;
+                z-index: 1000;
+            }
+
+
+            #cc-phone-button{
+                vertical-align: middle;
+                display: inline-block;
+                border-radius: 100%;
+                width:60px;
+                height:60px;
+                cursor:pointer;
+                background: #009321 url(\"http://".$_SERVER['SERVER_NAME']."/i/phone.png\") no-repeat center;
+                -webkit-animation: vibro 3s infinite ;
+
+            }
+
+            @-webkit-keyframes vibro {
+              0% {
+                transform: rotate(0deg)
+              }
+              10% {
+                transform: rotate(-15deg)
+              }
+
+              15% {
+                transform: rotate(15deg)
+              }
+              16% {
+                transform: rotate(0deg)
+              }
+              94% {
+                transform: rotate(0deg)
+              }
+              95% {
+                transform: rotate(-15deg)
+              }
+              100% {
+                transform: rotate(20deg)
+              }
+            }
+
             #cc-popup-shadow{
                 position: fixed;
                 left: 0;
@@ -87,6 +139,7 @@ Route::get('externform',function(){
                 height: 100%;
                 z-index: 10000;
                 background: rgba(0, 0, 0, 0.8);
+                display: none;
             }
             #cc-popup{
                 width:700px;
@@ -103,6 +156,7 @@ Route::get('externform',function(){
                 font-family: arial, Helvetica, sans-serif;
                 line-height:normal;
                 box-sizing: border-box;
+                display: none;
             }
             #cc-popup .cc-content{
                 height:259px;
@@ -150,6 +204,7 @@ Route::get('externform',function(){
                 width:188px;
                 display: inline-block;
                 vertical-align:top;
+                cursor:pointer;
             }
 
             #cc-popup span#cc-call1{
@@ -164,6 +219,7 @@ Route::get('externform',function(){
                 width:188px;
                 display: none;
                 vertical-align:top;
+                cursor:pointer;
             }
 
             #cc-popup span#cc-call:hover{
@@ -223,11 +279,12 @@ Route::get('externform',function(){
         ";
 
     $html = '
+        <div id="cc-phone-button-wrap"><div onclick="cPopupOpen()" id="cc-phone-button"></div></div>
         <div id="cc-popup-shadow"></div>
         <div id="cc-popup">
-        <div class="cc-close" onclick="cpopupClose()"></div>
+        <div class="cc-close" onclick="cPopupClose()"></div>
         <div class="cc-content">
-            <span class="cc-head">Оставьте свой номер и мы перезвоним Вам<br> в течении <span class="cc-bold" id="cc-timer">30</span> <span class="cc-bold">секунд</span>!</span>
+            <span class="cc-head">Оставьте свой номер и мы перезвоним Вам<br> в течение <span class="cc-bold" id="cc-timer">30</span> <span class="cc-bold">секунд</span>!</span>
             <div class="cc-wrapper">
                 <input id="cc-phone" type = "text" value="+7" placeholder="+7"> <span id="cc-call" onClick="cSendCall()" href="#">Жду звонка</span><span id="cc-call1" href="#">Жду звонка</span>
                 <div id="cc-error"></div>
@@ -245,10 +302,15 @@ Route::get('externform',function(){
     $script = trim(preg_replace('/\s\s+/', '', $script));
 
     $result = "
-            function cpopupClose(){
+            function cPopupClose(){
                 document.getElementById(\"cc-popup\").style.display=\"none\";
                 document.getElementById(\"cc-popup-shadow\").style.display=\"none\";
             }
+            function cPopupOpen(){
+                document.getElementById(\"cc-popup\").style.display=\"block\";
+                document.getElementById(\"cc-popup-shadow\").style.display=\"block\";
+            }
+
             function cSendCall(){
                 document.getElementById(\"cc-error\").innerText=\"\";
                 var phone =document.getElementById(\"cc-phone\").value;
@@ -259,25 +321,25 @@ Route::get('externform',function(){
                 }
                 document.getElementById(\"cc-call\").style.display = \"none\";
                 document.getElementById(\"cc-call1\").style.display = \"inline-block\";
-                setTimeout(timerDown,1000);
+                setTimeout(cTimerDown,1000);
                 var r = new XMLHttpRequest();
                 r.open(\"GET\",\"".url('externcall')."?phone=\"+phone, true);
                 r.onreadystatechange = function () {
                     if (r.readyState != 4 || r.status != 200) return;
-
                 };
                 r.send();
             }
 
-            function timerDown(){
+            function cTimerDown(){
                 var time = document.getElementById(\"cc-timer\").innerText;
                 document.getElementById(\"cc-timer\").innerText = time-1;
                 if(time>1) setTimeout(timerDown,1000);
             }
             ;(function(){
+                document.body.insertAdjacentHTML('afterend','".$style.$html."');
                 window.setTimeout(function(){
-                    document.body.insertAdjacentHTML('afterend','".$style.$html."');
-                }, 3000);
+                    cPopupOpen();
+                }, 30000);
                 ".$script.";
             })();";
     $result = trim(preg_replace('/\s\s+/', '', $result));
