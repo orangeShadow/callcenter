@@ -236,8 +236,10 @@ Route::get('externform',function(){
 
             #cc-popup-shadow{
                 position: fixed;
+                _position:absolute;
                 left: 0;
                 top: 0;
+                _top:expression(eval(document.body.scrollTop));
                 width: 100%;
                 height: 100%;
                 z-index: 10000;
@@ -250,9 +252,11 @@ Route::get('externform',function(){
                 border: 1px solid #ccc;
                 border-radius: 5px;
                 position: fixed;
+                _position:absolute;
                 z-index:10005;
                 left: 50%;
                 top:50%;
+                _top:expression(eval(document.body.scrollTop));
                 margin-top:-150px;
                 margin-left: -351px;
                 overflow: hidden;
@@ -262,6 +266,7 @@ Route::get('externform',function(){
                 display: none;
             }
             #cc-popup .cc-content{
+                position:relative;
                 height:259px;
                 background-color: #ededed;
             }
@@ -281,6 +286,7 @@ Route::get('externform',function(){
             }
 
             #cc-popup .cc-content span.cc-head{
+                position:relative;
                 font-family: arial, Helvetica, sans-serif;
                 margin: 0px;
                 font-size: 24px;
@@ -347,12 +353,13 @@ Route::get('externform',function(){
                 text-align: start;
                 box-sizing: border-box;
                 vertical-align:top;
+                position:relative;
             }
 
             #cc-popup .cc-wrapper{
                 text-align: center;
                 width:100%;
-
+                position:relative;
             }
 
             #cc-error{
@@ -373,6 +380,7 @@ Route::get('externform',function(){
                 padding-right: 41px;
                 background-color:#fff;
                 height:37px;
+                position:relative;
             }
         </style>
        ";
