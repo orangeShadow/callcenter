@@ -102,11 +102,114 @@ Route::get('externform',function(){
                 height:60px;
                 cursor:pointer;
                 background: #009321 url(\"http://".$_SERVER['SERVER_NAME']."/i/phone.png\") no-repeat center;
+                animation: vibro 3s infinite ;
                 -webkit-animation: vibro 3s infinite ;
+                -moz-animation: vibro 3s infinite ;
+                -ms-animation: vibro 3s infinite ;
+                -o-animation: vibro 3s infinite ;
+            }
 
+            @keyframes vibro {
+              0% {
+                transform: rotate(0deg)
+              }
+              10% {
+                transform: rotate(-15deg)
+              }
+
+              15% {
+                transform: rotate(15deg)
+              }
+              16% {
+                transform: rotate(0deg)
+              }
+              94% {
+                transform: rotate(0deg)
+              }
+              95% {
+                transform: rotate(-15deg)
+              }
+              100% {
+                transform: rotate(20deg)
+              }
             }
 
             @-webkit-keyframes vibro {
+              0% {
+                transform: rotate(0deg)
+              }
+              10% {
+                transform: rotate(-15deg)
+              }
+
+              15% {
+                transform: rotate(15deg)
+              }
+              16% {
+                transform: rotate(0deg)
+              }
+              94% {
+                transform: rotate(0deg)
+              }
+              95% {
+                transform: rotate(-15deg)
+              }
+              100% {
+                transform: rotate(20deg)
+              }
+            }
+
+            @-moz-keyframes vibro {
+              0% {
+                transform: rotate(0deg)
+              }
+              10% {
+                transform: rotate(-15deg)
+              }
+
+              15% {
+                transform: rotate(15deg)
+              }
+              16% {
+                transform: rotate(0deg)
+              }
+              94% {
+                transform: rotate(0deg)
+              }
+              95% {
+                transform: rotate(-15deg)
+              }
+              100% {
+                transform: rotate(20deg)
+              }
+            }
+
+            @-ms-keyframes vibro {
+              0% {
+                transform: rotate(0deg)
+              }
+              10% {
+                transform: rotate(-15deg)
+              }
+
+              15% {
+                transform: rotate(15deg)
+              }
+              16% {
+                transform: rotate(0deg)
+              }
+              94% {
+                transform: rotate(0deg)
+              }
+              95% {
+                transform: rotate(-15deg)
+              }
+              100% {
+                transform: rotate(20deg)
+              }
+            }
+
+            @-o-keyframes vibro {
               0% {
                 transform: rotate(0deg)
               }
@@ -286,7 +389,7 @@ Route::get('externform',function(){
         <div class="cc-content">
             <span class="cc-head">Оставьте свой номер и мы перезвоним Вам<br> в течение <span class="cc-bold" id="cc-timer">30</span> <span class="cc-bold">секунд</span>!</span>
             <div class="cc-wrapper">
-                <input id="cc-phone" type = "text" value="+7" placeholder="+7"> <span id="cc-call" onClick="cSendCall()" href="#">Жду звонка</span><span id="cc-call1" href="#">Жду звонка</span>
+                <input id="cc-phone" type = "text" value="+7"> <span id="cc-call" onClick="cSendCall()" href="#">Жду звонка</span><span id="cc-call1" href="#">Жду звонка</span>
                 <div id="cc-error"></div>
             </div>
         </div>
@@ -309,12 +412,29 @@ Route::get('externform',function(){
             function cPopupOpen(){
                 document.getElementById(\"cc-popup\").style.display=\"block\";
                 document.getElementById(\"cc-popup-shadow\").style.display=\"block\";
+                var focusC =  document.getElementById(\"cc-phone\").value;
+                document.getElementById(\"cc-phone\").focus();
+                cSetEnd(document.getElementById(\"cc-phone\"));
+
             }
+
+            function cSetEnd(txt) {
+                if (txt.createTextRange) {
+                    var FieldRange = txt.createTextRange();
+                    FieldRange.moveStart(\"character\", txt.value.length);
+                    FieldRange.collapse();
+                    FieldRange.select();
+                }else{
+                    txt.focus();
+                    var length = txt.value.length;
+                    txt.setSelectionRange(length, length);
+                }
+            }
+
 
             function cSendCall(){
                 document.getElementById(\"cc-error\").innerText=\"\";
                 var phone =document.getElementById(\"cc-phone\").value;
-                console.log(/^\\+?[0-9]{11,12}$/.test(phone));
                 if(!/^\\+?[0-9]{11,12}$/.test(phone)){
                     document.getElementById(\"cc-error\").innerText=\"Неверный формат телефона, должны быть только цифры\";
                     return false;
@@ -322,18 +442,20 @@ Route::get('externform',function(){
                 document.getElementById(\"cc-call\").style.display = \"none\";
                 document.getElementById(\"cc-call1\").style.display = \"inline-block\";
                 setTimeout(cTimerDown,1000);
-                var r = new XMLHttpRequest();
+                /*var r = new XMLHttpRequest();
                 r.open(\"GET\",\"".url('externcall')."?phone=\"+phone, true);
                 r.onreadystatechange = function () {
                     if (r.readyState != 4 || r.status != 200) return;
                 };
                 r.send();
+                */
             }
 
             function cTimerDown(){
-                var time = document.getElementById(\"cc-timer\").innerText;
-                document.getElementById(\"cc-timer\").innerText = time-1;
-                if(time>1) setTimeout(cTimerDown,1000);
+                document.getElementById(\"cc-timer\").style.color = \"#009321\";
+                var timer = parseInt(document.getElementById(\"cc-timer\").innerHTML);
+                document.getElementById(\"cc-timer\").innerHTML = timer-1;
+                if(timer>1) setTimeout(cTimerDown,1000);
             }
             ;(function(){
                 document.body.insertAdjacentHTML('afterend','".$style.$html."');
