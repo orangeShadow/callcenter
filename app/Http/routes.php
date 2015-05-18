@@ -352,6 +352,7 @@ Route::get('externform',function(){
             #cc-popup .cc-wrapper{
                 text-align: center;
                 width:100%;
+
             }
 
             #cc-error{
@@ -359,6 +360,8 @@ Route::get('externform',function(){
                 text-align:left;
                 color:red;
                 padding:10px;
+                width: 440px;
+                font-size: 12px;
             }
 
             #cc-popup .cc-footer{
@@ -433,10 +436,10 @@ Route::get('externform',function(){
 
 
             function cSendCall(){
-                document.getElementById(\"cc-error\").innerText=\"\";
+                document.getElementById(\"cc-error\").innerHTML=\"\";
                 var phone =document.getElementById(\"cc-phone\").value;
-                if(!/^\\+?[0-9]{11,12}$/.test(phone)){
-                    document.getElementById(\"cc-error\").innerText=\"Неверный формат телефона, должны быть только цифры\";
+                if(!/^\\+7[0-9]{10}$/.test(phone)){
+                    document.getElementById(\"cc-error\").innerHTML=\"Неверный формат телефона: Телефон должен начинаться с +7 и содержать только цифры\";
                     return false;
                 }
                 document.getElementById(\"cc-call\").style.display = \"none\";
