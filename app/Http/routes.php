@@ -355,6 +355,7 @@ Route::get('externform',function(){
                 box-sizing: border-box;
                 vertical-align:top;
                 position:relative;
+                margin:0;
             }
 
             #cc-popup .cc-wrapper{
