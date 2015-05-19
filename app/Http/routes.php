@@ -399,7 +399,7 @@ Route::get('externform',function(){
         <div id="cc-popup">
         <div class="cc-close" onclick="cPopupClose()"></div>
         <div class="cc-content">
-            <span class="cc-head">Оставьте свой номер и мы перезвоним Вам<br> в течение <span class="cc-bold" id="cc-timer">30</span> <span class="cc-bold">секунд</span>!</span>
+            <span class="cc-head">Оставьте свой номер и мы перезвоним Вам<br> в течение <span class="cc-bold" id="cc-timer">30</span> <span class="cc-bold">секунд</span>! Засекайте!</span>
             <div class="cc-wrapper">
                 <input id="cc-phone" type = "text" value="+7"> <span id="cc-call" onClick="cSendCall()" href="#">Жду звонка</span><span id="cc-call1" href="#">Жду звонка</span>
                 <div id="cc-error"></div>
