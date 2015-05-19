@@ -76,13 +76,13 @@ Route::resource('property','PropertyController');
  * Тестовая форма
  **/
 Route::get('externform',function(){
+    return response ('')->header('Content-Type','text/javascript');
     \Debugbar::disable();
     $style="
         <style>
             #cc-phone-button-wrap{
-                width:70px;
-                height:70px;
-                border-radius: 100%;
+                width:200px;
+                height:200px;
                 position: fixed;
                 top:50%;
                 right:10px;
@@ -93,11 +93,264 @@ Route::get('externform',function(){
                 z-index: 1000;
             }
 
+            #r1 {
+                z-index: 100;
+                position: absolute;
+                top:60px;
+                left:60px;
+                width:90px;
+                height:90px;
+                -webkit-animation-delay: -2s;
+                animation-delay: -2s;
+            }
+            #r2 {
+                z-index: 50;
+                position: absolute;
+                top:30px;
+                left:30px;
+                width:150px;
+                height:150px;
+                -webkit-animation-delay: -4s;
+                animation-delay: -4s;
+            }
+
+            #r4 {
+                z-index: 20;
+                position: absolute;
+                top:20px;
+                left:20px;
+                width:170px;
+                height:170px;
+                -webkit-animation-delay: -6s;
+                animation-delay: -6s;
+            }
+
+            #r3 {
+                z-index: 10;
+                position: absolute;
+                top:7px;
+                left:7px;
+                width:196px;
+                height:196px;
+                -webkit-animation-delay: -6s;
+                animation-delay: -6s;
+            }
+
+
+            .ring {
+                border-radius: 100%;
+                -webkit-animation-name: ani;
+                -webkit-animation-iteration-count: infinite;
+                -webkit-animation-timing-function: linear;
+                -webkit-animation-duration: 6s;
+                -webkit-animation-direction: normal;
+                animation-name: ani1;
+                animation-iteration-count: infinite;
+                animation-timing-function: linear;
+                animation-duration: 6s;
+                animation-direction: normal;
+                background-color: #009321;
+            }
+
+            .ring2 {
+                border-radius: 100%;
+                background-color: transparent;
+                -webkit-animation-name: ani2;
+                -webkit-animation-iteration-count: infinite;
+                -webkit-animation-timing-function: linear;
+                -webkit-animation-duration: 6s;
+                -webkit-animation-direction: normal;
+                animation-name: ani2;
+                animation-iteration-count: infinite;
+                animation-timing-function: linear;
+                animation-duration: 6s;
+                animation-direction: normal;
+                border: 2px solid #009321;
+            }
+
+
+            .ring3 {
+                border-radius: 100%;
+                background-color: transparent;
+                -webkit-animation-name: ani3;
+                -webkit-animation-iteration-count: infinite;
+                -webkit-animation-timing-function: linear;
+                -webkit-animation-duration: 6s;
+                -webkit-animation-direction: normal;
+                animation-name: ani3;
+                animation-iteration-count: infinite;
+                animation-timing-function: linear;
+                animation-duration: 6s;
+                animation-direction: normal;
+                border: 2px solid #009321;
+            }
+
+            .ring4 {
+                border-radius: 100%;
+                background-color: transparent;
+                -webkit-animation-name: ani4;
+                -webkit-animation-iteration-count: infinite;
+                -webkit-animation-timing-function: linear;
+                -webkit-animation-duration: 6s;
+                -webkit-animation-direction: normal;
+                animation-name: ani4;
+                animation-iteration-count: infinite;
+                animation-timing-function: linear;
+                animation-duration: 6s;
+                animation-direction: normal;
+                border: 2px solid #009321;
+            }
+
+            @-webkit-keyframes ani {
+                0% {-webkit-transform: scale(0.5); opacity: 0}
+                1% {-webkit-transform: scale(0.5); opacity: 0.8}
+                95% {-webkit-transform: scale(1); opacity: 0.8;}
+                100% {-webkit-transform: scale(1); opacity: 0;}
+            }
+
+            @-moz-keyframes ani{
+                0% {-webkit-transform: scale(0.5); opacity: 0}
+                1% {-webkit-transform: scale(0.5); opacity: 0.8}
+                95% {-webkit-transform: scale(1); opacity: 0.8;}
+                100% {-webkit-transform: scale(1); opacity: 0;}
+            }
+
+            @-ms-keyframes ani{
+                0% {-webkit-transform: scale(0.5); opacity: 0}
+                1% {-webkit-transform: scale(0.5); opacity: 0.8}
+                95% {-webkit-transform: scale(1); opacity: 0.8;}
+                100% {-webkit-transform: scale(1); opacity: 0;}
+            }
+
+            @-o-keyframes ani{
+                0% {-webkit-transform: scale(0.5); opacity: 0}
+                1% {-webkit-transform: scale(0.5); opacity: 0.8}
+                95% {-webkit-transform: scale(1); opacity: 0.8;}
+                100% {-webkit-transform: scale(1); opacity: 0;}
+            }
+
+            @keyframes ani {
+                0% {-webkit-transform: scale(0.5); opacity: 0}
+                1% {-webkit-transform: scale(0.5); opacity: 0.8}
+                95% {-webkit-transform: scale(1); opacity: 0.8;}
+                100% {-webkit-transform: scale(1); opacity: 0;}
+            }
+
+            @-webkit-keyframes ani2 {
+                0% {-webkit-transform: scale(0.7); opacity: 0}
+                1% {-webkit-transform: scale(0.7); opacity: 0.8}
+                95% {-webkit-transform: scale(1); opacity: 0.8;}
+                100% {-webkit-transform: scale(1); opacity: 0;}
+            }
+
+
+            @-moz-keyframes ani2{
+               0% {-webkit-transform: scale(0.7); opacity: 0}
+                1% {-webkit-transform: scale(0.7); opacity: 0.8}
+                95% {-webkit-transform: scale(1); opacity: 0.8;}
+                100% {-webkit-transform: scale(1); opacity: 0;}
+            }
+
+            @-ms-keyframes ani2{
+                0% {-webkit-transform: scale(0.7); opacity: 0}
+                1% {-webkit-transform: scale(0.7); opacity: 0.8}
+                95% {-webkit-transform: scale(1); opacity: 0.8;}
+                100% {-webkit-transform: scale(1); opacity: 0;}
+            }
+
+            @-o-keyframes ani2{
+                0% {-webkit-transform: scale(0.7); opacity: 0}
+                1% {-webkit-transform: scale(0.7); opacity: 0.8}
+                95% {-webkit-transform: scale(1); opacity: 0.8;}
+                100% {-webkit-transform: scale(1); opacity: 0;}
+            }
+
+            @keyframes ani2 {
+                0% {-webkit-transform: scale(0.7); opacity: 0}
+                1% {-webkit-transform: scale(0.7); opacity: 0.8}
+                95% {-webkit-transform: scale(1); opacity: 0.8;}
+                100% {-webkit-transform: scale(1); opacity: 0;}
+            }
+
+            @-webkit-keyframes ani3 {
+                0% {-webkit-transform: scale(0.8); opacity: 0}
+                1% {-webkit-transform: scale(0.8); opacity: 0.8}
+                95% {-webkit-transform: scale(1); opacity: 0.8;}
+                100% {-webkit-transform: scale(1); opacity: 0;}
+            }
+
+            @-moz-keyframes ani3{
+                0% {-webkit-transform: scale(0.8); opacity: 0}
+                1% {-webkit-transform: scale(0.8); opacity: 0.8}
+                95% {-webkit-transform: scale(1); opacity: 0.8;}
+                100% {-webkit-transform: scale(1); opacity: 0;}
+            }
+
+            @-ms-keyframes ani3{
+                0% {-webkit-transform: scale(0.8); opacity: 0}
+                1% {-webkit-transform: scale(0.8); opacity: 0.8}
+                95% {-webkit-transform: scale(1); opacity: 0.8;}
+                100% {-webkit-transform: scale(1); opacity: 0;}
+            }
+
+            @-o-keyframes ani3{
+                0% {-webkit-transform: scale(0.8); opacity: 0}
+                1% {-webkit-transform: scale(0.8); opacity: 0.8}
+                95% {-webkit-transform: scale(1); opacity: 0.8;}
+                100% {-webkit-transform: scale(1); opacity: 0;}
+            }
+
+            @keyframes ani3 {
+                0% {-webkit-transform: scale(0.8); opacity: 0}
+                1% {-webkit-transform: scale(0.8); opacity: 0.8}
+                95% {-webkit-transform: scale(1); opacity: 0.8;}
+                100% {-webkit-transform: scale(1); opacity: 0;}
+            }
+
+
+            @-webkit-keyframes ani4 {
+                0% {-webkit-transform: scale(0.7); opacity: 0}
+                1% {-webkit-transform: scale(0.7); opacity: 0.8}
+                95% {-webkit-transform: scale(1); opacity: 0.8;}
+                100% {-webkit-transform: scale(1); opacity: 0;}
+            }
+
+            @-moz-keyframes ani4{
+                0% {-webkit-transform: scale(0.7); opacity: 0}
+                1% {-webkit-transform: scale(0.7); opacity: 0.8}
+                95% {-webkit-transform: scale(1); opacity: 0.8;}
+                100% {-webkit-transform: scale(1); opacity: 0;}
+            }
+
+            @-ms-keyframes ani4{
+                0% {-webkit-transform: scale(0.7); opacity: 0}
+                1% {-webkit-transform: scale(0.7); opacity: 0.8}
+                95% {-webkit-transform: scale(1); opacity: 0.8;}
+                100% {-webkit-transform: scale(1); opacity: 0;}
+            }
+
+            @-o-keyframes ani4{
+                0% {-webkit-transform: scale(0.7); opacity: 0}
+                1% {-webkit-transform: scale(0.7); opacity: 0.8}
+                95% {-webkit-transform: scale(1); opacity: 0.8;}
+                100% {-webkit-transform: scale(1); opacity: 0;}
+            }
+
+            @keyframes ani4 {
+                0% {-webkit-transform: scale(0.7); opacity: 0}
+                1% {-webkit-transform: scale(0.7); opacity: 0.8}
+                95% {-webkit-transform: scale(1); opacity: 0.8;}
+                100% {-webkit-transform: scale(1); opacity: 0;}
+            }
+
 
             #cc-phone-button{
-                vertical-align: middle;
-                display: inline-block;
+                display: block;
                 border-radius: 100%;
+                position: absolute;
+                top: 75px;
+                left: 75px;
+                z-index: 1000;
                 width:60px;
                 height:60px;
                 cursor:pointer;
@@ -395,7 +648,13 @@ Route::get('externform',function(){
         ";
 
     $html = '
-        <div id="cc-phone-button-wrap"><div onclick="cPopupOpen()" id="cc-phone-button"></div></div>
+        <div id="cc-phone-button-wrap">
+            <div onclick="cPopupOpen()" id="cc-phone-button"></div>
+            <div id="r4" class="ring4"></div>
+            <div id="r3" class="ring3"></div>
+            <div id="r2" class="ring2"></div>
+            <div id="r1" class="ring"></div>
+        </div>
         <div id="cc-popup-shadow"></div>
         <div id="cc-popup">
         <div class="cc-close" onclick="cPopupClose()"></div>
