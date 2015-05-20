@@ -76,7 +76,11 @@ Route::resource('property','PropertyController');
  * Тестовая форма
  **/
 Route::get('externform',function(){
-    return response ('')->header('Content-Type','text/javascript');
+    $dt = new DateTime();
+
+
+    if((int)$dt->format('H')<9 || (int)$dt->format('H')>21) return response ('')->header('Content-Type','text/javascript');
+
     \Debugbar::disable();
     $style="
         <style>
