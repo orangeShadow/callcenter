@@ -85,59 +85,71 @@ Route::get('externform',function(){
     $style="
         <style>
             #cc-phone-button-wrap{
-                width:200px;
-                height:200px;
+                width:160px;
+                height:160px;
                 position: fixed;
-                top:50%;
+                top:70%;
                 right:10px;
-                margin-top: -35px;
+                margin-top: -80px;
                 text-align: center;
                 vertical-align: middle;
-                line-height: 70px;
                 z-index: 1000;
+                overflow: hidden;
             }
 
             #r1 {
                 z-index: 100;
                 position: absolute;
-                top:60px;
-                left:60px;
-                width:90px;
-                height:90px;
-                -webkit-animation-delay: -2s;
-                animation-delay: -2s;
+                top:40px;
+                left:40px;
+                width:76px;
+                height:76px;
+                -webkit-animation-delay: -4s;
+                -moz-animation-delay: -4s;
+                -ms-animation-delay: -4s;
+                -o-animation-delay: -4s;
+                animation-delay: -4s;
             }
             #r2 {
                 z-index: 50;
                 position: absolute;
                 top:30px;
                 left:30px;
-                width:150px;
-                height:150px;
+                width:96px;
+                height:96px;
                 -webkit-animation-delay: -4s;
+                -moz-animation-delay: -4s;
+                -ms-animation-delay: -4s;
+                -o-animation-delay: -4s;
+                animation-delay: -4s;
+            }
+
+            #r3 {
+                z-index: 10;
+                position: absolute;
+                top:10px;
+                left:10px;
+                width:136px;
+                height:136px;
+                -webkit-animation-delay: -4s;
+                -moz-animation-delay: -4s;
+                -ms-animation-delay: -4s;
+                -o-animation-delay: -4s;
                 animation-delay: -4s;
             }
 
             #r4 {
                 z-index: 20;
                 position: absolute;
-                top:20px;
-                left:20px;
-                width:170px;
-                height:170px;
-                -webkit-animation-delay: -6s;
-                animation-delay: -6s;
-            }
-
-            #r3 {
-                z-index: 10;
-                position: absolute;
-                top:7px;
-                left:7px;
-                width:196px;
-                height:196px;
-                -webkit-animation-delay: -6s;
-                animation-delay: -6s;
+                top:0px;
+                left:0px;
+                width:156px;
+                height:156px;
+                -webkit-animation-delay: -4s;
+                -moz-animation-delay: -4s;
+                -ms-animation-delay: -4s;
+                -o-animation-delay: -4s;
+                animation-delay: -4s;
             }
 
 
@@ -146,12 +158,32 @@ Route::get('externform',function(){
                 -webkit-animation-name: ani;
                 -webkit-animation-iteration-count: infinite;
                 -webkit-animation-timing-function: linear;
-                -webkit-animation-duration: 6s;
+                -webkit-animation-duration: 8s;
                 -webkit-animation-direction: normal;
+
+                -moz-animation-name: ani;
+                -moz-animation-iteration-count: infinite;
+                -moz-animation-timing-function: linear;
+                -moz-animation-duration: 8s;
+                -moz-animation-direction: normal;
+
+
+                -ms-animation-name: ani;
+                -ms-animation-iteration-count: infinite;
+                -ms-animation-timing-function: linear;
+                -ms-animation-duration: 8s;
+                -ms-animation-direction: normal;
+
+                -o-animation-name: ani;
+                -o-animation-iteration-count: infinite;
+                -o-animation-timing-function: linear;
+                -o-animation-duration: 8s;
+                -o-animation-direction: normal;
+
                 animation-name: ani1;
                 animation-iteration-count: infinite;
                 animation-timing-function: linear;
-                animation-duration: 6s;
+                animation-duration: 8s;
                 animation-direction: normal;
                 background-color: #009321;
             }
@@ -162,12 +194,33 @@ Route::get('externform',function(){
                 -webkit-animation-name: ani2;
                 -webkit-animation-iteration-count: infinite;
                 -webkit-animation-timing-function: linear;
-                -webkit-animation-duration: 6s;
+                -webkit-animation-duration: 8s;
                 -webkit-animation-direction: normal;
+
+                -moz-animation-name: ani2;
+                -moz-animation-iteration-count: infinite;
+                -moz-animation-timing-function: linear;
+                -moz-animation-duration: 8s;
+                -moz-animation-direction: normal;
+
+
+                -ms-animation-name: ani2;
+                -ms-animation-iteration-count: infinite;
+                -ms-animation-timing-function: linear;
+                -ms-animation-duration: 8s;
+                -ms-animation-direction: normal;
+
+                -o-animation-name: ani2;
+                -o-animation-iteration-count: infinite;
+                -o-animation-timing-function: linear;
+                -o-animation-duration: 8s;
+                -o-animation-direction: normal;
+
+
                 animation-name: ani2;
                 animation-iteration-count: infinite;
                 animation-timing-function: linear;
-                animation-duration: 6s;
+                animation-duration: 8s;
                 animation-direction: normal;
                 border: 2px solid #009321;
             }
@@ -179,12 +232,32 @@ Route::get('externform',function(){
                 -webkit-animation-name: ani3;
                 -webkit-animation-iteration-count: infinite;
                 -webkit-animation-timing-function: linear;
-                -webkit-animation-duration: 6s;
+                -webkit-animation-duration: 8s;
                 -webkit-animation-direction: normal;
+
+                -moz-animation-name: ani3;
+                -moz-animation-iteration-count: infinite;
+                -moz-animation-timing-function: linear;
+                -moz-animation-duration: 8s;
+                -moz-animation-direction: normal;
+
+
+                -ms-animation-name: ani3;
+                -ms-animation-iteration-count: infinite;
+                -ms-animation-timing-function: linear;
+                -ms-animation-duration: 8s;
+                -ms-animation-direction: normal;
+
+                -o-animation-name: ani3;
+                -o-animation-iteration-count: infinite;
+                -o-animation-timing-function: linear;
+                -o-animation-duration: 8s;
+                -o-animation-direction: normal;
+
                 animation-name: ani3;
                 animation-iteration-count: infinite;
                 animation-timing-function: linear;
-                animation-duration: 6s;
+                animation-duration: 8s;
                 animation-direction: normal;
                 border: 2px solid #009321;
             }
@@ -195,156 +268,176 @@ Route::get('externform',function(){
                 -webkit-animation-name: ani4;
                 -webkit-animation-iteration-count: infinite;
                 -webkit-animation-timing-function: linear;
-                -webkit-animation-duration: 6s;
+                -webkit-animation-duration: 8s;
                 -webkit-animation-direction: normal;
+
+                -moz-animation-name: ani4;
+                -moz-animation-iteration-count: infinite;
+                -moz-animation-timing-function: linear;
+                -moz-animation-duration: 8s;
+                -moz-animation-direction: normal;
+
+
+                -ms-animation-name: ani4;
+                -ms-animation-iteration-count: infinite;
+                -ms-animation-timing-function: linear;
+                -ms-animation-duration: 8s;
+                -ms-animation-direction: normal;
+
+                -o-animation-name: ani4;
+                -o-animation-iteration-count: infinite;
+                -o-animation-timing-function: linear;
+                -o-animation-duration: 8s;
+                -o-animation-direction: normal;
+
                 animation-name: ani4;
                 animation-iteration-count: infinite;
                 animation-timing-function: linear;
-                animation-duration: 6s;
+                animation-duration: 8s;
                 animation-direction: normal;
                 border: 2px solid #009321;
             }
 
             @-webkit-keyframes ani {
-                0% {-webkit-transform: scale(0.5); opacity: 0}
-                1% {-webkit-transform: scale(0.5); opacity: 0.8}
+                0% {-webkit-transform: scale(0.75); opacity: 0}
+                1% {-webkit-transform: scale(0.75); opacity: 0.8}
                 95% {-webkit-transform: scale(1); opacity: 0.8;}
                 100% {-webkit-transform: scale(1); opacity: 0;}
             }
 
             @-moz-keyframes ani{
-                0% {-webkit-transform: scale(0.5); opacity: 0}
-                1% {-webkit-transform: scale(0.5); opacity: 0.8}
-                95% {-webkit-transform: scale(1); opacity: 0.8;}
-                100% {-webkit-transform: scale(1); opacity: 0;}
+                0% {-moz-transform: scale(0.75); opacity: 0}
+                1% {-moz-transform: scale(0.75); opacity: 0.8}
+                95% {-moz-transform: scale(1); opacity: 0.8;}
+                100% {-moz-transform: scale(1); opacity: 0;}
             }
 
             @-ms-keyframes ani{
-                0% {-webkit-transform: scale(0.5); opacity: 0}
-                1% {-webkit-transform: scale(0.5); opacity: 0.8}
-                95% {-webkit-transform: scale(1); opacity: 0.8;}
-                100% {-webkit-transform: scale(1); opacity: 0;}
+                0% {-ms-transform: scale(0.75); opacity: 0}
+                1% {-ms-transform: scale(0.75); opacity: 0.8}
+                95% {-ms-transform: scale(1); opacity: 0.8;}
+                100% {-ms-transform: scale(1); opacity: 0;}
             }
 
             @-o-keyframes ani{
-                0% {-webkit-transform: scale(0.5); opacity: 0}
-                1% {-webkit-transform: scale(0.5); opacity: 0.8}
-                95% {-webkit-transform: scale(1); opacity: 0.8;}
-                100% {-webkit-transform: scale(1); opacity: 0;}
+                0% {-o-transform: scale(0.75); opacity: 0}
+                1% {-o-transform: scale(0.75); opacity: 0.8}
+                95% {-o-transform: scale(1); opacity: 0.8;}
+                100% {-o-transform: scale(1); opacity: 0;}
             }
 
             @keyframes ani {
-                0% {-webkit-transform: scale(0.5); opacity: 0}
-                1% {-webkit-transform: scale(0.5); opacity: 0.8}
-                95% {-webkit-transform: scale(1); opacity: 0.8;}
-                100% {-webkit-transform: scale(1); opacity: 0;}
+                0% {transform: scale(0.75); opacity: 0}
+                1% {transform: scale(0.75); opacity: 0.8}
+                95% {transform: scale(1); opacity: 0.8;}
+                100% {transform: scale(1); opacity: 0;}
             }
 
             @-webkit-keyframes ani2 {
-                0% {-webkit-transform: scale(0.7); opacity: 0}
-                1% {-webkit-transform: scale(0.7); opacity: 0.8}
+                0% {-webkit-transform: scale(0.875); opacity: 0}
+                1% {-webkit-transform: scale(0.875); opacity: 0.8}
                 95% {-webkit-transform: scale(1); opacity: 0.8;}
                 100% {-webkit-transform: scale(1); opacity: 0;}
             }
 
 
             @-moz-keyframes ani2{
-               0% {-webkit-transform: scale(0.7); opacity: 0}
-                1% {-webkit-transform: scale(0.7); opacity: 0.8}
-                95% {-webkit-transform: scale(1); opacity: 0.8;}
-                100% {-webkit-transform: scale(1); opacity: 0;}
+               0% {-moz-transform: scale(0.875); opacity: 0}
+                1% {-moz-transform: scale(0.875); opacity: 0.8}
+                95% {-moz-transform: scale(1); opacity: 0.8;}
+                100% {-moz-transform: scale(1); opacity: 0;}
             }
 
             @-ms-keyframes ani2{
-                0% {-webkit-transform: scale(0.7); opacity: 0}
-                1% {-webkit-transform: scale(0.7); opacity: 0.8}
-                95% {-webkit-transform: scale(1); opacity: 0.8;}
-                100% {-webkit-transform: scale(1); opacity: 0;}
+                0% {-ms-transform: scale(0.875); opacity: 0}
+                1% {-ms-transform: scale(0.875); opacity: 0.8}
+                95% {-ms-transform: scale(1); opacity: 0.8;}
+                100% {-ms-transform: scale(1); opacity: 0;}
             }
 
             @-o-keyframes ani2{
-                0% {-webkit-transform: scale(0.7); opacity: 0}
-                1% {-webkit-transform: scale(0.7); opacity: 0.8}
-                95% {-webkit-transform: scale(1); opacity: 0.8;}
-                100% {-webkit-transform: scale(1); opacity: 0;}
+                0% {-o-transform: scale(0.875); opacity: 0}
+                1% {-o-transform: scale(0.875); opacity: 0.8}
+                95% {-o-transform: scale(1); opacity: 0.8;}
+                100% {-o-transform: scale(1); opacity: 0;}
             }
 
             @keyframes ani2 {
-                0% {-webkit-transform: scale(0.7); opacity: 0}
-                1% {-webkit-transform: scale(0.7); opacity: 0.8}
-                95% {-webkit-transform: scale(1); opacity: 0.8;}
-                100% {-webkit-transform: scale(1); opacity: 0;}
+                0% {transform: scale(0.875); opacity: 0}
+                1% {transform: scale(0.875); opacity: 0.8}
+                95% {transform: scale(1); opacity: 0.8;}
+                100% {transform: scale(1); opacity: 0;}
             }
 
             @-webkit-keyframes ani3 {
-                0% {-webkit-transform: scale(0.8); opacity: 0}
-                1% {-webkit-transform: scale(0.8); opacity: 0.8}
+                0% {-webkit-transform: scale(0.714); opacity: 0}
+                1% {-webkit-transform: scale(0.714); opacity: 0.8}
                 95% {-webkit-transform: scale(1); opacity: 0.8;}
                 100% {-webkit-transform: scale(1); opacity: 0;}
             }
 
             @-moz-keyframes ani3{
-                0% {-webkit-transform: scale(0.8); opacity: 0}
-                1% {-webkit-transform: scale(0.8); opacity: 0.8}
-                95% {-webkit-transform: scale(1); opacity: 0.8;}
-                100% {-webkit-transform: scale(1); opacity: 0;}
+                0% {-moz-transform: scale(0.714); opacity: 0}
+                1% {-moz-transform: scale(0.714); opacity: 0.8}
+                95% {-moz-transform: scale(1); opacity: 0.8;}
+                100% {-moz-transform: scale(1); opacity: 0;}
             }
 
             @-ms-keyframes ani3{
-                0% {-webkit-transform: scale(0.8); opacity: 0}
-                1% {-webkit-transform: scale(0.8); opacity: 0.8}
-                95% {-webkit-transform: scale(1); opacity: 0.8;}
-                100% {-webkit-transform: scale(1); opacity: 0;}
+                0% {-ms-transform: scale(0.714); opacity: 0}
+                1% {-ms-transform: scale(0.714); opacity: 0.8}
+                95% {-ms-transform: scale(1); opacity: 0.8;}
+                100% {-ms-transform: scale(1); opacity: 0;}
             }
 
             @-o-keyframes ani3{
-                0% {-webkit-transform: scale(0.8); opacity: 0}
-                1% {-webkit-transform: scale(0.8); opacity: 0.8}
-                95% {-webkit-transform: scale(1); opacity: 0.8;}
-                100% {-webkit-transform: scale(1); opacity: 0;}
+                0% {-o-transform: scale(0.714); opacity: 0}
+                1% {-o-transform: scale(0.714); opacity: 0.8}
+                95% {-o-transform: scale(1); opacity: 0.8;}
+                100% {-o-transform: scale(1); opacity: 0;}
             }
 
             @keyframes ani3 {
-                0% {-webkit-transform: scale(0.8); opacity: 0}
-                1% {-webkit-transform: scale(0.8); opacity: 0.8}
+                0% {-webkit-transform: scale(0.714); opacity: 0}
+                1% {-webkit-transform: scale(0.714); opacity: 0.8}
                 95% {-webkit-transform: scale(1); opacity: 0.8;}
                 100% {-webkit-transform: scale(1); opacity: 0;}
             }
 
 
             @-webkit-keyframes ani4 {
-                0% {-webkit-transform: scale(0.7); opacity: 0}
-                1% {-webkit-transform: scale(0.7); opacity: 0.8}
+                0% {-webkit-transform: scale(0.8); opacity: 0}
+                1% {-webkit-transform: scale(0.8); opacity: 0.8}
                 95% {-webkit-transform: scale(1); opacity: 0.8;}
                 100% {-webkit-transform: scale(1); opacity: 0;}
             }
 
             @-moz-keyframes ani4{
-                0% {-webkit-transform: scale(0.7); opacity: 0}
-                1% {-webkit-transform: scale(0.7); opacity: 0.8}
-                95% {-webkit-transform: scale(1); opacity: 0.8;}
-                100% {-webkit-transform: scale(1); opacity: 0;}
+                0% {-moz-transform: scale(0.8); opacity: 0}
+                1% {-moz-transform: scale(0.8); opacity: 0.8}
+                95% {-moz-transform: scale(1); opacity: 0.8;}
+                100% {-moz-transform: scale(1); opacity: 0;}
             }
 
             @-ms-keyframes ani4{
-                0% {-webkit-transform: scale(0.7); opacity: 0}
-                1% {-webkit-transform: scale(0.7); opacity: 0.8}
-                95% {-webkit-transform: scale(1); opacity: 0.8;}
-                100% {-webkit-transform: scale(1); opacity: 0;}
+                0% {-ms-transform: scale(0.8); opacity: 0}
+                1% {-ms-transform: scale(0.8); opacity: 0.8}
+                95% {-ms-transform: scale(1); opacity: 0.8;}
+                100% {-ms-transform: scale(1); opacity: 0;}
             }
 
             @-o-keyframes ani4{
-                0% {-webkit-transform: scale(0.7); opacity: 0}
-                1% {-webkit-transform: scale(0.7); opacity: 0.8}
-                95% {-webkit-transform: scale(1); opacity: 0.8;}
-                100% {-webkit-transform: scale(1); opacity: 0;}
+                0% {-o-transform: scale(0.8); opacity: 0}
+                1% {-o-transform: scale(0.8); opacity: 0.8}
+                95% {-o-transform: scale(1); opacity: 0.8;}
+                100% {-o-transform: scale(1); opacity: 0;}
             }
 
             @keyframes ani4 {
-                0% {-webkit-transform: scale(0.7); opacity: 0}
-                1% {-webkit-transform: scale(0.7); opacity: 0.8}
-                95% {-webkit-transform: scale(1); opacity: 0.8;}
-                100% {-webkit-transform: scale(1); opacity: 0;}
+                0% {transform: scale(0.8); opacity: 0}
+                1% {transform: scale(0.8); opacity: 0.8}
+                95% {transform: scale(1); opacity: 0.8;}
+                100% {transform: scale(1); opacity: 0;}
             }
 
 
@@ -352,8 +445,8 @@ Route::get('externform',function(){
                 display: block;
                 border-radius: 100%;
                 position: absolute;
-                top: 75px;
-                left: 75px;
+                top: 50px;
+                left: 50px;
                 z-index: 1000;
                 width:60px;
                 height:60px;
