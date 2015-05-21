@@ -221,7 +221,7 @@ class CallbackHelper {
 
     public static function getCallBackForm()
     {
-        $miliseconds = (int)Request::get('sec',1);
+        $miliseconds = (int)Request::get('sec',90000);
 
         $style="<style>
             #r1 {
@@ -764,7 +764,7 @@ class CallbackHelper {
 
     public static function getSendBackForm()
     {
-        $miliseconds = (int)Request::get('sec',1);
+        $miliseconds = (int)Request::get('sec',90000);
 
         $style=" <style>";
         $style.= self::styleStat();

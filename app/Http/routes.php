@@ -79,13 +79,13 @@ Route::get('externform',function(){
     \Debugbar::disable();
     $dt = new DateTime();
 
-    //if((int)$dt->format('H')<9 || (int)$dt->format('H')>21){
+    if((int)$dt->format('H')<9 || (int)$dt->format('H')>21){
         $result = App\ACME\Helpers\CallbackHelper::getSendBackForm();
         return response ($result)->header('Content-Type','text/javascript');
-    /*}else{
+    }else{
         $result = App\ACME\Helpers\CallbackHelper::getCallBackForm();
         return response ($result)->header('Content-Type','text/javascript');
-    }*/
+    }
 });
 
 /**
