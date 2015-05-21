@@ -76,12 +76,14 @@ Route::resource('property','PropertyController');
  * Тестовая форма
  **/
 Route::get('externform',function(){
+    \Debugbar::disable();
     $dt = new DateTime();
 
 
     if((int)$dt->format('H')<9 || (int)$dt->format('H')>21) return response ('')->header('Content-Type','text/javascript');
 
-    \Debugbar::disable();
+    $miliseconds = (int)Request::get('sec',90000);
+
     $style="
         <style>
             #cc-phone-button-wrap{
@@ -829,7 +831,7 @@ Route::get('externform',function(){
                 document.body.insertAdjacentHTML('beforeend','".$style.$html."');
                 window.setTimeout(function(){
                     cPopupOpen();
-                }, 30000);
+                }, ".$miliseconds.");
                 ".$script.";
             })();";
     $result = trim(preg_replace('/\s\s+/', '', $result));
