@@ -11,7 +11,7 @@ class CallbackHelper {
                 width:160px;
                 height:160px;
                 position: fixed;
-                top:70%;
+                top:40%;
                 right:10px;
                 margin-top: -80px;
                 text-align: center;
