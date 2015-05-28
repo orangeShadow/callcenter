@@ -16,7 +16,7 @@ $(function(){
     })
 });
 
-var app = angular.module('project-property', [], function($interpolateProvider) {
+var app = angular.module('project', [], function($interpolateProvider) {
     $interpolateProvider.startSymbol('<%');
     $interpolateProvider.endSymbol('%>');
 });
@@ -44,10 +44,10 @@ app.controller('propertyController', function($scope, $http) {
     $scope.addProperty = function() {
         $scope.loading = true;
 
-        $('.form-inline .form-group').removeClass('has-error');
+        $('form.property .form-group').removeClass('has-error');
         if(typeof($scope.property) == "undefined")
         {
-            $('.form-inline .form-group').addClass('has-error');
+            $('form.property .form-group').addClass('has-error');
             return false;
         }
 
@@ -72,8 +72,7 @@ app.controller('propertyController', function($scope, $http) {
         }).error(function(data,status){
             for(k in data.errors)
             {
-                console.log($('.form-inline [name="property.'+k+'"]'));
-                $('.form-inline [name="property.'+k+'"]').parents('.form-group').addClass('has-error');
+                $('form.property [name="property.'+k+'"]').parents('.form-group').addClass('has-error');
             }
         });
     };
@@ -88,6 +87,81 @@ app.controller('propertyController', function($scope, $http) {
         $http.delete('/property/' + property.id)
             .success(function() {
                 $scope.properties.splice(index, 1);
+                $scope.loading = false;
+
+            });;
+    };
+
+
+    $scope.init();
+
+});
+
+
+app.controller('destinationController', function($scope, $http) {
+
+    $scope.destinations = [];
+    $scope.loading = false;
+
+
+    $scope.project_id = $(".destinationProject").data('project-id');
+
+
+    $scope.init = function() {
+        $scope.loading = true;
+        $http.get('/destination/?project_id='+$scope.project_id).
+            success(function(data, status, headers, config) {
+                $scope.destinations = data;
+                $scope.loading = false;
+
+            });
+    }
+
+    $scope.addDestination = function() {
+        $scope.loading = true;
+
+        $('form.destination .form-group').removeClass('has-error');
+        if(typeof($scope.destination) == "undefined")
+        {
+            $('form.destination .form-group').addClass('has-error');
+            return false;
+        }
+
+        var destination = {
+            title: $scope.destination.title,
+            email:  $scope.destination.email,
+            project_id: $scope.project_id,
+            sort:$scope.destination.sort,
+            _token:$('input[name="_token"]').val()
+        }
+
+        $http({
+            method:'POST',
+            url:'/destination',
+            data:destination,
+            'header':{'Content-Type': 'application/x-www-form-urlencoded'}
+        }).success(function(data, status, headers, config) {
+            $scope.destinations.push(data);
+            $scope.destination= '';
+            $scope.loading = false;
+        }).error(function(data,status){
+            for(k in data)
+            {
+                $('form.destination [name="destination.'+k+'"]').parents('.form-group').addClass('has-error');
+            }
+        });
+    };
+
+
+    $scope.deleteDestination = function(index) {
+        $scope.loading = true;
+
+        var destination = $scope.destinations[index];
+
+
+        $http.delete('/destination/' + destination.id)
+            .success(function() {
+                $scope.destinations.splice(index, 1);
                 $scope.loading = false;
 
             });;

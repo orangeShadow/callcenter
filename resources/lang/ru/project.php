@@ -24,6 +24,10 @@ return [
     'propertyType' =>'Тип свойства',
     'propertyText' => 'Текстовое',
     'propertyNumber'=> 'Числовое',
-    'propertyDate' => 'Дата'
+    'propertyDate' => 'Дата',
+    'destinationTitle'=>'Имя Адресата',
+    'destinationEmail'=>'Email',
+    'sort'=>'Сортировка',
+
 ];
 ?>

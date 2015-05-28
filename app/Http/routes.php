@@ -71,6 +71,7 @@ Route::post('claim/statuschange',function(Request $request){
 Route::resource('user','UserController');
 
 Route::resource('property','PropertyController');
+Route::resource('destination','DestinationController');
 
 /**
  * Тестовая форма

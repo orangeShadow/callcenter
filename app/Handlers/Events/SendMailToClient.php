@@ -28,7 +28,6 @@ class SendMailToClient {
         $claim = $event->claim;
         $properties = \App\Property::showPropertyValue($claim);
 
-
         \Mail::send('emails.claimcreate',compact('claim','properties'), function($message) use ($event)
         {
             $emails = [];
@@ -39,6 +38,9 @@ class SendMailToClient {
                 {
                     $emails[] = trim($item);
                 }
+            }
+            if(is_array($event->destinations)){
+                $emails = array_merge($emails,$event->destinations);
             }
             $message->to($emails, 'Callcenter №1')->subject('Круглосуточный call-центр №1');
         });

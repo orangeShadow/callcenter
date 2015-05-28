@@ -56,7 +56,6 @@ class ClaimController extends Controller {
         {
             $claim->project_id = (int)Request::get('project_id');
             $properties  = Property::getPropertyByModel($claim);
-
         }else{
             abort(404);
         }
@@ -70,7 +69,10 @@ class ClaimController extends Controller {
 	 */
 	public function store(Requests\CreateClaimRequest $request)
 	{
-        $request = $request->all();
+
+        $destinations = $request->get('destination');
+
+        $request = $request->except('destination');
         $request['operator_id'] = Auth::user()->id;
         $request['status']='N';
         $claim = new Claim($request);
@@ -120,7 +122,7 @@ class ClaimController extends Controller {
             $pr->save();
         }
         flash()->success('Обращение Создано, № '.$claim->id);
-        \Event::fire(new ClaimCreate($claim));
+        \Event::fire(new ClaimCreate($claim,$destinations));
         return redirect('project');
 	}
 

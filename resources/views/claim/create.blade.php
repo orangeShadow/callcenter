@@ -19,7 +19,14 @@
 
 
             {!! Form::model($claim,['route'=>['claim.store'],'class'=>'form-horizontal']) !!}
-            @include('claim.form',["submit"=>Lang::get("claim.create"),'createStatus'=>true])
+                @include('claim.form',["submit"=>Lang::get("claim.create"),'createStatus'=>true])
+                <div class="form-group">
+                    @foreach($claim->getDestinations() as $destination)
+
+                                    <label class="checkbox-inline"><input type="checkbox" name="destination[]" value="{{$destination->email}}"> {{$destination->title}}</label>
+
+                    @endforeach
+                </div>
             {!! Form::close() !!}
         </div>
     </div>

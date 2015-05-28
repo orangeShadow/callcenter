@@ -143,4 +143,15 @@ class Claim extends Model {
     {
         return $this->belongsTo('App\StatusClaim','status','code');
     }
+
+    public function getDestinations()
+    {
+        if(!empty($this->project_id))
+        {
+            return \App\Destination::where('project_id',$this->project_id)->orderBy('sort')->get(['title','email']);
+        }else{
+            return null;
+        }
+
+    }
 }
