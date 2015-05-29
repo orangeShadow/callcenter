@@ -2,25 +2,25 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Круглосуточный call-центр №1</title>
+    <title>Call-центр №1</title>
 </head>
 <body>
 <h2>Уважаемый клиент!</h2>
 <p>Зарегистрирована новая заявка № {{$claim->id}}.</p>
-<p>Клиент: {{$claim->name}}.</p>
-<p>Контактный телефон: {{$claim->phone}}.</p>
-<p>Описание:<br>
+<p><strong>Клиент:</strong> {{$claim->name}}.</p>
+<p><strong>Контактный телефон:</strong> {{$claim->phone}}.</p>
+<p><strong>Описание:</strong><br>
     {{ $claim->text}}
 </p>
 <p>
-    Дата обратного звонка: {{$claim->backcall_at}}
+    <strong>Дата обратного звонка:</strong> {{$claim->backcall_at}}
 </p>
 <p>
-    Статус: {{$claim->statusT->title}}
+    <strong>Статус:</strong> {{$claim->statusT->title}}
 </p>
 @foreach($properties as $property)
     <p>
-        {{$property["title"]}}: {!! $property["value"] !!}
+        <strong>{{$property["title"]}}:</strong> {!! $property["value"] !!}
     </p>
 @endforeach
 <p><a href="http://callcenter1.roumingu.net/claim/{{$claim->id}}">Перейти к заявке</a></p>

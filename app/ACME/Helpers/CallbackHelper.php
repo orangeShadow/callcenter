@@ -21,22 +21,22 @@ class CallbackHelper {
             }
 
              #cc-phone-button{
-                    display: block;
-                    border-radius: 100%;
-                    position: absolute;
-                    top: 48px;
-                    left: 48px;
-                    z-index: 1000;
-                    width:60px;
-                    height:60px;
-                    cursor:pointer;
-                    background: #009321 url(\"http://".$_SERVER['SERVER_NAME']."/i/phone.png\") no-repeat center;
-                    animation: vibro 3s infinite ;
-                    -webkit-animation: vibro 3s infinite ;
-                    -moz-animation: vibro 3s infinite ;
-                    -ms-animation: vibro 3s infinite ;
-                    -o-animation: vibro 3s infinite ;
-                }
+                display: block;
+                border-radius: 100%;
+                position: absolute;
+                top: 50px;
+                left: 50px;
+                z-index: 1000;
+                width:60px;
+                height:60px;
+                cursor:pointer;
+                background: #009321 url(\"http://".$_SERVER['SERVER_NAME']."/i/phone.png\") no-repeat center;
+                animation: vibro 3s infinite ;
+                -webkit-animation: vibro 3s infinite ;
+                -moz-animation: vibro 3s infinite ;
+                -ms-animation: vibro 3s infinite ;
+                -o-animation: vibro 3s infinite ;
+             }
 
                 @keyframes vibro {
                   0% {
