@@ -760,7 +760,10 @@ class CallbackHelper {
                 function noEventOpenCall(){
                     clearTimeout(idleTimer);
                     idleState = false;
-                    idleTimer = setTimeout(function () {cPopupOpen(); idleState = true;}, idleWait);
+                    idleTimer = setTimeout(function () {
+                        cPopupOpen();
+                        idleState = true;
+                    }, idleWait);
                 }
 
                 var idleTimer = null;
