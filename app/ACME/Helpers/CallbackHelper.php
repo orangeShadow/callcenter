@@ -227,8 +227,8 @@ class CallbackHelper {
             #r1 {
                 z-index: 100;
                 position: absolute;
-                top:40px;
-                left:40px;
+                top:42px;
+                left:42px;
                 width:76px;
                 height:76px;
                 -webkit-animation-delay: -4s;
