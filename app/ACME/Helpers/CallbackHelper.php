@@ -668,7 +668,7 @@ class CallbackHelper {
             var body = document.body;
             var html = document.documentElement;
             var height = Math.max( body.scrollHeight, body.offsetHeight,html.clientHeight, html.scrollHeight, html.offsetHeight );
-            $(\"#cc-popup-shadow\").css(\"height\",height);
+            document.getElementById(\"cc-popup-shadow\").style.height=height;
         ";
 
         $html = '
@@ -694,6 +694,7 @@ class CallbackHelper {
         </div>
     </div>
     ';
+
 
 
         $style = trim(preg_replace('/\s\s+/', '', $style));
@@ -752,7 +753,24 @@ class CallbackHelper {
                 document.getElementById(\"cc-timer\").innerHTML = timer-1;
                 if(timer>1) setTimeout(cTimerDown,1000);
             }
+
+            function noEventOpenCall(){
+                clearTimeout(idleTimer);
+                idleState = false;
+                idleTimer = setTimeout(function () {cPopupOpen(); idleState = true;}, idleWait);
+            }
+
+
             ;(function(){
+                var idleTimer = null;
+                var idleState = false;
+                var idleWait = 1000 * 60;
+
+                document.addEventListener('mousemove',noEventOpenCall);
+                document.addEventListener('keydown',noEventOpenCall);
+                document.addEventListener('scroll',noEventOpenCall);
+                document.addEventListener('touchstart',noEventOpenCall);
+
                 document.body.insertAdjacentHTML('beforeend','".$style.$html."');
                 window.setTimeout(function(){
                     cPopupOpen();
@@ -761,6 +779,9 @@ class CallbackHelper {
             })();";
         return $result = trim(preg_replace('/\s\s+/', '', $result));
     }
+
+
+
 
     public static function getSendBackForm()
     {
