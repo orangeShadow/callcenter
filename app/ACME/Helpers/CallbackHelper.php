@@ -754,14 +754,15 @@ class CallbackHelper {
                 if(timer>1) setTimeout(cTimerDown,1000);
             }
 
-            function noEventOpenCall(){
-                clearTimeout(idleTimer);
-                idleState = false;
-                idleTimer = setTimeout(function () {cPopupOpen(); idleState = true;}, idleWait);
-            }
-
 
             ;(function(){
+
+                function noEventOpenCall(){
+                    clearTimeout(idleTimer);
+                    idleState = false;
+                    idleTimer = setTimeout(function () {cPopupOpen(); idleState = true;}, idleWait);
+                }
+
                 var idleTimer = null;
                 var idleState = false;
                 var idleWait = 1000 * 60;
