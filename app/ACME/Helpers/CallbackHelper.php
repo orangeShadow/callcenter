@@ -710,6 +710,9 @@ class CallbackHelper {
                 }
             }
             function cPopupOpen(){
+
+                if(localStorage.hasOwnProperty('cc-call') && localStorage.getItem('cc-call')==1) return false;
+
                 document.getElementById(\"cc-popup\").style.display=\"block\";
                 document.getElementById(\"cc-popup-shadow\").style.display=\"block\";
                 var focusC =  document.getElementById(\"cc-phone\").value;
@@ -780,7 +783,6 @@ class CallbackHelper {
 
                 document.body.insertAdjacentHTML('beforeend','".$style.$html."');
                 window.setTimeout(function(){
-                    if(localStorage.hasOwnProperty('cc-call') && localStorage.getItem('cc-call')==1) return 0;
                     cPopupOpen();
                 }, ".$miliseconds.");
                 ".$script.";
@@ -942,6 +944,8 @@ class CallbackHelper {
                 }
             }
             function cPopupOpen(){
+                if(localStorage.hasOwnProperty('cc-call') && localStorage.getItem('cc-call')==1) return false;
+
                 document.getElementById(\"cc-popup\").style.display=\"block\";
                 document.getElementById(\"cc-popup-shadow\").style.display=\"block\";
                 var focusC =  document.getElementById(\"cc-phone\").value;
@@ -994,7 +998,6 @@ class CallbackHelper {
             ;(function(){
                 document.body.insertAdjacentHTML('beforeend','".$style.$html."');
                 window.setTimeout(function(){
-                    if(localStorage.hasOwnProperty('cc-call') && localStorage.getItem('cc-call')==1) return 0;
                     cPopupOpen();
                 }, ".$miliseconds.");
                 ".$script.";
