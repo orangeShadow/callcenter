@@ -705,6 +705,9 @@ class CallbackHelper {
             function cPopupClose(){
                 document.getElementById(\"cc-popup\").style.display=\"none\";
                 document.getElementById(\"cc-popup-shadow\").style.display=\"none\";
+                if(localStorage.hasOwnProperty('cc-call')==false){
+                    localStorage.setItem('cc-call',1);
+                }
             }
             function cPopupOpen(){
                 document.getElementById(\"cc-popup\").style.display=\"block\";
@@ -777,6 +780,7 @@ class CallbackHelper {
 
                 document.body.insertAdjacentHTML('beforeend','".$style.$html."');
                 window.setTimeout(function(){
+                    if(localStorage.hasOwnProperty('cc-call') && localStorage.getItem('cc-call')==1) return 0;
                     cPopupOpen();
                 }, ".$miliseconds.");
                 ".$script.";
@@ -933,6 +937,9 @@ class CallbackHelper {
             function cPopupClose(){
                 document.getElementById(\"cc-popup\").style.display=\"none\";
                 document.getElementById(\"cc-popup-shadow\").style.display=\"none\";
+                if(localStorage.hasOwnProperty('cc-call')==false){
+                    localStorage.setItem('cc-call',1);
+                }
             }
             function cPopupOpen(){
                 document.getElementById(\"cc-popup\").style.display=\"block\";
@@ -987,6 +994,7 @@ class CallbackHelper {
             ;(function(){
                 document.body.insertAdjacentHTML('beforeend','".$style.$html."');
                 window.setTimeout(function(){
+                    if(localStorage.hasOwnProperty('cc-call') && localStorage.getItem('cc-call')==1) return 0;
                     cPopupOpen();
                 }, ".$miliseconds.");
                 ".$script.";
