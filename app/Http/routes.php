@@ -51,7 +51,7 @@ Route::resource('user','UserController');
 Route::resource('property','PropertyController');
 
 Route::resource('destination','DestinationController');
-Route::resource('typicalDescription','typicalDescriptionController');
+Route::resource('typicalDescription','TypicalDescriptionController');
 
 
 
