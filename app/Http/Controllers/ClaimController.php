@@ -281,4 +281,30 @@ class ClaimController extends Controller {
         return redirect('/claim');
 	}
 
+
+    /**
+     * @param Request $request
+     * @return Response
+     */
+    public function postStatuschange(Request $request)
+    {
+        if (Auth::guest())
+        {
+            if ($request::ajax())
+            {
+                return response('Unauthorized.', 401);
+            }
+            else
+            {
+                return redirect()->guest('auth/login');
+            }
+        }
+
+        $id  = Request::get('id');
+        $claim =Claim::findOrFail($id);
+        $claim->status = Request::get('status');
+        $claim->note = Request::get('note');
+        $claim->save();
+        return redirect("claim/$id");
+    }
 }

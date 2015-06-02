@@ -60,7 +60,7 @@
 
                     <div class="destinationProject row"  data-project-id="{{$project->id}}" ng-app="project-destination" ng-controller="destinationController">
                         <div class="col-lg-12">
-                            <h4 >Создать свойства для проекта</h4>
+                            <h4 >Создать адресатов</h4>
                             <form class="form-inline destination" style="margin-bottom:20px;" >
                                 <div class="form-group">
                                     <label>{{Lang::get("project.destinationTitle")}}</label>
@@ -80,6 +80,31 @@
                                 <div class="col-lg-12">
                                     <ol>
                                         <li   ng-repeat='destination in destinations'><% destination.sort %>: <% destination.title %>(<% destination.email %>)<a ng-click="deleteDestination($index)" class="text-danger"><i class="glyphicon glyphicon-remove"></i></a> </li>
+                                    </ol>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <hr>
+
+                    <div class="typicalDescriptionProject row"  data-project-id="{{$project->id}}" ng-app="project-typicalDescription" ng-controller="typicalDescriptionController">
+                        <div class="col-lg-12">
+                            <h4 >Создать типовое описание</h4>
+                            <form class="form-inline typicalDescription" style="margin-bottom:20px;" >
+                                <div class="form-group">
+                                    <label>{{Lang::get("project.typicalDescription.Description")}}</label>
+                                    <textarea style="width:400px;" name="typicalDescription.description" ng-model="typicalDescription.description" class="form-control"></textarea>
+                                </div>
+                                <div class="form-group">
+                                    <label>{{Lang::get("project.sort")}}</label>
+                                    <input name="typicalDescription.sort" ng-model="typicalDescription.sort" style="width: 50px;" type="text" class="form-control">
+                                </div>
+                                <a class="btn btn-success btn-sm" ng-click="addDestination()"><i class="glyphicon glyphicon-plus"></i></a>
+                            </form>
+                            <div class="destination-list row">
+                                <div class="col-lg-12">
+                                    <ol>
+                                        <li   ng-repeat='typicalDescription in typicalDescriptions'><% typicalDescription.sort %>: <% typicalDescription.description %><a ng-click="deleteTypicalDescription($index)" class="text-danger"><i class="glyphicon glyphicon-remove"></i></a> </li>
                                     </ol>
                                 </div>
                             </div>

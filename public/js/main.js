@@ -171,3 +171,77 @@ app.controller('destinationController', function($scope, $http) {
     $scope.init();
 
 });
+
+
+app.controller('typicalDescriptionController', function($scope, $http) {
+
+    $scope.typicalDescriptions = [];
+    $scope.loading = false;
+
+
+    $scope.project_id = $(".typicalDescriptionProject").data('project-id');
+
+
+    $scope.init = function() {
+        $scope.loading = true;
+        $http.get('/typicalDescription/?project_id='+$scope.project_id).
+            success(function(data, status, headers, config) {
+                $scope.typicalDescriptions = data;
+                $scope.loading = false;
+
+            });
+    }
+
+    $scope.addDestination = function() {
+        $scope.loading = true;
+
+        $('form.typicalDescription .form-group').removeClass('has-error');
+        if(typeof($scope.typicalDescription) == "undefined")
+        {
+            $('form.typicalDescription .form-group').addClass('has-error');
+            return false;
+        }
+
+        var typicalDescription = {
+            description:  $scope.typicalDescription.description,
+            project_id: $scope.project_id,
+            sort:$scope.typicalDescription.sort,
+            _token:$('input[name="_token"]').val()
+        }
+
+        $http({
+            method:'POST',
+            url:'/typicalDescription',
+            data:typicalDescription,
+            'header':{'Content-Type': 'application/x-www-form-urlencoded'}
+        }).success(function(data, status, headers, config) {
+            $scope.typicalDescriptions.push(data);
+            $scope.typicalDescription= '';
+            $scope.loading = false;
+        }).error(function(data,status){
+            for(k in data)
+            {
+                $('form.typicalDescription [name="typicalDescription.'+k+'"]').parents('.form-group').addClass('has-error');
+            }
+        });
+    };
+
+
+    $scope.deleteTypicalDescription = function(index) {
+        $scope.loading = true;
+
+        var typicalDescription = $scope.typicalDescription[index];
+
+
+        $http.delete('/typicalDescription/' + typicalDescription.id)
+            .success(function() {
+                $scope.typicalDescription.splice(index, 1);
+                $scope.loading = false;
+
+            });;
+    };
+
+
+    $scope.init();
+
+});

@@ -41,37 +41,19 @@ Route::get('/',function(Request $request){
     }
 });
 
-
 Route::resource('project','ProjectController');
 
 Route::resource('claim','ClaimController');
-Route::post('claim/statuschange',function(Request $request){
-    if (Auth::guest())
-    {
-        if ($request::ajax())
-        {
-            return response('Unauthorized.', 401);
-        }
-        else
-        {
-            return redirect()->guest('auth/login');
-        }
-    }
-
-    $id  = Request::get('id');
-    $claim =App\Claim::findOrFail($id);
-    $claim->status = Request::get('status');
-    $claim->note = Request::get('note');
-    $claim->save();
-    return redirect("claim/$id");
-
-});
-
+Route::post('claim/statuschange','ClaimController@postStatuschange');
 
 Route::resource('user','UserController');
 
 Route::resource('property','PropertyController');
+
 Route::resource('destination','DestinationController');
+Route::resource('typicalDescription','typicalDescriptionController');
+
+
 
 /**
  * Тестовая форма

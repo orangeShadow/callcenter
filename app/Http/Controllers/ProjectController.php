@@ -147,6 +147,7 @@ class ProjectController extends Controller {
         }
 
         \App\Destination::where('project_id','=',$id)->delete();
+        \App\TypicalDescription::where('project_id','=',$id)->delete();
 
         \App\Claim::where('project_id','=',$id)->delete();
 
