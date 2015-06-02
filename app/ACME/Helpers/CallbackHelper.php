@@ -5,7 +5,7 @@ use \Request;
 
 class CallbackHelper {
 
-    public static function styleStat(){
+    private static function styleStat($color="#009321"){
         return "
             #cc-phone-button-wrap{
                 width:160px;
@@ -30,7 +30,7 @@ class CallbackHelper {
                 width:60px;
                 height:60px;
                 cursor:pointer;
-                background: #009321 url(\"http://".$_SERVER['SERVER_NAME']."/i/phone.png\") no-repeat center;
+                background: $color url(\"http://".$_SERVER['SERVER_NAME']."/i/phone.png\") no-repeat center;
                 animation: vibro 3s infinite ;
                 -webkit-animation: vibro 3s infinite ;
                 -moz-animation: vibro 3s infinite ;
@@ -212,16 +212,32 @@ class CallbackHelper {
                 }
 
                 #cc-popup .cc-close:hover{
-                    background-color:#009321;
+                    background-color:$color;
                 }
         ";
     }
 
+    private static function getColorScheme($colorScheme)
+    {
+        switch($colorScheme)
+        {
+            case 1:
+                return "#009321";
+                break;
+            case 2:
+                return "#FED440";
+                break;
+            default:
+                return "#009321";
+                break;
+        }
 
+    }
 
     public static function getCallBackForm()
     {
         $miliseconds = (int)Request::get('sec',90000);
+        $color = static::getColorScheme((int)Request::get('color',1));
 
         $style="<style>
             #r1 {
@@ -309,7 +325,7 @@ class CallbackHelper {
                 animation-timing-function: linear;
                 animation-duration: 8s;
                 animation-direction: normal;
-                background-color: #009321;
+                background-color: $color;
             }
 
             .ring2 {
@@ -346,7 +362,7 @@ class CallbackHelper {
                 animation-timing-function: linear;
                 animation-duration: 8s;
                 animation-direction: normal;
-                border: 2px solid #009321;
+                border: 2px solid $color;
             }
 
             .ring3 {
@@ -382,7 +398,7 @@ class CallbackHelper {
                 animation-timing-function: linear;
                 animation-duration: 8s;
                 animation-direction: normal;
-                border: 2px solid #009321;
+                border: 2px solid $color;
             }
 
             .ring4 {
@@ -418,7 +434,7 @@ class CallbackHelper {
                 animation-timing-function: linear;
                 animation-duration: 8s;
                 animation-direction: normal;
-                border: 2px solid #009321;
+                border: 2px solid $color;
             }
 
             @-webkit-keyframes ani {
@@ -562,8 +578,7 @@ class CallbackHelper {
                 95% {transform: scale(1); opacity: 0.8;}
                 100% {transform: scale(1); opacity: 0;}
             }";
-
-        $style .= self::styleStat();
+        $style .= self::styleStat($color);
         $style .= "#cc-popup .cc-content span.cc-head{
                 position:relative;
                 font-family: arial, Helvetica, sans-serif;
@@ -611,7 +626,7 @@ class CallbackHelper {
             }
 
             #cc-popup span#cc-call:hover{
-                background-color: #009321;
+                background-color: $color;
             }
 
 
@@ -751,7 +766,7 @@ class CallbackHelper {
             }
 
             function cTimerDown(){
-                document.getElementById(\"cc-timer\").style.color = \"#009321\";
+                document.getElementById(\"cc-timer\").style.color = \"$color\";
                 var timer = parseInt(document.getElementById(\"cc-timer\").innerHTML);
                 document.getElementById(\"cc-timer\").innerHTML = timer-1;
                 if(timer>1) setTimeout(cTimerDown,1000);
@@ -796,8 +811,10 @@ class CallbackHelper {
     {
         $miliseconds = (int)Request::get('sec',90000);
 
+        $color =  static::getColorScheme((int)Request::get('color',1));
+
         $style=" <style>";
-        $style.= self::styleStat();
+        $style.= static::styleStat();
         $style.="#cc-popup .cc-content span.cc-head{
                 position:relative;
                 font-family: arial, Helvetica, sans-serif;
@@ -988,7 +1005,7 @@ class CallbackHelper {
             }
 
             function cTimerDown(){
-                document.getElementById(\"cc-timer\").style.color = \"#009321\";
+                document.getElementById(\"cc-timer\").style.color = \"$color\";
                 var timer = parseInt(document.getElementById(\"cc-timer\").innerHTML);
                 document.getElementById(\"cc-timer\").innerHTML = timer-1;
                 if(timer>1) setTimeout(cTimerDown,1000);
