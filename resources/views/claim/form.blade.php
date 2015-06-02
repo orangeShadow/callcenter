@@ -15,8 +15,23 @@
             {!! Form::label('phone',Lang::get('claim.phone')) !!}
             {!!Form::text('phone',$claim->phone,["class"=>"form-control"])!!}
         </div>
+
         <div class="form-group">
             {!! Form::label('text',Lang::get('claim.text')) !!}
+            @if($claim->project->typicalDescriptions)
+                <div class="row">
+                    <div class="col-lg-6">
+                        <select id="typicalDescriptionSelect" class="form-control">
+                            <option>-</option>
+                            @foreach($claim->project->typicalDescriptions->sortBy('sort') as $desc)
+                                <option value="{{$desc->id}}">{{$desc->description}}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                    <div class="col-lg-1"><a class="btn btn-default addTypicalDescription"><i class="fa fa-plus"></i></a></div>
+                </div>
+                <br>
+            @endif
             {!! Form::textarea('text',$claim->text,["class"=>"form-control"]) !!}
         </div>
         <div class="form-group">

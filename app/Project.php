@@ -123,4 +123,9 @@ class Project extends Model {
     {
         return $this->belongsTo('App\User','update_by','id');
     }
+
+    public function typicalDescriptions()
+    {
+        return $this->hasMany('App\TypicalDescription');
+    }
 }
