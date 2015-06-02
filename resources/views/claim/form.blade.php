@@ -28,7 +28,7 @@
                             @endforeach
                         </select>
                     </div>
-                    <div class="col-lg-1"><a class="btn btn-default addTypicalDescription"><i class="fa fa-plus"></i></a></div>
+                    <div class="col-lg-1"><a class="btn btn-default addTypicalDescription"><i class="glyphicon glyphicon-plus"></i></a></div>
                 </div>
                 <br>
             @endif
