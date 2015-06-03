@@ -84,9 +84,10 @@ Route::get('getform',function(){
 Route::get('externcall',function(){
     \Debugbar::disable();
     $phone = Request::input('phone');
+    $sip   = Request::input('sip',101);
     if(!empty($phone))
     {
-        $callerId = "101";
+        $callerId = $sip;
         $oSocket = fsockopen(env('Asterisk_host'), env('Asterisk_port'), $errnum, $errdesc,50) or die("Connection to host failed");
 
         fputs($oSocket, "Action: Login\r\n");
