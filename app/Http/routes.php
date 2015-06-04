@@ -55,18 +55,29 @@ Route::resource('typicalDescription','TypicalDescriptionController');
 
 
 
+Route::resource('callback/client','Callback\ClientController');
+Route::resource('callback','Callback\CallbackController');
+
 /**
  * Тестовая форма
  **/
 Route::get('externform',function(){
     \Debugbar::disable();
-    $dt = new DateTime();
 
+    $key = Request::input('key',null);
+
+    if(is_null($key)) return;
+
+    $client = \App\ACME\Model\Callback\Client::where('key','=',$key)->first();
+
+    if(empty($client)) return;
+
+    $dt = new DateTime();
     if((int)$dt->format('H')<9 || (int)$dt->format('H')>21){
-        $result = App\ACME\Helpers\CallbackHelper::getSendBackForm();
+        $result = App\ACME\Helpers\CallbackHelper::getSendBackForm($client);
         return response ($result)->header('Content-Type','text/javascript');
     }else{
-        $result = App\ACME\Helpers\CallbackHelper::getCallBackForm();
+        $result = App\ACME\Helpers\CallbackHelper::getCallBackForm($client);
         return response ($result)->header('Content-Type','text/javascript');
     }
 });
@@ -79,12 +90,20 @@ Route::get('getform',function(){
 });
 
 /**
- * Тестоввый звонок
+ *  Запуска звонока
  **/
 Route::get('externcall',function(){
+
     \Debugbar::disable();
+    $key = Request::input('key',null);
+
+    if(is_null($key)) return response()->json(['error'=>1,'message'=>'Key not found']);
+
+    $client = \App\ACME\Model\Callback\Client::where('key',$key)->get();
+
     $phone = Request::input('phone');
-    $sip   = Request::input('sip',101);
+    $sip   = Request::input('sip',$client->sip);
+
     if(!empty($phone))
     {
         $callerId = $sip;
@@ -99,15 +118,15 @@ Route::get('externcall',function(){
         fputs($oSocket, "Channel: ".env('Asterisk_channel')."\r\n");
         fputs($oSocket, "Timeout: ".env('Asterisk_timeout')."\r\n");
         fputs($oSocket, "CallerId: ".$callerId."\r\n");
-        fputs($oSocket, "Exten: ".Request::input('phone')."\r\n");
+        fputs($oSocket, "Exten: ".$phone."\r\n");
         fputs($oSocket, "Context: ".env('Asterisk_context')."\r\n");
         fputs($oSocket, "Priority: ".env('Asterisk_priority')."\r\n\r\n");
         fputs($oSocket, "Action: Logoff\r\n\r\n");
 
         sleep (1);
         fclose($oSocket);
-        return response(Request::input('phone'))->header('Access-Control-Allow-Origin', 'all');
-        //return response()->header('Access-Control-Allow-Origin', 'http://shop.goodline.ru');
+        return response($phone)->header('Access-Control-Allow-Origin', 'all');
+        //return response()->header('Access-Control-Allow-Origin', $client->href);
     }else{
         return response('Не введен номер')->header('Access-Control-Allow-Origin', 'all');
     }

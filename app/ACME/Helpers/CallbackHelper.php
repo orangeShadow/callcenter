@@ -234,7 +234,7 @@ class CallbackHelper {
 
     }
 
-    public static function getCallBackForm()
+    public static function getCallBackForm($client)
     {
         $miliseconds = (int)Request::get('sec',90000);
         $color = static::getColorScheme((int)Request::get('color',1));
@@ -807,7 +807,7 @@ class CallbackHelper {
 
 
 
-    public static function getSendBackForm()
+    public static function getSendBackForm($client)
     {
         $miliseconds = (int)Request::get('sec',90000);
 
