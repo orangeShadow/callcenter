@@ -6,7 +6,7 @@
 </div>
 @endsection
 @section('endbody')
-    <script src="/externform?key=rj6UBUV8wHUp&color=2"></script>
+    <script src="/externform?key=AffAQGEy1dCD&color=2"></script>
     <script type="text/javascript">
         /*var validNavigation = false;
 

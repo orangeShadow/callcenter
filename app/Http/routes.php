@@ -99,7 +99,7 @@ Route::get('externcall',function(){
 
     if(is_null($key)) return response()->json(['error'=>1,'message'=>'Key not found']);
 
-    $client = \App\ACME\Model\Callback\Client::where('key',$key)->get();
+    $client = \App\ACME\Model\Callback\Client::where('key','=',$key)->first();
 
     $phone = Request::input('phone');
     $sip   = Request::input('sip',$client->sip);
@@ -125,8 +125,8 @@ Route::get('externcall',function(){
 
         sleep (1);
         fclose($oSocket);
-        //return response($phone)->header('Access-Control-Allow-Origin', 'all');
-        return response()->header('Access-Control-Allow-Origin', $client->href);
+        return response($phone)->header('Access-Control-Allow-Origin', 'all');
+        //return response()->header('Access-Control-Allow-Origin', $client->href);
     }else{
         return response('Не введен номер')->header('Access-Control-Allow-Origin', 'all');
     }
