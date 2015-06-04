@@ -18,7 +18,11 @@
         </div>
         <div class="form-group">
             {!! Form::label('role',Lang::get('user.role')) !!}
-            {!! Form::select('role_id',\App\Role::orderBy('sort','asc')->where('visible',true)->get(['id','title'])->lists('title','id'),null,['class'=>'form-control']) !!}
+            @if(Auth::user()->role_id=="1")
+                {!! Form::select('role_id',\App\Role::orderBy('sort','asc')->get(['id','title'])->lists('title','id'),null,['class'=>'form-control']) !!}
+            @else
+                {!! Form::select('role_id',\App\Role::orderBy('sort','asc')->where('visible',true)->get(['id','title'])->lists('title','id'),null,['class'=>'form-control']) !!}
+            @endif
         </div>
         <div class="form-group">
             {!!Form::label('password',Lang::get('user.password'))!!}
