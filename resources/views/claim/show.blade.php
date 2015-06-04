@@ -55,7 +55,7 @@
             <div class="row">
                 <div class="col-lg-2"><b>{{ Lang::get('claim.text') }}</b></div>
                 <div class="col-lg-5">
-                    {{ $claim->text }}
+                    {{ preg_replace("/\\\\n/", "<br />",$claim->text) }}
                 </div>
             </div>
             <br>
