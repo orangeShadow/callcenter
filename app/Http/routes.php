@@ -107,6 +107,7 @@ Route::get('externcall',function(){
     if(!empty($phone))
     {
         $callerId = $sip;
+        $chanel   = "SIP/".$sip;
         $oSocket = fsockopen(env('Asterisk_host'), env('Asterisk_port'), $errnum, $errdesc,50) or die("Connection to host failed");
 
         fputs($oSocket, "Action: Login\r\n");
@@ -115,7 +116,7 @@ Route::get('externcall',function(){
 
 
         fputs($oSocket, "Action: originate\r\n");
-        fputs($oSocket, "Channel: ".env('Asterisk_channel')."\r\n");
+        fputs($oSocket, "Channel: ".$chanel."\r\n");
         fputs($oSocket, "Timeout: ".env('Asterisk_timeout')."\r\n");
         fputs($oSocket, "CallerId: ".$callerId."\r\n");
         fputs($oSocket, "Exten: ".$phone."\r\n");
