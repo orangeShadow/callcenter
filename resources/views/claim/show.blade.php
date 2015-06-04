@@ -55,7 +55,7 @@
             <div class="row">
                 <div class="col-lg-2"><b>{{ Lang::get('claim.text') }}</b></div>
                 <div class="col-lg-5">
-                    {!!str_replace("\n", "<br/>", $claim->text !!}
+                    {!!str_replace("\n", "<br/>", $claim->text) !!}
                 </div>
             </div>
             <br>
@@ -69,7 +69,7 @@
             <div class="row">
                 <div class="col-lg-2"><b>{{ Lang::get('claim.note') }}</b></div>
                 <div class="col-lg-5">
-                    {!!str_replace("\n", "<br/>", $claim->note !!}
+                    {!!str_replace("\n", "<br/>", $claim->note) !!}
                 </div>
             </div>
             @endif

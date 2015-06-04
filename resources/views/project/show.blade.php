@@ -24,7 +24,7 @@
             <div class="row">
                 <div class="col-lg-1"><b>{{ Lang::get('project.text') }}</b></div>
                 <div class="col-lg-5">
-                    {!!str_replace("\n", "<br/>",  $project->text !!}
+                    {!!str_replace("\n", "<br/>",  $project->text) !!}
                 </div>
             </div>
             @endif
