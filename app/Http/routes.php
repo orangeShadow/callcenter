@@ -126,8 +126,8 @@ Route::get('externcall',function(){
 
         sleep (1);
         fclose($oSocket);
-        //return response($phone)->header('Access-Control-Allow-Origin', 'all');
-        return response($phone)->header('Access-Control-Allow-Origin', $client->href);
+        return response($phone)->header('Access-Control-Allow-Origin', '*');
+        //return response($phone)->header('Access-Control-Allow-Origin', $client->href);
     }else{
         return response('Не введен номер')->header('Access-Control-Allow-Origin', 'all');
     }
