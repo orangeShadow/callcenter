@@ -11,5 +11,6 @@ return [
     'claim'=>'Заявки',
     'project'=>'Проекты',
     'authenticationError'=>'E-mail или пароль заданы не верно',
-    'users'=>'Пользователи'
+    'users'=>'Пользователи',
+    'callback'=>"Обратный звонок"
 ];

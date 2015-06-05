@@ -62,7 +62,8 @@ class ClientController extends Controller {
 	 */
 	public function show($id)
 	{
-		//
+        $client = Client::findOrFail($id);
+        return view('callback.client.show')->with(compact('client'));
 	}
 
 	/**
@@ -80,6 +81,7 @@ class ClientController extends Controller {
 	/**
 	 * Update the specified resource in storage.
 	 *
+     * @param  $request;
 	 * @param  int  $id
 	 * @return Response
 	 */

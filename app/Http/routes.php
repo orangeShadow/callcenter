@@ -56,6 +56,7 @@ Route::resource('typicalDescription','TypicalDescriptionController');
 
 
 Route::resource('callback/client','Callback\ClientController');
+Route::resource('callback/settings','Callback\SettingsController');
 Route::resource('callback','Callback\CallbackController');
 
 /**
@@ -138,10 +139,10 @@ Route::get('externcall',function(){
  * Форма в CRM
  **/
 Route::get('formback',function(){
+
+
     $time  = Request::input('time');
-
     $timeSelect = array(1=>"9:00-12:00",2=>"12:00-16:00",3=>"16:00-19:00",4=>"19:00-21:00");
-
 
     $object  = new stdClass();
     $object->Questions = array();

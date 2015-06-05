@@ -63,7 +63,10 @@
                                                     <th>{{$client->sip}}</th>
                                                     <th>{{$client->created_at->format('d.m.Y H:i:s')}}</th>
                                                     <th>{{$client->key}}</th>
-                                                    <th><a href="{{url('callback/client',['id'=>$client->id,'edit'])}}" class="btn btn-sm btn-primary"><i class="fa fa-pencil"></i></a></th>
+                                                    <th>
+                                                        <a href="{{url('callback/client',['id'=>$client->id,'edit'])}}" class="btn btn-sm btn-primary"><i class="fa fa-pencil"></i></a>
+                                                        <a href="{{url('callback/settings',['id'=>$client->id,'edit'])}}" class="btn btn-sm btn-primary"><i class="fa fa-gears"></i></a>
+                                                    </th>
                                                 </tr>
                                             @endforeach
                                         </tbody>

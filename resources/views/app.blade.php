@@ -43,6 +43,9 @@
                         @if(Auth::user()->checkRole(['manager','admin']))
                             <li><a href="/user"><?=Lang::get('app.users')?></a></li>
                         @endif
+                        @if(Auth::user()->checkRole(['manager','admin']))
+                            <li><a href="/callback"><?=Lang::get('app.callback')?></a></li>
+                        @endif
                     @endif
 				</ul>
 

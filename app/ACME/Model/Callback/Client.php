@@ -12,4 +12,9 @@ class Client extends Model {
     public $timestamps = true;
 
     protected $dates=['created_at','updated_at'];
+
+    public function settings()
+    {
+        return $this->hasOne('App\ACME\Model\Callback\FormSetting','client_id','id');
+    }
 }

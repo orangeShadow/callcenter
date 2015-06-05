@@ -5,13 +5,13 @@ use \Request;
 
 class CallbackHelper {
 
-    private static function styleStat($color="#009321"){
+    private static function styleStat($color="#009321",$top=20){
         return "
             #cc-phone-button-wrap{
                 width:160px;
                 height:160px;
                 position: fixed;
-                top:20%;
+                top:".$top."%;
                 right:10px;
                 margin-top: -80px;
                 text-align: center;
@@ -236,8 +236,11 @@ class CallbackHelper {
 
     public static function getCallBackForm($client)
     {
-        $miliseconds = (int)Request::get('sec',90000);
-        $color = static::getColorScheme((int)Request::get('color',1));
+        $swe = empty($client->settings->swe_interval) ? 60000: ($client->settings->swe_interval*1000);
+        $sop = empty($client->settings->sop_interval) ? 90000: ($client->settings->sop_interval*1000);
+        $colors = empty($client->settings->colors) ? 1: ($client->settings->colors);
+        $top = empty($client->settings->top) ? 20: ($client->settings->top);
+        $color = static::getColorScheme($colors);
 
         $style="<style>
             #r1 {
@@ -578,7 +581,9 @@ class CallbackHelper {
                 95% {transform: scale(1); opacity: 0.8;}
                 100% {transform: scale(1); opacity: 0;}
             }";
-        $style .= self::styleStat($color);
+
+        $style .= self::styleStat($color,$top);
+
         $style .= "#cc-popup .cc-content span.cc-head{
                 position:relative;
                 font-family: arial, Helvetica, sans-serif;
@@ -600,7 +605,7 @@ class CallbackHelper {
                 font-size: 18px;
                 color: #fff;
                 border: 1px solid #b2b2b2;
-                background-color: #33a94d;
+                background-color: #566473;
                 text-decoration: none;
                 border-radius: 3px;
                 padding: 10px 0;
@@ -787,7 +792,7 @@ class CallbackHelper {
 
                 var idleTimer = null;
                 var idleState = false;
-                var idleWait = 1000 * 60;
+                var idleWait = ".$swe.";
 
                 document.addEventListener('mousemove',noEventOpenCall);
                 document.addEventListener('keydown',noEventOpenCall);
@@ -798,7 +803,7 @@ class CallbackHelper {
                 window.setTimeout(function(){
                     if(localStorage.hasOwnProperty('cc-call') && localStorage.getItem('cc-call')==1) return false;
                     cPopupOpen();
-                }, ".$miliseconds.");
+                }, ".$sop.");
                 ".$script.";
             })();";
         return $result = trim(preg_replace('/\s\s+/', '', $result));
