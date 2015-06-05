@@ -3,7 +3,7 @@
         {!! Form::hidden('client_id',$settings->client_id) !!}
         <div class="form-group">
             {!! Form::label('colors',Lang::get('client.color')) !!}
-            {!! Form::select('colors',[1=>1,2=>2],$settings->colors,["class"=>"form-control"]) !!}
+            {!! Form::select('colors',[1=>'Зеленый',2=>'Желтый'],$settings->colors,["class"=>"form-control"]) !!}
         </div>
 
         <div class="form-group">

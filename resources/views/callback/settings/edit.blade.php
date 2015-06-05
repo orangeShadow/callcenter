@@ -1,11 +1,13 @@
 @extends('layouts.sb-admin')
 
+@section('title')
+    {{Lang::get('callback.settings')}}{{$settings->client->title}}
+@stop
+
 @section('content')
 
     <div class="row">
         <div class="col-sm-12 col-md-8 col-lg-6">
-            <h1>{!! Lang::get('claim.createClaim') !!}</h1>
-
             @if($errors->any())
                 <div class="alert alert-danger">
                     <ul>
