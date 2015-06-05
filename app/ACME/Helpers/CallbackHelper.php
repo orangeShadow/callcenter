@@ -997,7 +997,7 @@ class CallbackHelper {
                 document.getElementsByClassName(\"cc-content\")[0].style.textAlign= \"center\";
                 setTimeout(cTimerDown,1000);
                 var r = new XMLHttpRequest();
-                r.open(\"GET\",\"".url('formback')."?phone=\"+phone+\"&time=\"+time, true);
+                r.open(\"GET\",\"".url('formback')."?&key=".$client->key."&phone=\"+phone+\"&time=\"+time, true);
                 r.onreadystatechange = function () {
                     if (r.readyState != 4 || r.status != 200) return;
                 };
