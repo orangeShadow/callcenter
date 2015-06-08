@@ -25,6 +25,12 @@
                     <th>{{Lang::get('create_at')}}</th>
                     <td>{{$user->created_at->format('d.m.Y H:i')}}</td>
                 </tr>
+                @if(!empty($user->apikey))
+                <tr>
+                    <th>{{Lang::get('user.apikey')}}</th>
+                    <td>{{$user->apikey}}</td>
+                </tr>
+                @endif
             </table>
         </div>
     </div>

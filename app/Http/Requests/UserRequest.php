@@ -28,6 +28,7 @@ class UserRequest extends Request {
             //'send_email'=>'email',
             'role'      =>'numeric|regex:#[^1]#',
             'password'  =>'required|min:6|confirmed',
+            'apikey'=>'unique'
 		];
 	}
 
@@ -40,7 +41,8 @@ class UserRequest extends Request {
             'name.required'=> 'Введите ФИО',
             'email.required' =>'Введите email, он будет логином пользователя',
             'password.confirmed'=>'Введите подтверждение пароля',
-            'send_email.email'  => 'Неверный формат в поле емайл: для оповещений'
+            'send_email.email'  => 'Неверный формат в поле емайл: для оповещений',
+            'apikey'=>'Клиент с таким ключом уже есть в системе'
         ];
     }
 }

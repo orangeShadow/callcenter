@@ -198,3 +198,7 @@ Route::get('formback',function(){
     }
     return '';
 });
+
+
+
+Route::get('api/claims/','ApiController@getClaims');

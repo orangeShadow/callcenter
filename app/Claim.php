@@ -148,7 +148,7 @@ class Claim extends Model {
     {
         if(!empty($this->project_id))
         {
-            return \App\Destination::where('project_id',$this->project_id)->orderBy('sort')->get(['title','email']);
+            return \App\Destination::where('project_id','=',$this->project_id)->orderBy('sort')->get(['title','email']);
         }else{
             return null;
         }

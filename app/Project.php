@@ -128,4 +128,9 @@ class Project extends Model {
     {
         return $this->hasMany('App\TypicalDescription');
     }
+
+    public function claims()
+    {
+        return $this->hasMany('App\Claim');
+    }
 }

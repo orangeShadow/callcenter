@@ -14,5 +14,6 @@ return [
     'password'=>'Пароль',
     'confirm_password'=>'Подтверждение пароля',
     'send_email'=>'E-mail для оповещения',
-    'create_at'=>'Дата регистрации'
+    'create_at'=>'Дата регистрации',
+    'apikey'=>'API ключ'
 ];

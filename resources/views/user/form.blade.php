@@ -24,6 +24,22 @@
                 {!! Form::select('role_id',\App\Role::orderBy('sort','asc')->where('visible',true)->get(['id','title'])->lists('title','id'),null,['class'=>'form-control']) !!}
             @endif
         </div>
+
+        @if(Auth::user()->role_id=="1" || Auth::user()->role_id=="3")
+            @if($user->role_id==4)
+                <div class="form-group">
+                    {!! Form::label('apikey',Lang::get('user.apikey')) !!}
+                    {!! Form::text('apikey',null,["class"=>"form-control"]) !!}
+                    @if(is_null($user->apikey))
+                        <div class="alert alert-warning alert-dismissable">
+                            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+                            Внимание у клиента отсутствует API ключ, сгенирирован случайный ключи: <a href="#" onclick="event.preventDefault(); document.getElementById('apikey').value= this.innerText;" class="alert-link"><?=App\ACME\Helpers\KeyGenerator::generateRandomString(16);?></a>, нажмите для того, что б установить его.
+                        </div>
+                    @endif
+                </div>
+            @endif
+        @endif
+
         <div class="form-group">
             {!!Form::label('password',Lang::get('user.password'))!!}
             {!!Form::password('password',["class"=>"form-control"])!!}
