@@ -29,14 +29,14 @@ class ApiController extends Controller {
         foreach($projects as $project)
         {
             $claimCollection = Claim::where('project_id','=',$project->id);
-            if(!empty($request->has('dts'))){
+            if($request->has('dts')){
 
                 $dtsObj = new \DateTime($request->input('dts'));
                 if(get_class($dtsObj)!=="DateTime") abor(500,'Wrong date format');
                 $claimCollection= $claimCollection->where('created_at','>=',$dtsObj->format('Y-m-d H:i:s'));
             }
 
-            if(!empty($request->has('dte'))){
+            if($request->has('dte')){
                 $dteObj = new \DateTime($request->input('dte'));
                 if(get_class($dteObj)!=="DateTime") abor(500,'Wrong date format');
                 $claimCollection= $claimCollection->where('created_at','<=',$dteObj->format('Y-m-d H:i:s'));
