@@ -15,9 +15,10 @@ class ApiController extends Controller {
 
     public function getClaims(Request $request)
     {
-        if(empty($request->input('key'))) abort('500','Key not found');
+        $key = $request->input('key');
+        if(empty($key)) abort('500','Key not found');
 
-        $user = User::where('apikey','=',$request->input('key'))->first();
+        $user = User::where('apikey','=',$key)->first();
 
         if(is_null($user)) abort('500','User with this key not found');
 
@@ -36,7 +37,6 @@ class ApiController extends Controller {
             }
 
             if(!empty($request->has('dte'))){
-
                 $dteObj = new \DateTime($request->input('dte'));
                 if(get_class($dteObj)!=="DateTime") abor(500,'Wrong date format');
                 $claimCollection= $claimCollection->where('created_at','<=',$dteObj->format('Y-m-d H:i:s'));
