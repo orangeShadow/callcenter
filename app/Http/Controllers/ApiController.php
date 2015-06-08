@@ -15,10 +15,10 @@ class ApiController extends Controller {
 
     public function getClaims(Request $request)
     {
-        $key = $request->input('key');
-        if(empty($key)) abort('500','Key not found');
 
-        $user = User::where('apikey','=',$key)->first();
+        if(!$request->has('key')) abort('500','Key not found');
+
+        $user = User::where('apikey','=',$request->input('key'))->first();
 
         if(is_null($user)) abort('500','User with this key not found');
 
