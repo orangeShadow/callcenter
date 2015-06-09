@@ -61,7 +61,7 @@ class Property extends Model
             }
 
             if (!empty($res)) {
-                $propertyValues[$property->id] = ['title' => $property->title, 'value' => $res->value];
+                $propertyValues[$property->id] = ['title' => $property->title, 'value' => $res->value,'code'=>$property->code,'type'=>$property->type];
             }
         }
         return $propertyValues;
