@@ -16,7 +16,8 @@ class Property extends Model
         "values",
         "model_goal",
         "model_initiator",
-        "link_id"
+        "link_id",
+        "code"
     ];
 
 

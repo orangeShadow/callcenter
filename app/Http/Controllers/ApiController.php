@@ -56,7 +56,7 @@ class ApiController extends Controller {
                 $claimEl["statusT"] = $claim->statusT->title;
                 $claimEl['properties'] = [];
                 foreach(\App\Property::showPropertyValue($claim) as $property){
-                    $claimEl['properties'][preg_replace('/-,\.:;\s/','',$property['title'])] = $property['value'];
+                    $claimEl['properties'][preg_replace('/\s/','',$property['title'])] = $property['value'];
                 }
                 $claims[] = $claimEl;
             }

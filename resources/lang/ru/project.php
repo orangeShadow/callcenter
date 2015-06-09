@@ -28,7 +28,7 @@ return [
     'destinationTitle'=>'Имя Адресата',
     'destinationEmail'=>'Email',
     'sort'=>'Сортировка',
-    'typicalDescription.Description'=>'Описание'
-
+    'typicalDescription.Description'=>'Описание',
+    "propertyXML_CODE"=>"XML_CODE",
 ];
 ?>

@@ -32,6 +32,10 @@
                                     <input name="property.title" ng-model="property.title" type="text" class="form-control">
                                 </div>
                                 <div class="form-group">
+                                    <label>{{Lang::get("project.propertyXML_CODE")}}</label>
+                                    <input name="property.code" ng-model="property.code" type="text" class="form-control">
+                                </div>
+                                <div class="form-group">
                                     <label>{{Lang::get("project.propertyType")}}</label>
                                     <div class="input-group">
                                         <select name="property.type" ng-model="property.type" class="form-control">
@@ -50,7 +54,7 @@
                             <div class="property-list row">
                                 <div class="col-lg-12">
                                     <ol>
-                                        <li   ng-repeat='property in properties'><% property.title %>, <% property.type %>, <% property.sort %> <a ng-click="deleteProperty($index)" class="text-danger"><i class="glyphicon glyphicon-remove"></i></a> </li>
+                                        <li   ng-repeat='property in properties'><% property.title %>, <% property.type %>,[<% property.code %>] <% property.sort %> <a ng-click="deleteProperty($index)" class="text-danger"><i class="glyphicon glyphicon-remove"></i></a> </li>
                                     </ol>
                                 </div>
                             </div>

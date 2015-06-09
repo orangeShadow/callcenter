@@ -86,6 +86,7 @@ app.controller('propertyController', function($scope, $http) {
 
         var property = {
             title: $scope.property.title,
+            code: $scope.property.code,
             type: $scope.property.type,
             model_initiator :$scope.model_initiator,
             model_goal: $scope.model_goal,

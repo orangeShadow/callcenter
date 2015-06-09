@@ -33,7 +33,7 @@
                     @if(is_null($user->apikey))
                         <div class="alert alert-warning alert-dismissable">
                             <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
-                            Внимание у клиента отсутствует API ключ, сгенирирован случайный ключи: <a href="#" onclick="event.preventDefault(); document.getElementById('apikey').value= this.innerText;" class="alert-link"><?=App\ACME\Helpers\KeyGenerator::generateRandomString(16);?></a>, нажмите для того, что б установить его.
+                            Внимание! У клиента отсутствует API ключ. Сгенирирован случайный ключ: <a href="#" onclick="event.preventDefault(); document.getElementById('apikey').value= this.innerText;" class="alert-link"><?=App\ACME\Helpers\KeyGenerator::generateRandomString(16);?></a>- нажмите, чтобы установить его.
                         </div>
                     @endif
                 </div>

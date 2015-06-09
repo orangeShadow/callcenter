@@ -66,6 +66,7 @@ class PropertyController extends Controller {
             $validator = \Validator::make($request,
                 [
                     'title'=>'required',
+                    'code'=>'required',
                     'type'=>'required',
                     'model_goal'=>'required',
                     'model_initiator'=>'required',
