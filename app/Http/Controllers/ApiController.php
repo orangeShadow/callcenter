@@ -48,15 +48,15 @@ class ApiController extends Controller {
                 $claimEl["id"] = $claim->id;
                 $claimEl["project"] = $project->title;
                 $claimEl["title"] = $claim->title;
-                $claimEl["text"] = htmlspecialchars($claim->text);
-                $claimEl["note"] = htmlspecialchars($claim->note);
+                $claimEl["text"] = $claim->text;
+                $claimEl["note"] = $claim->note;
                 $claimEl["phone"] = $claim->phone;
-                $claimEl["backcall_at"] = htmlspecialchars($claim->backcall_at);
+                $claimEl["backcall_at"] = $claim->backcall_at;
                 $claimEl["created_at"] = $claim->created_at->format('Y-m-d H:i:s');
-                $claimEl["statusT"] = htmlspecialchars($claim->statusT->title);
+                $claimEl["statusT"] = $claim->statusT->title;
                 $claimEl['properties'] = [];
                 foreach(\App\Property::showPropertyValue($claim) as $property){
-                    $claimEl['properties'][$property['title']] = htmlspecialchars($property['value']);
+                    $claimEl['properties'][preg_replace('/\s/','',$property['title'])] = $property['value'];
                 }
                 $claims[] = $claimEl;
             }
