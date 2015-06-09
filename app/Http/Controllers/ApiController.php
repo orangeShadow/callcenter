@@ -30,7 +30,6 @@ class ApiController extends Controller {
         {
             $claimCollection = Claim::where('project_id','=',$project->id);
             if($request->has('dts')){
-
                 $dtsObj = new \DateTime($request->input('dts'));
                 if(get_class($dtsObj)!=="DateTime") abor(500,'Wrong date format');
                 $claimCollection= $claimCollection->where('created_at','>=',$dtsObj->format('Y-m-d H:i:s'));
@@ -49,15 +48,15 @@ class ApiController extends Controller {
                 $claimEl["id"] = $claim->id;
                 $claimEl["project"] = $project->title;
                 $claimEl["title"] = $claim->title;
-                $claimEl["text"] = $claim->text;
-                $claimEl["note"] = $claim->note;
+                $claimEl["text"] = htmlspecialchars($claim->text);
+                $claimEl["note"] = htmlspecialchars($claim->note);
                 $claimEl["phone"] = $claim->phone;
-                $claimEl["backcall_at"] = $claim->backcall_at;
-                $claimEl["created_at"] = $claim->created_at;
-                $claimEl["statusT"] = $claim->statusT->title;
+                $claimEl["backcall_at"] = htmlspecialchars($claim->backcall_at);
+                $claimEl["created_at"] = $claim->created_at->format('Y-m-d H:i:s');
+                $claimEl["statusT"] = htmlspecialchars($claim->statusT->title);
                 $claimEl['properties'] = [];
                 foreach(\App\Property::showPropertyValue($claim) as $property){
-                    $claimEl['properties'][$property['title']] = $property['value'];
+                    $claimEl['properties'][$property['title']] = htmlspecialchars($property['value']);
                 }
                 $claims[] = $claimEl;
             }
