@@ -38,7 +38,7 @@ class SettingsController extends Controller {
         $settings = new Settings($request->all());
 
         if($settings->save()){
-            flash()->success('Заданы настройки для сайта: '.$settings->client->title);
+            //flash()->success('Заданы настройки для сайта: '.$settings->client->title);
             return redirect('callback/client');
         }
         return \Redirect::back()->withInput($request);

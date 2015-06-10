@@ -3,7 +3,8 @@
         {!! Form::hidden('client_id',$settings->client_id) !!}
         <div class="form-group">
             {!! Form::label('colors',Lang::get('client.color')) !!}
-            {!! Form::select('colors',[1=>'Зеленый',2=>'Желтый'],$settings->colors,["class"=>"form-control"]) !!}
+            {!! Form::select('colors',App\ACME\Helpers\CallbackHelper::$colors,["class"=>"form-control"]) !!}
+            <div style="width:30px;height:30px;margin:5px;background-color:<?=App\ACME\Helpers\CallbackHelper::$colors[empty($settings->colors)?1:$settings->colors]?>" class="colorScheme"></div>
         </div>
 
         <div class="form-group">
@@ -26,3 +27,13 @@
         </div>
     </div>
 </div>
+
+@section('sripts')
+    <script>
+    $('select#colors').change(function(){
+        var color = $('select#colors').find('option[value="'+$(this).val()+'"]').html();
+        console.log(color);
+        $('div.colorScheme').css({'background-color':color});
+    })
+    </script>
+@stop

@@ -4,6 +4,15 @@ namespace App\ACME\Helpers;
 use \Request;
 
 class CallbackHelper {
+    public static $colors=[
+        1=>"#009321",
+        2=>"#FED440",
+        3=>"#cba0e8",
+        4=>"#a7caea",
+        5=>"#d4d752",
+        6=>"#ededed",
+        7=>"#e5dc8f"
+    ];
 
     private static function styleStat($color="#009321",$top=20){
         return "
@@ -219,19 +228,7 @@ class CallbackHelper {
 
     private static function getColorScheme($colorScheme)
     {
-        switch($colorScheme)
-        {
-            case 1:
-                return "#009321";
-                break;
-            case 2:
-                return "#FED440";
-                break;
-            default:
-                return "#009321";
-                break;
-        }
-
+        return self::$colors[$colorScheme];
     }
 
     public static function getCallBackForm($client)
