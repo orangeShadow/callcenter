@@ -11,7 +11,8 @@ class CallbackHelper {
         4=>"#a7caea",
         5=>"#d4d752",
         6=>"#ededed",
-        7=>"#e5dc8f"
+        7=>"#e5dc8f",
+        8=>"#ae6467"
     ];
 
     private static function styleStat($color="#009321",$top=20){
