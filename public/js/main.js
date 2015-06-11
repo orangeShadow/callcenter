@@ -1,5 +1,8 @@
 ;(function(){
-    $( ".datepicker" ).datepicker($.datepicker.regional[ "ru" ]);
+    $(function(){
+        $( ".datepicker" ).datepicker($.datepicker.regional[ "ru" ]);
+    });
+
 
     $('button.btn-danger').click(function(e){
         e.preventDefault();
