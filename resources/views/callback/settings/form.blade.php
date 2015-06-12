@@ -1,10 +1,39 @@
+@section('css')
+    <style>
+        .colorList{
+            display:block;
+            margin: 10px 0;
+        }
+
+        p.color{
+            display: inline-block;
+            width:30px;
+            height:30px;
+            margin:5px;
+            cursor: pointer;
+        }
+
+        p.color:hover{
+            border: 2px solid #FF4F00;
+        }
+        p.color.active{
+            border: 2px solid #000;
+        }
+    </style>
+@stop
+
 <div class="row">
     <div class="col-lg-12">
         {!! Form::hidden('client_id',$settings->client_id) !!}
         <div class="form-group">
             {!! Form::label('colors',Lang::get('client.color')) !!}
-            {!! Form::select('colors',App\ACME\Helpers\CallbackHelper::$colors,["class"=>"form-control"]) !!}
-            <div style="width:30px;height:30px;margin:5px;background-color:<?=App\ACME\Helpers\CallbackHelper::$colors[empty($settings->colors)?1:$settings->colors]?>" class="colorScheme"></div>
+            {!! Form::hidden('colors',$settings->color,["class"=>"form-control"]) !!}
+            <div class = "colorList" >
+                @foreach(App\ACME\Helpers\CallbackHelper::$colors  as $key=>$color)
+                    <p data-color="{{$key}}" style="background-color:{{$color}}" class="color @if($key==$settings->colors) active @endif"></p>
+                @endforeach
+            </div>
+
         </div>
 
         <div class="form-group">

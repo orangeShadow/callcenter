@@ -23,6 +23,10 @@ class SettingsController extends Controller {
         if(empty($id)) throw new HttpException(404,'Не указан сайт клиента');
 		$settings = new Settings();
         $settings->client_id = $id;
+
+        if(empty($settings->color)){
+            $settings->colors = \App\ACME\Helpers\CallbackHelper::$colors[1];
+        }
         return view('callback.settings.create')->with(compact('settings'));
 
 	}

@@ -51,7 +51,7 @@
                                             <th>Линия</th>
                                             <th>Дата Создания</th>
                                             <th>Ключ</th>
-                                            <th><a href="{{url('callback/client/create')}}" class="btn btn-success"><i class="fa fa-plus"></i></a></th>
+                                            <th width="130"><a href="{{url('callback/client/create')}}" class="btn btn-success"><i class="fa fa-plus"></i></a></th>
                                         </tr>
                                         </thead>
                                         <tbody>
@@ -66,6 +66,7 @@
                                                     <th>
                                                         <a href="{{url('callback/client',['id'=>$client->id,'edit'])}}" class="btn btn-sm btn-primary"><i class="fa fa-pencil"></i></a>
                                                         <a href="{{url('callback/settings',['id'=>$client->id,'edit'])}}" class="btn btn-sm btn-primary"><i class="fa fa-gears"></i></a>
+                                                        {!! Form::open(['method'=>'DELETE','action'=>["Callback\ClientController@destroy",$client->id],'style'=>'display:inline']) !!}<button title="{{Lang::get('project.remove')}}"  type="submit" class="btn btn-sm btn-danger"><i class="glyphicon glyphicon-remove"></i></button>{!!Form::close()!!}
                                                     </th>
                                                 </tr>
                                             @endforeach

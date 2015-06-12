@@ -5,6 +5,7 @@ use App\Http\Controllers\Controller;
 
 use Illuminate\Http\Request;
 use App\ACME\Model\Callback\Client;
+use App\ACME\Model\Callback\FormSetting;
 
 
 class ClientController extends Controller {
@@ -105,7 +106,10 @@ class ClientController extends Controller {
 	 */
 	public function destroy($id)
 	{
-		//
+		$settings = FormSetting::where('client_id','=',$id);
+        $settings->delete();
+        Client::destroy($id);
+        return redirect('callback/client');
 	}
 
     private function generateRandomString($length = 32) {

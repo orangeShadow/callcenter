@@ -20,7 +20,7 @@
 
 
             {!! Form::model($settings,['method'=>'PATCH','action'=>['Callback\SettingsController@update',$settings->client_id],'class'=>'form-horizontal']) !!}
-            @include('callback.settings.form',["submit"=>Lang::get("client.save"),compact('settings')])
+                @include('callback.settings.form',["submit"=>Lang::get("client.save"),compact('settings')])
             {!! Form::close() !!}
         </div>
     </div>
