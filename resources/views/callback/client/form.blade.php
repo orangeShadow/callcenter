@@ -15,6 +15,7 @@
         </div>
         <div class="form-group">
             {!! Form::label('active',Lang::get('client.active')) !!}
+            {!! Form::hidden('active',0)!!}
             {!! Form::checkbox('active',$client->active ? $client->active:1,["class"=>"form-control"])!!}
         </div>
         <div class="form-group">

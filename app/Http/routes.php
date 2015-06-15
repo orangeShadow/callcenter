@@ -105,6 +105,11 @@ Route::get('externcall',function(){
     $phone = Request::input('phone');
     $sip   = Request::input('sip',$client->sip);
 
+    $phoneLog = new \App\ACME\Model\Callback\PhoneLog();
+    $phoneLog->client_id = $client->id;
+    $phoneLog->phone = $phone;
+    $phoneLog->save();
+
     if(!empty($phone))
     {
         $callerId = $sip;
@@ -132,6 +137,7 @@ Route::get('externcall',function(){
     }else{
         return response('Не введен номер')->header('Access-Control-Allow-Origin', 'all');
     }
+
 });
 
 

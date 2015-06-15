@@ -24,9 +24,19 @@ class ClientRequest extends Request {
 		return [
 			'title'=>'required',
             'href'=>'required|url',
-            'sip'=>'required',
+            'sip'=>'required|numeric',
             'active'=>'boolean'
 		];
 	}
 
+
+    public function messages()
+    {
+        return [
+            'href.url'=>'Полн ссылка на сайта должна быть формата http://example.com',
+            'sip.required'=>'Внутренний номер обязателен для заполнения',
+            'sip.numeric'=>'Внутренний номер может содержать только цифры',
+            'active'=>'boolean'
+        ];
+    }
 }
