@@ -69,7 +69,7 @@ Route::get('externform',function(){
 
     if(is_null($key)) return;
 
-    $client = \App\ACME\Model\Callback\Client::where('key','=',$key)->first();
+    $client = \App\ACME\Model\Callback\Client::where('key','=',$key)->where('active','=',true)->first();
 
     if(empty($client)) return;
 

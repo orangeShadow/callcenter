@@ -57,7 +57,7 @@
                                         <tbody>
                                             @foreach($clients as $client)
                                                 <tr>
-                                                    <th>{{$client->active}}</th>
+                                                    <th>{{$client->active? 'Да':'Нет'}}</th>
                                                     <th>{{$client->title}}</th>
                                                     <th>{{$client->href}}</th>
                                                     <th>{{$client->sip}}</th>
