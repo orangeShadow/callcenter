@@ -139,6 +139,12 @@ class Claim extends Model {
     }
 
 
+    public function scopeWeekly($query)
+    {
+        $query->whereRaw('YEARWEEK(created_at)=YEARWEEK(NOW())');
+        return $query;
+    }
+
     public function statusT()
     {
         return $this->belongsTo('App\StatusClaim','status','code');
