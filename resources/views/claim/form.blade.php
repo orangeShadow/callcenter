@@ -7,6 +7,12 @@
         </div>
         --}}
         {!! Form::hidden('project_id',Request::get('project_id')) !!}
+        @if($claimType=\App\ClaimType::where('project_id','=',(int)Request::get('project_id'))->get(['id','title'])->lists('title','id'))
+        <div class="form-group">
+            {!! Form::label('type_request',Lang::get('claim.type_request')) !!}
+            {!! Form::select('type_request', $claimType,$claim->type_request,["class"=>"form-control"])!!}
+        </div>
+        @endif
         <div class="form-group">
             {!! Form::label('name',Lang::get('claim.name')) !!}
             {!!Form::text('name',$claim->name,["class"=>"form-control"])!!}
@@ -56,6 +62,13 @@
                 {!! Form::select('status',\App\StatusClaim::orderBy('sort','asc')->get(['code','title'])->lists('title','code'),Request::get('status'),['class'=>'form-control']) !!}
             </div>
         @endif
+
+        <div class="form-group">
+            {!! Form::label('send_mail',Lang::get('claim.send_mail')) !!}
+            {!! Form::hidden('send_mail',0,["class"=>"form-control"]) !!}
+            {!! Form::checkbox('send_mail',1,true) !!}
+        </div>
+
         <div class="form-group">
             {!! Form::submit($submit,["class"=>"btn btn-default"]) !!}
         </div>

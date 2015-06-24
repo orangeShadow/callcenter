@@ -52,6 +52,7 @@ Route::resource('property','PropertyController');
 
 Route::resource('destination','DestinationController');
 Route::resource('typicalDescription','TypicalDescriptionController');
+Route::resource('claimType','ClaimTypeController');
 
 
 

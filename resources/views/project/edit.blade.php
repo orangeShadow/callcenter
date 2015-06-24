@@ -115,6 +115,36 @@
                         </div>
                     </div>
                     <hr>
+
+                    <div class="claimTypeProject row"  data-project-id="{{$project->id}}" ng-app="project-claimType" ng-controller="claimTypeController">
+                        <div class="col-lg-12">
+                            <h4 >Создать тип запроса для заявки</h4>
+                            <form class="form-inline claimType" style="margin-bottom:20px;" >
+                                <div class="form-group">
+                                    <label>{{Lang::get("project.title")}}</label>
+                                    <input name="claimType.title" ng-model="claimType.title" type="text" class="form-control">
+                                </div>
+                                <div class="form-group">
+                                    <label>{{Lang::get("project.price")}}</label>
+                                    <input name="claimType.price" ng-model="claimType.price" type="text" class="form-control">
+                                </div>
+                                <div class="form-group">
+                                    <label>{{Lang::get("project.sort")}}</label>
+                                    <input name="claimType.sort" ng-model="claimType.sort" style="width: 50px;" type="text" class="form-control">
+                                </div>
+                                <a class="btn btn-success btn-sm" ng-click="addClaimType()"><i class="glyphicon glyphicon-plus"></i></a>
+                            </form>
+                            <div class="typeRequest-list row">
+                                <div class="col-lg-12">
+                                    <ol>
+                                        <li   ng-repeat='claimType in claimTypes'><% claimType.sort %>: <% claimType.title %>(<% claimType.price %> р)<a ng-click="deleteClaimType($index)" class="text-danger"><i class="glyphicon glyphicon-remove"></i></a> </li>
+                                    </ol>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <hr>
+
                 </div>
             @endif
         </div>

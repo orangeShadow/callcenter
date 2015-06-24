@@ -281,3 +281,78 @@ app.controller('typicalDescriptionController', function($scope, $http) {
     $scope.init();
 
 });
+
+
+app.controller('claimTypeController', function($scope, $http) {
+
+    $scope.claimTypes = [];
+    $scope.loading = false;
+
+
+    $scope.project_id = $(".claimTypeProject").data('project-id');
+
+
+    $scope.init = function() {
+        $scope.loading = true;
+        $http.get('/claimType/?project_id='+$scope.project_id).
+            success(function(data, status, headers, config) {
+                $scope.claimTypes = data;
+                $scope.loading = false;
+
+            });
+    }
+
+    $scope.addClaimType = function() {
+        $scope.loading = true;
+
+        $('form.claimType .form-group').removeClass('has-error');
+        if(typeof($scope.claimType) == "undefined")
+        {
+            $('form.claimType .form-group').addClass('has-error');
+            return false;
+        }
+
+        var claimType = {
+            title:  $scope.claimType.title,
+            project_id: $scope.project_id,
+            price:  $scope.claimType.price,
+            sort: $scope.claimType.sort,
+            _token:$('input[name="_token"]').val()
+        }
+
+        $http({
+            method:'POST',
+            url:'/claimType',
+            data:claimType,
+            'header':{'Content-Type': 'application/x-www-form-urlencoded'}
+        }).success(function(data, status, headers, config) {
+            $scope.claimTypes.push(data);
+            $scope.claimType= '';
+            $scope.loading = false;
+        }).error(function(data,status){
+            for(k in data)
+            {
+                $('form.claimType [name="claimType.'+k+'"]').parents('.form-group').addClass('has-error');
+            }
+        });
+    };
+
+
+    $scope.deleteClaimType = function(index) {
+        $scope.loading = true;
+
+        var claimType = $scope.claimType[index];
+
+
+        $http.delete('/claimType/' + claimType.id)
+            .success(function() {
+                $scope.claimType.splice(index, 1);
+                $scope.loading = false;
+
+            });;
+    };
+
+
+    $scope.init();
+
+});

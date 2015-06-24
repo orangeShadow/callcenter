@@ -28,22 +28,32 @@ class SendMailToClient {
         $claim = $event->claim;
         $properties = \App\Property::showPropertyValue($claim);
 
-        \Mail::send('emails.claimcreate',compact('claim','properties'), function($message) use ($event)
+        if($claim->send_mail==1)
         {
-            $emails = [];
-            $emails[] = $event->claim->project->client->email;
-            if(!empty($event->claim->project->client->send_email)){
-                $emailsSplit  = explode(",",$event->claim->project->client->send_email);
-                foreach($emailsSplit as $item)
-                {
-                    $emails[] = trim($item);
+            \Mail::send('emails.claimcreate',compact('claim','properties'), function($message) use ($event)
+            {
+                $emails = [];
+                $emails[] = $event->claim->project->client->email;
+                if(!empty($event->claim->project->client->send_email)){
+                    $emailsSplit  = explode(",",$event->claim->project->client->send_email);
+                    foreach($emailsSplit as $item)
+                    {
+                        $emails[] = trim($item);
+                    }
                 }
-            }
-            if(is_array($event->destinations)){
-                $emails = array_merge($emails,$event->destinations);
-            }
-            $message->to($emails, 'Callcenter №1')->subject('Круглосуточный call-центр №1');
-        });
+
+                $message->to($emails, 'Callcenter №1')->subject('Круглосуточный call-центр №1');
+            });
+        }
+
+        if(!empty($event->destinations))
+        {
+            \Mail::send('emails.claimcreate',compact('claim','properties'), function($message) use ($event)
+            {
+                $message->to($event->destinations, 'Callcenter №1')->subject('Круглосуточный call-центр №1');
+            });
+        }
+
 	}
 
 }

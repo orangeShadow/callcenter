@@ -30,5 +30,6 @@ return [
     'sort'=>'Сортировка',
     'typicalDescription.Description'=>'Описание',
     "propertyXML_CODE"=>"XML_CODE",
+    'price'=>'Цена'
 ];
 ?>

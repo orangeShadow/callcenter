@@ -14,7 +14,9 @@ class Claim extends Model {
         'project_id',
         'operator_id',
         'update_by',
-        'status'
+        'status',
+        'type_request',
+        'send_mail'
     ];
 
     //protected $dates = [];
@@ -149,6 +151,13 @@ class Claim extends Model {
     {
         return $this->belongsTo('App\StatusClaim','status','code');
     }
+
+    public function typeR()
+    {
+        return $this->belongsTo('App\ClaimType','type_request','id');
+    }
+
+
 
     public function getDestinations()
     {
