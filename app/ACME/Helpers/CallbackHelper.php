@@ -243,7 +243,7 @@ class CallbackHelper {
 
         if($client->id == 2)
         {
-            $yandexCounter  = "if(typeof yaCounter24769124 != \"undefined\") yaCounter24769124.reachGoal(\"reachGoal\");";
+            $yandexCounter  = "if(typeof yaCounter24769124 != \"undefined\") yaCounter24769124.reachGoal(\"Callshop\");";
         }
 
         $style="<style>
