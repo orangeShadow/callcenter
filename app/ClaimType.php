@@ -8,7 +8,8 @@ class ClaimType extends Model {
         'project_id',
         'title',
         'price',
-        'sort'
+        'sort',
+        'send_mail'
     ];
 
 }

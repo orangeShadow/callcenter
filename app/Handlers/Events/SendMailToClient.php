@@ -28,7 +28,14 @@ class SendMailToClient {
         $claim = $event->claim;
         $properties = \App\Property::showPropertyValue($claim);
 
-        if($claim->send_mail==1)
+        $send = 1;
+
+        if(!empty($event->claim->typeR()))
+        {
+
+            $send = $event->claim->typeR()->send_mail;
+        }
+        if($send==1)
         {
             \Mail::send('emails.claimcreate',compact('claim','properties'), function($message) use ($event)
             {
@@ -45,6 +52,7 @@ class SendMailToClient {
                 $message->to($emails, 'Callcenter №1')->subject('Круглосуточный call-центр №1');
             });
         }
+
 
         if(!empty($event->destinations))
         {

@@ -64,12 +64,6 @@
         @endif
 
         <div class="form-group">
-            {!! Form::label('send_mail',Lang::get('claim.send_mail')) !!}
-            {!! Form::hidden('send_mail',0,["class"=>"form-control"]) !!}
-            {!! Form::checkbox('send_mail',1,true) !!}
-        </div>
-
-        <div class="form-group">
             {!! Form::submit($submit,["class"=>"btn btn-default"]) !!}
         </div>
     </div>

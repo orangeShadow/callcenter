@@ -29,7 +29,8 @@ return [
     'destinationEmail'=>'Email',
     'sort'=>'Сортировка',
     'typicalDescription.Description'=>'Описание',
-    "propertyXML_CODE"=>"XML_CODE",
-    'price'=>'Цена'
+    'propertyXML_CODE'=>'XML_CODE',
+    'price'=>'Цена',
+    'send_mail'=>"Отправлять уведомление"
 ];
 ?>

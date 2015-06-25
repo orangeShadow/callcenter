@@ -317,9 +317,11 @@ app.controller('claimTypeController', function($scope, $http) {
             project_id: $scope.project_id,
             price:  $scope.claimType.price,
             sort: $scope.claimType.sort,
+            send_mail: (typeof $scope.claimType.send_mail == "undefined" || $scope.claimType.send_mail==false) ? 0:1,
             _token:$('input[name="_token"]').val()
         }
 
+        console.log(claimType);
         $http({
             method:'POST',
             url:'/claimType',
@@ -328,6 +330,7 @@ app.controller('claimTypeController', function($scope, $http) {
         }).success(function(data, status, headers, config) {
             $scope.claimTypes.push(data);
             $scope.claimType= '';
+            $('[name="claimType.send_mail"]').val(0).removeAttr('checked');
             $scope.loading = false;
         }).error(function(data,status){
             for(k in data)
@@ -341,16 +344,17 @@ app.controller('claimTypeController', function($scope, $http) {
     $scope.deleteClaimType = function(index) {
         $scope.loading = true;
 
-        var claimType = $scope.claimType[index];
+        var claimType = $scope.claimTypes[index];
 
 
         $http.delete('/claimType/' + claimType.id)
             .success(function() {
-                $scope.claimType.splice(index, 1);
+                $scope.claimTypes.splice(index, 1);
                 $scope.loading = false;
 
             });;
     };
+
 
 
     $scope.init();

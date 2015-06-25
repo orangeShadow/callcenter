@@ -129,16 +129,21 @@
                                     <input name="claimType.price" ng-model="claimType.price" type="text" class="form-control">
                                 </div>
                                 <div class="form-group">
+                                    <label>{{Lang::get("project.send_mail")}}</label>
+                                    <input name="claimType.send_mail" ng-model="claimType.send_mail" onclick="if(this.value==0) this.value=1; else this.value=0;" style="margin:5px;" type="checkbox" value="0" >
+                                </div>
+                                <div class="form-group">
                                     <label>{{Lang::get("project.sort")}}</label>
                                     <input name="claimType.sort" ng-model="claimType.sort" style="width: 50px;" type="text" class="form-control">
                                 </div>
+
                                 <a class="btn btn-success btn-sm" ng-click="addClaimType()"><i class="glyphicon glyphicon-plus"></i></a>
                             </form>
                             <div class="typeRequest-list row">
                                 <div class="col-lg-12">
-                                    <ol>
-                                        <li   ng-repeat='claimType in claimTypes'><% claimType.sort %>: <% claimType.title %>(<% claimType.price %> р)<a ng-click="deleteClaimType($index)" class="text-danger"><i class="glyphicon glyphicon-remove"></i></a> </li>
-                                    </ol>
+                                    <ul>
+                                        <li   ng-repeat='claimType in claimTypes'><% claimType.sort %> <% claimType.title %>(<% claimType.price %> р) <% (claimType.send_mail==1) ? "отправлять уведомление":"" %><a ng-click="deleteClaimType($index)" class="text-danger"><i class="glyphicon glyphicon-remove"></i></a> </li>
+                                    </ul>
                                 </div>
                             </div>
                         </div>
