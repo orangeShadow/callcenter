@@ -39,11 +39,11 @@
             </div>
             <br>
 
-            @if(!empty($claim->typeR()->first()->title))
+            @if(!empty($claim->typeR()->title))
             <div class="row">
                 <div class="col-lg-2"><b>{{ Lang::get('claim.type_request') }}</b></div>
                 <div class="col-lg-5">
-                    {{ $claim->typeR()->first()->title }}
+                    {{ $claim->typeR()->title }}
                 </div>
             </div>
             <br>
