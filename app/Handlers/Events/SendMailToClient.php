@@ -29,11 +29,11 @@ class SendMailToClient {
         $properties = \App\Property::showPropertyValue($claim);
 
         $send = 1;
-
-        if(!empty($event->claim->typeR()))
+        $rType = $event->claim->typeR();
+        if(!empty($rType))
         {
 
-            $send = $event->claim->typeR()->send_mail;
+            $send = $rType->send_mail;
         }
         if($send==1)
         {
