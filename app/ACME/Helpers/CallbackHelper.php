@@ -234,11 +234,17 @@ class CallbackHelper {
 
     public static function getCallBackForm($client)
     {
+        $yandexCounter ="";
         $swe = empty($client->settings->swe_interval) ? 60000: ($client->settings->swe_interval*1000);
         $sop = empty($client->settings->sop_interval) ? 90000: ($client->settings->sop_interval*1000);
         $colors = empty($client->settings->colors) ? 1: ($client->settings->colors);
         $top = empty($client->settings->top) ? 20: ($client->settings->top);
         $color = static::getColorScheme($colors);
+
+        if($client->id == 2)
+        {
+            $yandexCounter  = "if(typeof yaCounter24769124 != \"undefined\") yaCounter24769124.reachGoal(\"reachGoal\");";
+        }
 
         $style="<style>
             #r1 {
@@ -751,6 +757,7 @@ class CallbackHelper {
 
 
             function cSendCall(){
+                ".$yandexCounter."
                 document.getElementById(\"cc-error\").innerHTML=\"\";
                 var phone =document.getElementById(\"cc-phone\").value;
                 if(!/^\\+7[0-9]{10}$/.test(phone)){
