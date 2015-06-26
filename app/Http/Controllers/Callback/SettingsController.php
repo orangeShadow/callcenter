@@ -25,7 +25,7 @@ class SettingsController extends Controller {
         $settings->client_id = $id;
 
         if(empty($settings->color)){
-            $settings->colors = \App\ACME\Helpers\CallbackHelper::$colors[1];
+            $settings->colors = 1;
         }
         return view('callback.settings.create')->with(compact('settings'));
 

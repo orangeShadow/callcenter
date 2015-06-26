@@ -23,9 +23,9 @@ class SettingsRequest extends Request {
 	{
 		return [
 			'color'=>'numeric',
-            'top'=>'numeric',
-            'sop_interval'=>'numeric',
-            'swe_interval'=>'numeric'
+            'top'=>'required|numeric',
+            'sop_interval'=>'required|numeric',
+            'swe_interval'=>'required|numeric'
 		];
 	}
 
