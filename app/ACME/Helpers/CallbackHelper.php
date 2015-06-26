@@ -241,9 +241,9 @@ class CallbackHelper {
         $top = empty($client->settings->top) ? 20: ($client->settings->top);
         $color = static::getColorScheme($colors);
 
-        if($client->id == 2)
+        if(!empty($client->settings->yandex_cn) && !empty($client->settings->yandex_goal))
         {
-            $yandexCounter  = "if(typeof yaCounter24769124 != \"undefined\") { yaCounter24769124.reachGoal(\"Callshop\"); console.log(yaCounter24769124); }";
+            $yandexCounter  = "if(typeof yaCounter".$client->settings->yandex_cn." != \"undefined\") { yaCounter".$client->settings->yandex_cn.".reachGoal(\"".$client->settings->yandex_goal."\");}";
         }
 
         $style="<style>
