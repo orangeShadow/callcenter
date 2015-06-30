@@ -3,3 +3,5 @@
 .DS_Store
 .idea/
 storage/
+/node_modules
+/public/less

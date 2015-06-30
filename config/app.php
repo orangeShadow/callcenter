@@ -144,11 +144,13 @@ return [
 		'App\Providers\ConfigServiceProvider',
 		'App\Providers\EventServiceProvider',
 		'App\Providers\RouteServiceProvider',
+        'App\Providers\ACMEServiceProvider',
         /*
          * Vendor service Provider
          */
         'Barryvdh\Debugbar\ServiceProvider',
         'Laracasts\Flash\FlashServiceProvider',
+
 	],
 
 	/*

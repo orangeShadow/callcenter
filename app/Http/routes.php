@@ -75,11 +75,11 @@ Route::get('externform',function(){
     if(empty($client)) return;
 
     $dt = new DateTime();
-    if((int)$dt->format('H')<9 || (int)$dt->format('H')>21){
-        $result = App\ACME\Helpers\CallbackHelper::getSendBackForm($client);
+    if((int)$dt->format('H')<16 || (int)$dt->format('H')>21){
+        $result = App()->CallbackHelper->getSendBackForm($client);
         return response ($result)->header('Content-Type','text/javascript');
     }else{
-        $result = App\ACME\Helpers\CallbackHelper::getCallBackForm($client);
+        $result = App()->CallbackHelper->getCallBackForm($client);
         return response ($result)->header('Content-Type','text/javascript');
     }
 });

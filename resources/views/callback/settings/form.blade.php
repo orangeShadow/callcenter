@@ -37,7 +37,7 @@
                     {!! Form::label('colors',Lang::get('client.color')) !!}
                     {!! Form::hidden('colors',$settings->color,["class"=>"form-control"]) !!}
                     <div class = "colorList" >
-                        @foreach(App\ACME\Helpers\CallbackHelper::$colors  as $key=>$color)
+                        @foreach(App()->CallbackHelper->getColors()  as $key=>$color)
                             <p data-color="{{$key}}" style="background-color:{{$color}}" class="color @if($key==$settings->colors) active @endif"></p>
                         @endforeach
                     </div>
