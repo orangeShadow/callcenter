@@ -68,7 +68,7 @@ class Reports extends Command {
             {
                 $table.="<tr>";
                 $table.="<td $styleTd>$claim->id</td>";
-                $table.="<td $styleTd>$claim->created_at->format('d.m.Y H:i')</td>";
+                $table.="<td $styleTd>".$claim->created_at->format('d.m.Y H:i')."</td>";
                 $table.="<td $styleTd>$claim->name</td>";
                 $table.="<td $styleTd>$claim->phone</td>";
                 $table.="<td $styleTd>$claim->text</td>";
