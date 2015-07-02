@@ -5,7 +5,7 @@
     <title>Call-центр №1</title>
 </head>
 <body>
-<h2>Отчет за неделю.</h2>
+<h2>{!! $title !!}</h2>
 
 {!! $table !!}
 

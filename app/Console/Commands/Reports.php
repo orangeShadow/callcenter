@@ -99,7 +99,9 @@ class Reports extends Command {
 
             $table.= "</table>";
 
-            \Mail::send('emails.reports',compact('table'), function($message) use ($project)
+            $title = "Отчет за неделю: ".$project->title;
+
+            \Mail::send('emails.reports',compact('table','title'), function($message) use ($project)
             {
                 $emails = [];
                 $emails[] = $project->client->email;

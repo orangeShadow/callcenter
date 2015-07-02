@@ -96,7 +96,9 @@ class OlgaReport extends Command {
 
             $table.= "</table>";
 
-            \Mail::send('emails.reports',compact('table'), function($message) use ($project)
+            $title = "Отчет за месяц: ".$project->title;
+
+            \Mail::send('emails.reports',compact('table','title'), function($message) use ($project)
             {
                 $emails = ['alexeev.sker@gmail.com','o.artemova@goodline.ru'];
                 /*
