@@ -44,7 +44,7 @@ class Reports extends Command {
 	public function fire()
 	{
         $projects = [];
-        foreach(Claim::weekly()->where('project_id','=',32)->get() as $claim)
+        foreach(Claim::weekly()->get() as $claim)
         {
             $projects[$claim->project_id][] = $claim;
         }
@@ -56,7 +56,7 @@ class Reports extends Command {
             $styleTd = 'style="border:1px solid #000;"';
 
             $table= '<table cellpadding="2" cellspacing="0" style="margin: 0;  width:100%;">';
-            $table.= "<tr><td $styleTd>id</td><td $styleTd>Клиент</td><td $styleTd>Контактный телефон</td><td $styleTd>Описание</td><td $styleTd>Дата обратного звонка</td><td $styleTd>Статус</td>";
+            $table.= "<tr><td $styleTd>id</td><td $styleTd>Дата</td><td $styleTd>Клиент</td><td $styleTd>Контактный телефон</td><td $styleTd>Описание</td><td $styleTd>Дата обратного звонка</td><td $styleTd>Статус</td>";
 
             $propertiesPR = Property::where('model_initiator','=','project')->where('link_id','=',$key)->orderBy('sort')->get();
             foreach ($propertiesPR as $property) {
@@ -68,6 +68,7 @@ class Reports extends Command {
             {
                 $table.="<tr>";
                 $table.="<td $styleTd>$claim->id</td>";
+                $table.="<td $styleTd>$claim->created_at->format('d.m.Y H:i')</td>";
                 $table.="<td $styleTd>$claim->name</td>";
                 $table.="<td $styleTd>$claim->phone</td>";
                 $table.="<td $styleTd>$claim->text</td>";
