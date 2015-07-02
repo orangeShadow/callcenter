@@ -23,7 +23,7 @@ class CallbackHelper {
     private function getFormCss($client,$name)
     {
         $colors = empty($client->settings->colors) ? 1: ($client->settings->colors);
-        $top = empty($client->settings->top) ? 20: ($client->settings->top);
+        $top = empty($client->settings->top) ? "20%": ($client->settings->top)."%";
         $color = static::getColorScheme($colors);
         $server = "http://".$_SERVER['SERVER_NAME'];
         $css = file_get_contents(base_path()."/public/css/callback/$name.css");
