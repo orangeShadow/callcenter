@@ -147,6 +147,12 @@ class Claim extends Model {
         return $query;
     }
 
+    public function scopeMonth($query)
+    {
+        $query->whereRaw('MONTH(created_at)=(MONTH(NOW())-1)');
+        return $query;
+    }
+
     public function statusT()
     {
         return $this->belongsTo('App\StatusClaim','status','code');

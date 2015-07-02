@@ -41,7 +41,7 @@ class OlgaReport extends Command {
     public function fire()
     {
         $projects = [];
-        foreach(Claim::weekly()->get() as $claim)
+        foreach(Claim::month()->get() as $claim)
         {
             $projects[$claim->project_id][] = $claim;
         }
