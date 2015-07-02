@@ -25,7 +25,7 @@ class Kernel extends ConsoleKernel {
 	protected function schedule(Schedule $schedule)
 	{
 		//$schedule->command('inspire')->hourly();
-        $schedule->command('callcenter:reports')->weeklyOn(5,"21:00");
+        $schedule->command('callcenter:reports')->weeklyOn(6,"23:30");
 	}
 
 }
