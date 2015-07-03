@@ -42,25 +42,37 @@ class CallbackHelper {
     private function getFormJS($client,$style,$html,$name)
     {
         $key = $client->key;
-        $swe = empty($client->settings->swe_interval) ? 60000: ($client->settings->swe_interval*1000);
-        $sop = empty($client->settings->sop_interval) ? 90000: ($client->settings->sop_interval*1000);
         $colors = empty($client->settings->colors) ? 1: ($client->settings->colors);
         $color = static::getColorScheme($colors);
         $url = ($name=="callform") ? url('externcall'):url('formback');
+
         $yandex_cn = empty($client->settings->yandex_cn) ? "undefined":$client->settings->yandex_cn ;
         $yandex_goal = empty($client->settings->yandex_goal) ? "undefined":$client->settings->yandex_goal ;
 
+        $swe = empty($client->settings->swe_interval) ? 60000: ($client->settings->swe_interval*1000);
+        $sop = empty($client->settings->sop_interval) ? 90000: ($client->settings->sop_interval*1000);
+        $site_time =  empty($client->settings->site_time) ? "undefined":$client->settings->site_time ;
+        $page_count = empty($client->settings->page_count) ? "undefined":$client->settings->page_count ;
+        $client_count_show = empty($client->settings->client_count_show) ? "undefined":$client->settings->client_count_show ;
+        $visit_count  = empty($client->settings->visit_count) ? "undefined":$client->settings->visit_count ;
 
         $content = file_get_contents(base_path()."/public/js/callback/$name.js");
         $content = preg_replace('/\[key\]/',$key,$content);
         $content = preg_replace('/\[style\]/',$style,$content);
         $content = preg_replace('/\[html\]/',$html,$content);
         $content = preg_replace('/\[color\]/',$color,$content);
-        $content = preg_replace('/\[swe\]/',$swe,$content);
-        $content = preg_replace('/\[sop\]/',$sop,$content);
+
         $content = preg_replace('/\[url\]/',$url,$content);
         $content = preg_replace('/\[yandex_cn\]/',$yandex_cn,$content);
         $content = preg_replace('/\[yandex_goal\]/',$yandex_goal,$content);
+
+        $content = preg_replace('/\[swe\]/',$swe,$content);
+        $content = preg_replace('/\[sop\]/',$sop,$content);
+        $content = preg_replace('/\[site_time\]/',$site_time,$content);
+
+        $content = preg_replace('/\[page_count\]/',$page_count,$content);
+        $content = preg_replace('/\[client_count_show\]/',$client_count_show,$content);
+        $content = preg_replace('/\[visit_count\]/',$visit_count,$content);
 
         return $content;
     }
