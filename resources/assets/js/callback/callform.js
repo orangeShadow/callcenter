@@ -176,15 +176,18 @@
             if(!sessionStorage.hasOwnProperty('visit_count'))
             {
                 localStorage.setItem('visit_count', parseInt(localStorage.getItem('visit_count'))+1);
-                sessionStorage.setItem('visit_count',1);
+
             }
 
-            if (localStorage.getItem('visit_count') == visit_count)
+            if (!sessionStorage.hasOwnProperty('visit_count') && localStorage.getItem('visit_count') == visit_count)
             {
                 setDataCallerAttribute('visit_count');
                 doNotShowPopup();
                 cPopupOpen();
             }
+
+            if(!sessionStorage.hasOwnProperty('visit_count')) sessionStorage.setItem('visit_count',1);
+
         }else{
             localStorage.setItem('visit_count',1);
             sessionStorage.setItem('visit_count',1);
