@@ -3,7 +3,8 @@
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use App\User;
-use Illuminate\Http\Request;
+//use Illuminate\Http\Request;
+use Request;
 
 class UserController extends Controller {
 
@@ -22,7 +23,7 @@ class UserController extends Controller {
 	 */
 	public function index()
 	{
-        $users = User::paginate(50);
+        $users = User::search(Request::all())->paginate(50);
         return view('user.index')->with(compact('users'));
 	}
 
@@ -45,7 +46,15 @@ class UserController extends Controller {
 	public function store(Requests\UserRequest $request)
 	{
 		$request = $request->all();
-        User::create($request);
+        $user = new User();
+        $user->create($request);
+        $login      = Request::get('email');
+        $password   = Request::get('password');
+        \Mail::send('emails.createuser',compact('login','password'), function($message) use ($login)
+        {
+            $message->to($login, 'Callcenter №1')->subject('Круглосуточный call-центр №1');
+        });
+
         return redirect('user');
 	}
 

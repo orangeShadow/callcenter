@@ -61,4 +61,30 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
     public function setPasswordAttribute($password){
         $this->attributes["password"] = bcrypt($password);
     }
+
+    public function scopeSearch($query,$request)
+    {
+
+
+
+        if(!empty($request['name']))
+        {
+            $query->where('name','like',"%".$request['name']."%");
+        }
+
+
+        if(!empty($request['email']))
+        {
+            $query->where('email','like',"%".$request['email']."%");
+        }
+
+        if(!empty($request['role_id']))
+        {
+            $query->where('role_id',"=",(int)$request['role_id']);
+        }
+
+
+        return $query;
+
+    }
 }

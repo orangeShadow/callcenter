@@ -2,7 +2,8 @@
 
 @section('content')
     <h1>{!!Lang::get('user.userList')!!}</h1>
-
+    @include('user.filter')
+    <br>
 
     @if($users->count())
         <div class="row">
