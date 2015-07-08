@@ -10,7 +10,7 @@
         @if($claimType=\App\ClaimType::where('project_id','=',(int)Request::get('project_id'))->get(['id','title'])->lists('title','id'))
         <div class="form-group">
             {!! Form::label('type_request',Lang::get('claim.type_request')) !!}
-            {!! Form::select('type_request', $claimType,$claim->type_request,["class"=>"form-control"])!!}
+            {!! Form::select('type_request',['Не указан'=>'Не указан']+$claimType,$claim->type_request,["class"=>"form-control"])!!}
         </div>
         @endif
         <div class="form-group">
