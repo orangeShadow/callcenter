@@ -80,6 +80,17 @@
         r.open("GET",url+"?phone="+phone+"&key="+key+"", true);
         r.onreadystatechange = function () {
             if (r.readyState != 4 || r.status != 200) return;
+            try{
+                var data = r.responseText;
+                data = JSON.parse(data);
+                if(data.error==1)
+                {
+                    alert(data.message);
+                }
+            }catch(e)
+            {
+                console.log(e);
+            }
         };
         r.send();
     }

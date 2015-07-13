@@ -58,7 +58,9 @@ Route::resource('claimType','ClaimTypeController');
 
 Route::resource('callback/client','Callback\ClientController');
 Route::resource('callback/settings','Callback\SettingsController');
+Route::resource('callback/blacklist','Callback\BlacklistController');
 Route::resource('callback','Callback\CallbackController');
+
 
 /**
  * Тестовая форма
@@ -103,13 +105,17 @@ Route::get('externcall',function(){
 
     $client = \App\ACME\Model\Callback\Client::where('key','=',$key)->first();
 
-    $phone = Request::input('phone');
+    $phone = trim(Request::input('phone'));
     $sip   = Request::input('sip',$client->sip);
 
     $phoneLog = new \App\ACME\Model\Callback\PhoneLog();
     $phoneLog->client_id = $client->id;
     $phoneLog->phone = $phone;
     $phoneLog->save();
+
+    $blacklists  = \App\ACME\Model\Callback\Blacklist::where('phone','=',$phone)->get()->count();
+    if($blacklists>0) return response()->json(['error'=>1,'message'=>'You are on blacklist']);
+    exit();
 
     if(!empty($phone))
     {
@@ -147,6 +153,10 @@ Route::get('externcall',function(){
  **/
 Route::get('formback',function(){
 
+    $phone = trim(Request::input('phone'));
+
+    $blacklists  = \App\ACME\Model\Callback\Blacklist::where('phone','=',$phone)->get()->count();
+    if($blacklists>0) return response()->json(['error'=>1,'message'=>'You are on blacklist']);
 
     $time  = Request::input('time');
     $timeSelect = array(1=>"9:00-12:00",2=>"12:00-16:00",3=>"16:00-19:00",4=>"19:00-21:00");
@@ -175,7 +185,7 @@ Route::get('formback',function(){
 
 
     $phone =  new stdClass();
-    $phone->name = Request::input('phone');
+    $phone->name = $phone;
     $phone->id = '2';
 
     $object->contactData[] = $gPhone;

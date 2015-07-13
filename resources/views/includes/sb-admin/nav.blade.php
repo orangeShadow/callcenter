@@ -53,6 +53,7 @@
                     <a href="{{url('callback')}}"><i class="fa fa-dashboard fa-fw"></i> Dashboard</a>
                 </li>
                 <li><a href="{{url('callback/client')}}"><i class="glyphicon glyphicon-ruble"></i> Список клиентов</a></li>
+                <li><a href="{{url('callback/blacklist')}}"><i style="color:#000" class="glyphicon glyphicon-list"></i> Черный cписок</a></li>
             </ul>
         </div>
         <!-- /.sidebar-collapse -->
