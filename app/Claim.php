@@ -1,6 +1,7 @@
 <?php namespace App;
 
 use Carbon\Carbon;
+use Faker\Provider\tr_TR\DateTime;
 use Illuminate\Database\Eloquent\Model;
 
 class Claim extends Model {
@@ -141,9 +142,55 @@ class Claim extends Model {
     }
 
 
+    //public function monthly
+
+    public function scopeDaily($query)
+    {
+        $dt = new \DateTime();
+        //$hour = $dt->format('G');
+        //$now = $dt->format('Y-m-d H:00:00');
+
+        $hour = 15;
+        $now = $dt->format('Y-m-d 15:00:00');
+        $query->whereRaw('claims.created_at between DATE_SUB("'.$now .'", INTERVAL 24 HOUR) and "'.$now.'"');
+        $query->join('projects', function($join) use ($hour)
+        {
+            $join->on('claims.project_id', '=', 'projects.id')
+                ->where('projects.reports_type','=',\DB::raw('daily'))
+                ->where('projects.hour_start','=',\DB::raw($hour));
+        });
+
+        return $query;
+    }
+
+
     public function scopeWeekly($query)
     {
-        $query->whereRaw('YEARWEEK(created_at)=YEARWEEK(NOW())');
+        $query->join('projects', function($join)
+            {
+                $join->on('claims.project_id', '=', 'projects.id')->where('projects.reports_type','=',\DB::raw('weekly'));
+            })
+            ->whereRaw('YEARWEEK(claims.created_at)=YEARWEEK(NOW())');
+        return $query;
+    }
+
+    public function scopeMonthly($query)
+    {
+        $dt = new \DateTime();
+        $month = intval($dt->format('n'));
+        $year  = intval($dt->format('Y'));
+        $target_year_month = null;
+        if($month == '1'){
+            $target_year_month = ($year-1).'12';
+        }else{
+            $target_year_month = $year.( $month-1<10 ? "0".($month-1):($month-1));
+        }
+
+        $query->Join('projects', function($join)
+        {
+            $join->on('claims.project_id', '=', 'projects.id')->where('projects.reports_type','=',\DB::raw('monthly'));
+        })
+            ->whereRaw('EXTRACT(YEAR_MONTH FROM claims.created_at)='.$target_year_month);
         return $query;
     }
 

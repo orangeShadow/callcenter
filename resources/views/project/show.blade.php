@@ -38,6 +38,16 @@
             </div>
             @endif
             <br>
+            @if(!empty($project->reports_type))
+                <div class="row">
+                    <div class="col-lg-1"><b>{{ Lang::get('project.reports_type') }}</b></div>
+                    <div class="col-lg-5">
+                        {!!$reports_type[$project->reports_type]!!}
+                        @if(!empty($project->hour_start)) {{$project->hour_start}}:00 @endif
+                    </div>
+                </div>
+            @endif
+            <br>
             <div class="row">
                 <div class="col-lg-1"><b>{{ Lang::get('project.status') }}</b></div>
                 <div class="col-lg-5">

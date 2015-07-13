@@ -136,7 +136,7 @@
 
 
 
-@section('sripts')
+@section('scripts')
     <script>
     $('select#colors').change(function(){
         var color = $('select#colors').find('option[value="'+$(this).val()+'"]').html();

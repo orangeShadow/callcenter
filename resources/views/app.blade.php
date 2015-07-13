@@ -75,5 +75,6 @@
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.12/angular.min.js"></script>
     <script src="/js/main.js"></script>
     @yield('endbody')
+    @yield('scripts')
 </body>
 </html>

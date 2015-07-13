@@ -31,6 +31,10 @@ return [
     'typicalDescription.Description'=>'Описание',
     'propertyXML_CODE'=>'XML_CODE',
     'price'=>'Цена',
-    'send_mail'=>"Отправлять уведомление"
+    'send_mail'=>"Отправлять уведомление",
+    'reports_type'=>"Тип отчетности",
+    'hour_start'=>'Начало периода',
+    'hour_end'=>'Конец периода'
+
 ];
 ?>

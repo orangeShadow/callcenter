@@ -44,11 +44,62 @@ class Reports extends Command {
 	public function fire()
 	{
         $projects = [];
-        foreach(Claim::weekly()->get() as $claim)
+
+        if($this->argument('type')=="daily")
         {
-            $projects[$claim->project_id][] = $claim;
+            foreach(Claim::daily()->get() as $claim)
+            {
+                $projects[$claim->project_id][] = $claim;
+            }
         }
 
+        if($this->argument('type')=="weekly")
+        {
+            foreach(Claim::weekly()->get() as $claim)
+            {
+                $projects[$claim->project_id][] = $claim;
+            }
+        }
+
+        if($this->argument('type')=="monthly")
+        {
+            foreach(Claim::monthly()->get() as $claim)
+            {
+                $projects[$claim->project_id][] = $claim;
+            }
+        }
+
+
+        $this->drawTable($projects);
+
+	}
+
+	/**
+	 * Get the console command arguments.
+	 *
+	 * @return array
+	 */
+	protected function getArguments()
+	{
+		return [
+            ['type',InputArgument::REQUIRED,'Type reports [monthly,weekly,daily]']
+		];
+	}
+
+	/**
+	 * Get the console command options.
+	 *
+	 * @return array
+	 */
+	protected function getOptions()
+	{
+		return [
+			//['example', null, InputOption::VALUE_OPTIONAL, 'An example option.', null],
+		];
+	}
+
+    private function drawTable($projects)
+    {
         foreach($projects as $key=>$claims)
         {
             $project = Project::find($key);
@@ -117,31 +168,5 @@ class Reports extends Command {
             });
 
         }
-
-	}
-
-	/**
-	 * Get the console command arguments.
-	 *
-	 * @return array
-	 */
-	protected function getArguments()
-	{
-		return [
-			//['example', InputArgument::REQUIRED, 'An example argument.'],
-		];
-	}
-
-	/**
-	 * Get the console command options.
-	 *
-	 * @return array
-	 */
-	protected function getOptions()
-	{
-		return [
-			//['example', null, InputOption::VALUE_OPTIONAL, 'An example option.', null],
-		];
-	}
-
+    }
 }

@@ -13,9 +13,20 @@ class Project extends Model {
         'note',
         'client_id',
         'manager_id',
-        'update_by'
+        'update_by',
+        'reports_type',
+        'hour_start'
     ];
 
+    public function setHourStartAttribute($value)
+    {
+        if($this->attributes["reports_type"]!='daily')
+        {
+            $this->attributes["hour_start"] = null;
+        }else{
+            $this->attributes["hour_start"] = $value;
+        }
+    }
 
 
     public function scopeOperator($query,$request)

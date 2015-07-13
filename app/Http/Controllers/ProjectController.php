@@ -74,6 +74,8 @@ class ProjectController extends Controller {
 	 */
 	public function show($id)
 	{
+        $reports_type=['monthly'=>'Ежемесячно','weekly'=>'Еженедельно','daily'=>'Ежедневно'];
+
         try
         {
             $project=Project::findOrFail($id);
@@ -83,7 +85,7 @@ class ProjectController extends Controller {
             abort(404);
         }
 
-        return view('project.show',compact('project'));
+        return view('project.show',compact('project','reports_type'));
 	}
 
 	/**
