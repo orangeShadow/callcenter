@@ -115,7 +115,6 @@ Route::get('externcall',function(){
 
     $blacklists  = \App\ACME\Model\Callback\Blacklist::where('phone','=',$phone)->get()->count();
     if($blacklists>0) return response()->json(['error'=>1,'message'=>'You are on blacklist']);
-    exit();
 
     if(!empty($phone))
     {
