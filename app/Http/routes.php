@@ -107,10 +107,15 @@ Route::get('externcall',function(){
 
     $phone = trim(Request::input('phone'));
     $sip   = Request::input('sip',$client->sip);
+    $initiator = Request::input('initiator');
+    $ip  = $_SERVER["REMOTE_ADDR"];
+
 
     $phoneLog = new \App\ACME\Model\Callback\PhoneLog();
     $phoneLog->client_id = $client->id;
     $phoneLog->phone = $phone;
+    $phoneLog->ip = $ip;
+    $phoneLog->initiator = $initiator;
     $phoneLog->save();
 
     $blacklists  = \App\ACME\Model\Callback\Blacklist::where('phone','=',$phone)->get()->count();
@@ -156,6 +161,8 @@ Route::get('formback',function(){
 
     $blacklists  = \App\ACME\Model\Callback\Blacklist::where('phone','=',$phone)->get()->count();
     if($blacklists>0) return response()->json(['error'=>1,'message'=>'You are on blacklist']);
+
+    exit('Stop');
 
     $time  = Request::input('time');
     $timeSelect = array(1=>"9:00-12:00",2=>"12:00-16:00",3=>"16:00-19:00",4=>"19:00-21:00");

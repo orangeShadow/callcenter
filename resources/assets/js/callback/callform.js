@@ -17,237 +17,273 @@
         html = document.documentElement,
         height = Math.max( body.scrollHeight, body.offsetHeight,html.clientHeight, html.scrollHeight, html.offsetHeight );
 
+    var debug = true;
 
-    function doNotShowPopup()
-    {
-        sessionStorage.setItem('DoNotShowPopup',true);
-    }
+    var Helper = {
+        cursorSetEnd :  function(txt) {
+            if (txt.createTextRange) {
+                var FieldRange = txt.createTextRange();
+                FieldRange.moveStart("character", txt.value.length);
+                FieldRange.collapse();
+                FieldRange.select();
+            }else{
+                txt.focus();
+                var length = txt.value.length;
+                txt.setSelectionRange(length, length);
+            }
+        },
 
-    function canShowPopup()
-    {
-        return !sessionStorage.hasOwnProperty('DoNotShowPopup');
-    }
-
-
-    function setDataCallerAttribute(caller)
-    {
-        document.getElementById('cc-popup').dataset.caller = caller;
-    }
-
-    function cPopupClose(){
-        document.getElementById("cc-popup").style.display="none";
-        document.getElementById("cc-popup-shadow").style.display="none";
-    }
-
-    function cPopupOpen(){
-        document.getElementById("cc-popup").style.display="block";
-        document.getElementById("cc-popup-shadow").style.display="block";
-        var focusC =  document.getElementById("cc-phone").value;
-        document.getElementById("cc-phone").focus();
-        cSetEnd(document.getElementById("cc-phone"));
-
-    }
-
-    //Курсор в конец
-    function cSetEnd(txt) {
-        if (txt.createTextRange) {
-            var FieldRange = txt.createTextRange();
-            FieldRange.moveStart("character", txt.value.length);
-            FieldRange.collapse();
-            FieldRange.select();
-        }else{
-            txt.focus();
-            var length = txt.value.length;
-            txt.setSelectionRange(length, length);
+        log: function(data){
+            if(debug){
+                console.log(data);
+            }
         }
-    }
+    };
 
-    //Отправка звонка
-    function cSendCall(){
+    var HtmlEvent = {
 
-        if( eval("typeof yaCounter"+yandex_cn) != "undefined") {eval("yaCounter"+yandex_cn).reachGoal(yandex_goal);}
+        canPopupShow: function(initiator){
 
-        document.getElementById("cc-error").innerHTML="";
-        var phone =document.getElementById("cc-phone").value;
-        if(!/^\+7[0-9]{10}$/.test(phone)){
-            document.getElementById("cc-error").innerHTML="Неверный формат телефона: Телефон должен начинаться с +7 и содержать только цифры";
-            return false;
-        }
-        document.getElementById("cc-call").style.display = "none";
-        document.getElementById("cc-call1").style.display = "inline-block";
-        setTimeout(cTimerDown,1000);
-        var r = new XMLHttpRequest();
-        r.open("GET",url+"?phone="+phone+"&key="+key+"", true);
-        r.onreadystatechange = function () {
-            if (r.readyState != 4 || r.status != 200) return;
-            try{
-                var data = r.responseText;
-                data = JSON.parse(data);
-                if(data.error==1)
+            if (initiator =='client-click') return true;
+
+            if ( localStorage.hasOwnProperty('client_count_show') &&  localStorage.getItem('client_count_show')>=client_count_show)
+            {
+                Helper.log('canPopupShow: Выключен так как уже был показан: '+localStorage.getItem('client_count_show')+' раз.');
+                return false;
+            }
+
+            //Можно показать форму?
+            if( initiator =='start-page-time' && sessionStorage.hasOwnProperty('ccPopupShow') && sessionStorage.getItem('ccPopupShow')==0 ){
+                Helper.log('canPopupShow: Выключен так как уже был показан: при загрузке страницы (1 раз, больше не показываем)');
+                return false;
+            }
+
+            return true;
+        },
+
+        setPopupShowOn: function(){
+            //Разрешить показ формы
+            sessionStorage.setItem('ccPopupShow',1);
+        },
+
+        setPopupShowOff: function(){
+            //Запретить показ формы
+            sessionStorage.setItem('ccPopupShow',0);
+        },
+
+        setPopupInitiator: function(initiator){
+            //Установить событие-инициатор открытия формы
+            document.getElementById('cc-popup').dataset.initiator = initiator;
+        },
+
+        getPopupInitiator: function(){
+            //Полчить событие-инициатор открытия формы
+            return document.getElementById('cc-popup').getAttribute('data-initiator');
+        },
+
+        popupOpen: function(initiator){
+            //Открываем popup
+
+            Helper.log('popupOpen: инициатор:'+initiator);
+
+            this.setPopupInitiator(initiator);
+
+            //Выходим если форму показать нельзя
+            if(!this.canPopupShow(initiator)) return false;
+
+            if(typeof client_count_show != "undefined" && initiator != "client-click")
+            {
+                var ccs = localStorage.hasOwnProperty('client_count_show') ? parseInt(localStorage.getItem('client_count_show')):0;
+                localStorage.setItem('client_count_show',ccs+1);
+            }
+
+            //Устанавливаем что при заходе на странцу уже показали
+            if(initiator =='start-page-time') this.setPopupShowOff();
+
+            document.getElementById("cc-popup").style.display="block";
+            document.getElementById("cc-popup-shadow").style.display="block";
+            document.getElementById("cc-phone").focus();
+            Helper.cursorSetEnd(document.getElementById("cc-phone"));
+        },
+
+        popupClose: function(){
+            //Закрываем попап
+            document.getElementById("cc-popup").style.display="none";
+            document.getElementById("cc-popup-shadow").style.display="none";
+        },
+
+        sendCall: function(){
+            //Отправка звонка
+
+            if( eval("typeof yaCounter"+yandex_cn) != "undefined") {eval("yaCounter"+yandex_cn).reachGoal(yandex_goal);}
+
+            document.getElementById("cc-error").innerHTML="";
+            var phone =document.getElementById("cc-phone").value;
+            if(!/^\+7[0-9]{10}$/.test(phone)){
+                document.getElementById("cc-error").innerHTML="Неверный формат телефона: Телефон должен начинаться с +7 и содержать только цифры";
+                return false;
+            }
+            document.getElementById("cc-call").style.display = "none";
+            document.getElementById("cc-call1").style.display = "inline-block";
+            setTimeout(HtmlEvent.timerDown,1000);
+            var r = new XMLHttpRequest();
+            r.open("GET",url+"?phone="+phone+"&key="+key+"&initiator="+HtmlEvent.getPopupInitiator(), true);
+            r.onreadystatechange = function () {
+                if (r.readyState != 4 || r.status != 200) return;
+                try{
+                    var data = r.responseText;
+                    data = JSON.parse(data);
+                    if(data.error==1)
+                    {
+                        alert(data.message);
+                    }
+                }catch(e)
                 {
-                    alert(data.message);
+                    Helper.log('Ошибка ' + e.name + ":" + e.message + "\n" + e.stack);
                 }
-            }catch(e)
-            {
-                console.log(e);
-            }
-        };
-        r.send();
-    }
+            };
+            r.send();
+        },
 
-    //Таймер отчета
-    function cTimerDown(){
-        document.getElementById("cc-timer").style.color = color;
-        var timer = parseInt(document.getElementById("cc-timer").innerHTML);
-        document.getElementById("cc-timer").innerHTML = timer-1;
-        if(timer>1) setTimeout(cTimerDown,1000);
-    }
-
-
-    //Время на сайте
-    function cSiteTime()
-    {
-
-        if(sessionStorage.hasOwnProperty('showBySiteTimer')){
-            return true;
+        timerDown: function(){
+            document.getElementById("cc-timer").style.color = color;
+            var timer = parseInt(document.getElementById("cc-timer").innerHTML);
+            document.getElementById("cc-timer").innerHTML = timer-1;
+            if(timer>1) setTimeout(HtmlEvent.cTimerDown,1000);
         }
+    };
 
+    var CallCenterEvent = {
 
+        siteTime : function(){
+            //Время нахождения на сайте
 
-        var sTime = null;
-        if(sessionStorage.hasOwnProperty('siteShowTimer')) {
-            sTime = parseInt(sessionStorage.getItem('siteShowTimer'));
-        }
+            var sTime = null;
+            clearTimeout(ssTimeVar);
 
-        clearTimeout(ssTimeVar);
-
-        if( sTime==parseInt(site_time))  {
-            sessionStorage.setItem('showBySiteTimer',1)
-            doNotShowPopup();
-            setDataCallerAttribute('site_timer')
-            cPopupOpen();
-            return true;
-        }
-
-
-
-        ssTimeVar = setTimeout(function(){
-            sTime= sTime+1;
-            sessionStorage.setItem('siteShowTimer',sTime);
-            cSiteTime();
-        },1000);
-
-    }
-
-    //Таймер бездействия
-    function noEventOpenCall(){
-        clearTimeout(idleTimer);
-        idleState = false;
-        idleTimer = setTimeout(function () {
-            idleState = true;
-            if(!canShowPopup()) return false;
-            setDataCallerAttribute('no_event');
-            doNotShowPopup();
-            cPopupOpen();
-        }, idleWait);
-    }
-
-    //Кол-во страниц
-    function pageCountShow(){
-        if(sessionStorage.hasOwnProperty('page_count'))
-        {
-
-            var arr = JSON.parse(sessionStorage.getItem('page_count'))
-
-            if (arr.length + 1 == page_count)
-            {
-                doNotShowPopup();
-                setDataCallerAttribute('page_count');
-                cPopupOpen();
+            if(sessionStorage.hasOwnProperty('siteShowTimer')) {
+                sTime = parseInt(sessionStorage.getItem('siteShowTimer'));
             }
 
-            if(arr.indexOf(location.pathname)==-1)
+            if( sTime==parseInt(site_time))  {
+                HtmlEvent.popupOpen('site-timer');
+                sessionStorage.setItem('siteShowTimer',sTime+1);
+            }else if(sTime<parseInt(site_time)){
+                ssTimeVar = setTimeout(function(){
+                    sTime= sTime+1;
+                    sessionStorage.setItem('siteShowTimer',sTime);
+                        CallCenterEvent.siteTime();
+                },1000);
+            }
+        },
+
+        noEvent: function() {
+            clearTimeout(idleTimer);
+            idleState = false;
+            idleTimer = setTimeout(function () {
+                idleState = true;
+                HtmlEvent.popupOpen('no-event');
+            }, idleWait);
+        },
+
+        pageCountShow: function() {
+            // Показ от числа просмотренных страниц
+            if(sessionStorage.hasOwnProperty('page_count'))
             {
+
+                var arr = JSON.parse(sessionStorage.getItem('page_count'))
+
+                if(arr.indexOf(location.pathname)==-1)
+                {
+                    arr.push(location.pathname);
+                }
+                sessionStorage.setItem('page_count',JSON.stringify(arr));
+
+                if (arr.length == page_count)
+                {
+                    Helper.log('Запустил функцию показа по числу просмотренных страниц');
+                    HtmlEvent.popupOpen('page-count');
+                }
+
+            }else{
+                var arr = [];
                 arr.push(location.pathname);
+                sessionStorage.setItem('page_count',JSON.stringify(arr));
             }
-            sessionStorage.setItem('page_count',JSON.stringify(arr));
-        }else{
-            var arr = [];
-            arr.push(location.pathname);
-            sessionStorage.setItem('page_count',JSON.stringify(arr));
-        }
 
-    }
+            return false;
+        },
 
-    //Кол-во визитов
-    function visitCountShow(){
-        if(localStorage.hasOwnProperty('visit_count'))
-        {
+        visitCountShow: function(){
+            //Кол-во визитов на сайт
 
-            if(!sessionStorage.hasOwnProperty('visit_count'))
+            if(localStorage.hasOwnProperty('visit_count') && !sessionStorage.hasOwnProperty('visit_count'))
             {
                 localStorage.setItem('visit_count', parseInt(localStorage.getItem('visit_count'))+1);
-
+                sessionStorage.setItem('visit_count',1)
+            }else{
+                localStorage.setItem('visit_count',1);
+                sessionStorage.setItem('visit_count',1);
             }
 
-            if (!sessionStorage.hasOwnProperty('visit_count') && localStorage.getItem('visit_count') == visit_count)
+            if(localStorage.getItem('visit_count') == visit_count)
             {
-                setDataCallerAttribute('visit_count');
-                doNotShowPopup();
-                cPopupOpen();
+                Helper.log('Запустил функцию показа по числу посещений');
+                HtmlEvent.popupOpen('visit-count');
             }
 
-            if(!sessionStorage.hasOwnProperty('visit_count')) sessionStorage.setItem('visit_count',1);
-
-        }else{
-            localStorage.setItem('visit_count',1);
-            sessionStorage.setItem('visit_count',1);
+            return false;
         }
-    }
+
+    };
 
     document.body.insertAdjacentHTML('beforeend',style+htmlInner);
 
-    //Таймер время на сайте
-    var ssTimeVar = null;
-    if(typeof site_time != "undefined")
-    {
-        var ssTimeVar = null;
-        cSiteTime();
-    }
 
-    //Таймер бездействия в ноль
+
+    //Установка переменных в начальное положение
+    var ssTimeVar = null;
     var idleTimer = null;
     var idleState = false;
     var idleWait = swe;
 
-    document.addEventListener('mousemove',noEventOpenCall);
-    document.addEventListener('keydown',noEventOpenCall);
-    document.addEventListener('scroll',noEventOpenCall);
-    document.addEventListener('touchstart',noEventOpenCall);
+    //Запускаем Таймер время на сайте
+    if(typeof site_time != "undefined")
+    {
+        CallCenterEvent.siteTime();
+    }
+
+    document.addEventListener('mousemove',CallCenterEvent.noEvent);
+    document.addEventListener('keydown',CallCenterEvent.noEvent);
+    document.addEventListener('scroll',CallCenterEvent.noEvent);
+    document.addEventListener('touchstart',CallCenterEvent.noEvent);
 
 
     //Кол-во просмотренных страниц
     if(typeof page_count != "undefined")
     {
-        pageCountShow();
+        CallCenterEvent.pageCountShow();
     }
 
     //Кол-во визитов
     if(typeof visit_count != "undefined")
     {
-        visitCountShow();
+        CallCenterEvent.visitCountShow();
     }
 
 
+
     document.getElementById("cc-popup-shadow").style.height=height;
-    document.getElementById("cc-phone-button").onclick = cPopupOpen;
-    document.getElementById("cc-close").onclick = cPopupClose;
-    document.getElementById("cc-call").onclick = cSendCall;
+    document.getElementById("cc-phone-button").onclick = function(){HtmlEvent.popupOpen('client-click');};
+    document.getElementById("cc-close").onclick = HtmlEvent.popupClose;
+    document.getElementById("cc-call").onclick = HtmlEvent.sendCall;
 
-    window.setTimeout(function(){
-        if(!canShowPopup()) return false;
-        doNotShowPopup();
-        cPopupOpen();
+    if(typeof sop != 'undefined')
+    {
+        window.setTimeout(function(){
+            HtmlEvent.popupOpen('start-page-time');
+        },sop);
 
-    },sop);
+    }
+
 })();
