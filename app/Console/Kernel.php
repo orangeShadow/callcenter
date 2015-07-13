@@ -27,7 +27,6 @@ class Kernel extends ConsoleKernel {
         $schedule->command('callcenter:reports',['type'=>'daily'])->hourly();
         $schedule->command('callcenter:reports',['type'=>'weekly'])->weeklyOn(6,"23:30");
         $schedule->command('callcenter:reports',['type'=>'monthly'])->monthly();
-
 	}
 
 }

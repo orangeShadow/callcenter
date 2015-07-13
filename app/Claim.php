@@ -147,11 +147,10 @@ class Claim extends Model {
     public function scopeDaily($query)
     {
         $dt = new \DateTime();
-        //$hour = $dt->format('G');
-        //$now = $dt->format('Y-m-d H:00:00');
+        $hour = $dt->format('G');
+        $now = $dt->format('Y-m-d H:00:00');
 
-        $hour = 15;
-        $now = $dt->format('Y-m-d 15:00:00');
+
         $query->whereRaw('claims.created_at between DATE_SUB("'.$now .'", INTERVAL 24 HOUR) and "'.$now.'"');
         $query->join('projects', function($join) use ($hour)
         {
