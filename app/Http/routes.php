@@ -157,12 +157,16 @@ Route::get('externcall',function(){
  **/
 Route::get('formback',function(){
 
-    $phone = trim(Request::input('phone'));
+    $key = Request::input('key',null);
 
+    if(is_null($key)) return response()->json(['error'=>1,'message'=>'Key not found']);
+
+    $client = \App\ACME\Model\Callback\Client::where('key','=',$key)->first();
+
+    $phone = trim(Request::input('phone'));
     $blacklists  = \App\ACME\Model\Callback\Blacklist::where('phone','=',$phone)->get()->count();
     if($blacklists>0) return response()->json(['error'=>1,'message'=>'You are on blacklist']);
 
-    exit('Stop');
 
     $time  = Request::input('time');
     $timeSelect = array(1=>"9:00-12:00",2=>"12:00-16:00",3=>"16:00-19:00",4=>"19:00-21:00");
@@ -194,8 +198,13 @@ Route::get('formback',function(){
     $phone->name = $phone;
     $phone->id = '2';
 
+    $department = new stdClass();
+    $department->name=$client->title;
+    $department->id = '6';
+
     $object->contactData[] = $gPhone;
     $object->contactData[] = $phone;
+    $object->contactData[] = $department;
 
     $post_q['query'] = json_encode($object);
     $post = http_build_query($post_q);
