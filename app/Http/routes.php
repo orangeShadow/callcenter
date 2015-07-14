@@ -101,7 +101,7 @@ Route::get('externcall',function(){
     \Debugbar::disable();
     $key = Request::input('key',null);
 
-    if(is_null($key)) return response()->json(['error'=>1,'message'=>'Key not found']);
+    if(is_null($key)) return response()->json(['error'=>1,'message'=>'Key not found'])->header('Access-Control-Allow-Origin', '*');
 
     $client = \App\ACME\Model\Callback\Client::where('key','=',$key)->first();
 
@@ -119,7 +119,7 @@ Route::get('externcall',function(){
     $phoneLog->save();
 
     $blacklists  = \App\ACME\Model\Callback\Blacklist::where('phone','=',$phone)->get()->count();
-    if($blacklists>0) return response()->json(['error'=>1,'message'=>'You are on blacklist']);
+    if($blacklists>0) return response()->json(['error'=>1,'message'=>'You are on blacklist'])->header('Access-Control-Allow-Origin', '*');
 
     if(!empty($phone))
     {
@@ -159,13 +159,13 @@ Route::get('formback',function(){
 
     $key = Request::input('key',null);
 
-    if(is_null($key)) return response()->json(['error'=>1,'message'=>'Key not found']);
+    if(is_null($key)) return response()->json(['error'=>1,'message'=>'Key not found'])->header('Access-Control-Allow-Origin', '*');
 
     $client = \App\ACME\Model\Callback\Client::where('key','=',$key)->first();
 
     $phone = trim(Request::input('phone'));
     $blacklists  = \App\ACME\Model\Callback\Blacklist::where('phone','=',$phone)->get()->count();
-    if($blacklists>0) return response()->json(['error'=>1,'message'=>'You are on blacklist']);
+    if($blacklists>0) return response()->json(['error'=>1,'message'=>'You are on blacklist'])->header('Access-Control-Allow-Origin', '*');
 
 
     $time  = Request::input('time');
@@ -223,12 +223,11 @@ Route::get('formback',function(){
     $out = curl_exec($curl);
     if ($out!='0'){
         $result->id=$out;
-        echo json_encode($result);
+        return response()->json($result)->header('Access-Control-Allow-Origin', '*');
     }else{
         $result->error= 1;
-        echo json_encode($result);
+        return response()->json($result)->header('Access-Control-Allow-Origin', '*');
     }
-    return '';
 });
 
 
