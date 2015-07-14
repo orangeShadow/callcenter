@@ -17,7 +17,7 @@
         html = document.documentElement,
         height = Math.max( body.scrollHeight, body.offsetHeight,html.clientHeight, html.scrollHeight, html.offsetHeight );
 
-    var debug = true;
+    var debug = false;
 
     var Helper = {
         cursorSetEnd :  function(txt) {
@@ -44,7 +44,10 @@
 
         canPopupShow: function(initiator){
 
-            if (initiator =='client-click') return true;
+            if (initiator =='client-click') {
+                this.setPopupShowOff();
+                return true;
+            }
 
             if ( localStorage.hasOwnProperty('client_count_show') &&  localStorage.getItem('client_count_show')>=client_count_show)
             {
@@ -53,7 +56,7 @@
             }
 
             //Можно показать форму?
-            if( initiator =='start-page-time' && sessionStorage.hasOwnProperty('ccPopupShow') && sessionStorage.getItem('ccPopupShow')==0 ){
+            if( (initiator =='start-page-time' || initiator=='no-event') && sessionStorage.hasOwnProperty('ccPopupShow') && sessionStorage.getItem('ccPopupShow')==0 ){
                 Helper.log('canPopupShow: Выключен так как уже был показан: при загрузке страницы (1 раз, больше не показываем)');
                 return false;
             }
@@ -192,14 +195,15 @@
             {
 
                 var arr = JSON.parse(sessionStorage.getItem('page_count'))
-
+                var addNow = false;
                 if(arr.indexOf(location.pathname)==-1)
                 {
                     arr.push(location.pathname);
+                    addNow==true
                 }
                 sessionStorage.setItem('page_count',JSON.stringify(arr));
 
-                if (arr.length == page_count)
+                if (arr.length == page_count && addNow)
                 {
                     Helper.log('Запустил функцию показа по числу просмотренных страниц');
                     HtmlEvent.popupOpen('page-count');
