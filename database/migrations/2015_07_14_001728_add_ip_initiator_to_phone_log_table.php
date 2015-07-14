@@ -10,7 +10,7 @@ class AddIpInitiatorToPhoneLogTable extends Migration {
         Schema::table('phone_logs', function(Blueprint $table)
         {
             $table->string('ip')->nullable();
-            $table->integer('initiator')->nullable();
+            $table->string('initiator')->nullable();
         });
     }
 
