@@ -187,25 +187,11 @@ Route::get('formback',function(){
     $object->abonTypeId  = 2;
     $object->username="bitrix-site";
 
-    $object->contactData = array();
-
-    $gPhone =  new stdClass();
-    $gPhone->name = '372';
-    $gPhone->id = '1';
-
-
-    $phone =  new stdClass();
-    $phone->name = $phone;
-    $phone->id = '2';
-
-    $siteName =  new stdClass();
-    $siteName->name = $client->title;
-    $siteName->id = '3';
-
-    $object->contactData[] = $gPhone;
-    $object->contactData[] = $phone;
-    $object->contactData[] = $siteName;
-
+    $object->contactData = array(
+        array('name'=>'372','id'=>1),
+        array('name'=>$phone,'id'=>2),
+        array('name'=>$client->title,'id'=>3),
+    );
 
     $post_q['query'] = json_encode($object);
     $post = http_build_query($post_q);
