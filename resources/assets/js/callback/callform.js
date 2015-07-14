@@ -149,7 +149,7 @@
             document.getElementById("cc-timer").style.color = color;
             var timer = parseInt(document.getElementById("cc-timer").innerHTML);
             document.getElementById("cc-timer").innerHTML = timer-1;
-            if(timer>1) setTimeout(HtmlEvent.cTimerDown,1000);
+            if(timer>1) setTimeout(HtmlEvent.timerDown,1000);
         }
     };
 
