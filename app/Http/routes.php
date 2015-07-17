@@ -68,6 +68,8 @@ Route::resource('callback','Callback\CallbackController');
 Route::get('externform',function(){
     \Debugbar::disable();
 
+    exit();
+
     $key = Request::input('key',null);
 
     if(is_null($key)) return;
