@@ -220,3 +220,16 @@ Route::get('formback',function(){
 
 
 Route::get('api/claims/','ApiController@getClaims');
+
+Route::get('mtt/test',function(){
+    $mtt = new App\ACME\Helpers\MttAPI();
+
+    //$res   = $mtt->setCallBackFollowme();
+    //$res = $mtt->getCallBackFollowme();
+    //$res = $mtt->deleteCallBackFollowme();
+    $res=$mtt->makeCallBackCallFollowme('79258404777');
+    echo "<pre>";
+    print_r($res);
+    echo "</pre>";
+
+});
