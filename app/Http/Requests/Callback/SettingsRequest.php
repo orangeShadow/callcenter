@@ -30,6 +30,7 @@ class SettingsRequest extends Request {
             'visit_count'=>'numeric',
             'client_count_show'=>'numeric',
             'site_time'=>'numeric',
+            'defaultPhone'
 		];
 	}
 

@@ -51,6 +51,12 @@
                         {!! Form::text('top',$settings->top,["class"=>"form-control"]) !!}
                     </div>
                 </div>
+                <div class="form-group">
+                    <div class="col-lg-12">
+                        {!! Form::label('right',Lang::get('client.right')) !!}
+                        {!! Form::text('right',$settings->right,["class"=>"form-control"]) !!}
+                    </div>
+                </div>
             </div>
         </div>
     </div>
@@ -85,7 +91,7 @@
             </div>
             <div class="panel-body">
                 <div class="row form-horizontal">
-                    <div class="col-lg-4">
+                    <div class="col-lg-6">
                         <div class="form-group">
                             {!! Form::label('sop_interval',Lang::get('client.sop_interval'),array("class"=>"col-lg-9 col-md-8 lh")) !!}
                             <div class="col-lg-3 col-md-4">{!! Form::text('sop_interval',$settings->sop_interval,["class"=>"form-control"]) !!}</div>
@@ -101,7 +107,7 @@
                                 <div class="col-lg-3 col-md-4">{!! Form::text('site_time',$settings->site_time,["class"=>"form-control"]) !!}</div>
                         </div>
                     </div>
-                    <div class="col-lg-4">
+                    <div class="col-lg-6">
                         <div class="form-group">
                                 {!! Form::label('client_count_show',Lang::get('client.client_count_show'),array("class"=>"col-lg-10 col-md-8 lh")) !!}
                                 <div class="col-lg-2 col-md-4">{!! Form::text('client_count_show',$settings->client_count_show,["class"=>"form-control"]) !!}</div>
@@ -116,6 +122,65 @@
                                 {!! Form::label('page_count',Lang::get('client.page_count'),array("class"=>"col-lg-10 col-md-8 lh")) !!}
                                 <div class="col-lg-2 col-md-4">{!! Form::text('page_count',$settings->page_count,["class"=>"form-control"]) !!}</div>
                         </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-lg-6 col-md-12 col-sm-12">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                Настройки звонков
+            </div>
+            <div class="panel-body">
+                <div class="row form-horizontal">
+                    <div class="col-lg-12">
+                            {!! Form::label('defaultPhone',Lang::get('client.defaultPhone')) !!}
+                            {!! Form::text('defaultPhone',$settings->defaultPhone,["class"=>"form-control"]) !!}
+                    </div>
+                </div>
+                <div class="row form-horizontal">
+                    <div class="col-lg-12">
+                        <table id="phonesTable" class="table table-stripped">
+                            <thead>
+                                <tr><th>Дополнительные номера дозвона</th><th></th></tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <th><input id="phone" placeholder="7" class="form-control"></th><th><a id="phoneAdd" class="btn btn-primary"><i class="fa fa-plus"></i></a></th>
+                                    {!! Form::hidden('phones',$settings->phones,["class"=>"form-control"]) !!}
+                                </tr>
+                            </tbody>
+                            <tfoot>
+                            @if(!empty($settings->phones))
+                                @foreach(json_decode($settings->phones) as $k=>$phone)
+                                    <tr><td>{{$k+1}}: {{$phone}}</td><td><a data-id="{{$k}}" class="btn btn-danger phoneDelete"><i class="fa fa-trash"></i></a></td></tr>
+                                @endforeach
+                            @endif
+                            </tfoot>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-6 col-md-12 col-sm-12">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                Голосовое приветствие роботом
+            </div>
+            <div class="panel-body">
+                <div class="form-group">
+                    <div class="col-lg-12">
+                        {!! Form::text('textA',$settings->textA,["class"=>"form-control","placeholder"=>"Голосовое сообщению клиенту"]) !!}
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-lg-12">
+                        {!! Form::text('textB',$settings->textB,["class"=>"form-control","placeholder"=>"Голосовое сообщению вам"]) !!}
                     </div>
                 </div>
             </div>
@@ -140,8 +205,69 @@
     <script>
     $('select#colors').change(function(){
         var color = $('select#colors').find('option[value="'+$(this).val()+'"]').html();
-        console.log(color);
         $('div.colorScheme').css({'background-color':color});
-    })
+    });
+
+    $('#phoneAdd').click(function(){
+        var error = false;
+        var curPhone =$('#phone').val().trim();
+
+        if ( curPhone.length == 0 )   error = true;
+        if ( curPhone.length != 11 )  error = true;
+        if ( !/^7/.test(curPhone))    error = true;
+
+        if(error)
+        {
+            $('#phone').parent('th').addClass('has-error');
+            return error;
+        }
+
+        var phones = $('input[name="phones"]').val();
+
+
+        if(phones.length==0)
+        {
+            phones=[];
+        }else{
+            phones = JSON.parse(phones);
+        }
+
+
+        if(phones.indexOf(curPhone))
+        {
+            phones.push(curPhone);
+        }
+
+
+        var tfoot = '';
+        for(var k in phones)
+        {
+            tfoot+='<tr><td>'+(parseInt(k)+1)+': '+phones[k]+'</td><td><a data-id="'+k+'" class="btn btn-danger phoneDelete"><i class="fa fa-trash"></i></a></td></tr>';
+        }
+
+        $('#phonesTable tfoot').html(tfoot);
+        $('input[name="phones"]').val(JSON.stringify(phones));
+        $('#phone').val('');
+        $('#phone').parent('th').removeClass('has-error');
+    });
+
+    $(document).on('click','.phoneDelete',function(){
+        var k = $(this).data('id');
+
+        var phones = $('input[name="phones"]').val();
+
+        //console.log(phones);
+
+        if(phones.length==0)
+        {
+            phones=[];
+        }else{
+            phones = JSON.parse(phones);
+        }
+
+        $('input[name="phones"]').val(JSON.stringify(phones.slice(k,1)));
+
+        $(this).parents('tr').remove();
+    });
     </script>
 @stop

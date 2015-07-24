@@ -11,6 +11,13 @@
 |
 */
 
+function print_r_pre($res){
+    echo "<pre>";
+    print_r($res);
+    echo "</pre>";
+}
+
+
 Route::controllers([
     'auth' => 'Auth\AuthController',
     'password' => 'Auth\PasswordController',
@@ -223,13 +230,21 @@ Route::get('api/claims/','ApiController@getClaims');
 
 Route::get('mtt/test',function(){
     $mtt = new App\ACME\Helpers\MttAPI();
-
-    //$res   = $mtt->setCallBackFollowme();
+    $start = time();
+    //$res = $mtt->deleteCallBackFollowme();
+    //print_r_pre($res);
+    $res   = $mtt->setCallBackFollowme('79094342294',['79258404777'],false,'Для ушей Ольги.','Миша мой уши чаще.');
+    print_r_pre($res);
+    $res = $mtt->makeCallBackCallFollowme('79265352196');
+    print_r_pre($res);
+    $res = $mtt->deleteCallBackFollowme();
+    print_r_pre($res);
+    $finish = time();
+    echo $finish - $start;
     //$res = $mtt->getCallBackFollowme();
     //$res = $mtt->deleteCallBackFollowme();
-    $res=$mtt->makeCallBackCallFollowme('79258404777');
-    echo "<pre>";
-    print_r($res);
-    echo "</pre>";
+    //
+
 
 });
+

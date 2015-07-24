@@ -90,7 +90,7 @@ class MttAPI{
 
         }
 
-        if(!is_null($textA))
+        if(!empty($textA))
         {
             $callBackFollowmeStruct[]=[
                 'order'=>$order,
@@ -102,14 +102,14 @@ class MttAPI{
             $order++;
         }
 
-        if(!is_null($textB))
+        if(!empty($textB))
         {
             $callBackFollowmeStruct[]=[
                 'order'=>$order,
                 'timeout'=>10,
                 'type'=>'text',
                 'value'=>$textA,
-                'side'=> 'A'
+                'side'=> 'B'
             ];
             $order++;
         }
@@ -276,4 +276,15 @@ class MttAPI{
     }
 
 
+    static public function makeCall($client,$phone)
+    {
+        $mtt = new self();
+        $start = time();
+        $phones = json_encode($client->settings->phones);
+        if(empty($phones)) $phones=[];
+        $res   = $mtt->setCallBackFollowme($client->settings->defaultPhone,$phones,false,$client->settings->textA,$client->settings->textB);
+        $res = $mtt->makeCallBackCallFollowme($phone);
+        $res = $mtt->deleteCallBackFollowme();
+        $finish = time();
+    }
 }

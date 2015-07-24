@@ -24,6 +24,11 @@ class FormSetting extends Model {
         'client_count_show',
         'visit_count',
         'site_time',
+        'phones',
+        'textA',
+        'textB',
+        'defaultPhone',
+        'record'
     ];
 
     public function client()
