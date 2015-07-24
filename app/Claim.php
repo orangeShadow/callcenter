@@ -84,7 +84,7 @@ class Claim extends Model {
             $join->on('claims.project_id', '=', 'projects.id')->where('projects.client_id','=',\Auth::user()->id);
         });
 
-        $query->orderBy('claims.id','asc')->get(["claims.*"]);
+        $query->orderBy('claims.id','desc')->get(["claims.*"]);
     }
 
     public function scopeSearch($query,$request)
