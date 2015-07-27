@@ -138,10 +138,19 @@
             <div class="panel-body">
                 <div class="row form-horizontal">
                     <div class="col-lg-12">
+                        {!! Form::label('record',Lang::get('client.record')) !!}
+                        {!! Form::hidden('record',0); !!}
+                        {!! Form::checkbox('record',$settings->record,["class"=>"form-control"]) !!}
+                    </div>
+                </div>
+                <br>
+                <div class="row form-horizontal">
+                    <div class="col-lg-12">
                             {!! Form::label('defaultPhone',Lang::get('client.defaultPhone')) !!}
                             {!! Form::text('defaultPhone',$settings->defaultPhone,["class"=>"form-control"]) !!}
                     </div>
                 </div>
+                <br>
                 <div class="row form-horizontal">
                     <div class="col-lg-12">
                         <table id="phonesTable" class="table table-stripped">
@@ -175,12 +184,14 @@
             <div class="panel-body">
                 <div class="form-group">
                     <div class="col-lg-12">
-                        {!! Form::text('textA',$settings->textA,["class"=>"form-control","placeholder"=>"Голосовое сообщению клиенту"]) !!}
+                        {!! Form::label('textA',Lang::get('client.textA')) !!}
+                        {!! Form::text('textA',$settings->textA,["class"=>"form-control"]) !!}
                     </div>
                 </div>
                 <div class="form-group">
                     <div class="col-lg-12">
-                        {!! Form::text('textB',$settings->textB,["class"=>"form-control","placeholder"=>"Голосовое сообщению вам"]) !!}
+                        {!! Form::label('textB',Lang::get('client.textB')) !!}
+                        {!! Form::text('textB',$settings->textB,["class"=>"form-control"]) !!}
                     </div>
                 </div>
             </div>

@@ -130,7 +130,8 @@ Route::get('externcall',function(){
 
     if(!empty($phone))
     {
-        $callerId = $sip;
+        App\ACME\Helpers\MttAPI::makeCall($client,$phone);
+        /*$callerId = $sip;
         $chanel   = "SIP/".$sip;
         $oSocket = fsockopen(env('Asterisk_host'), env('Asterisk_port'), $errnum, $errdesc,50) or die("Connection to host failed");
 
@@ -152,6 +153,7 @@ Route::get('externcall',function(){
         fclose($oSocket);
         return response($phone)->header('Access-Control-Allow-Origin', '*');
         //return response($phone)->header('Access-Control-Allow-Origin', $client->href);
+        */
     }else{
         return response('Не введен номер')->header('Access-Control-Allow-Origin', 'all');
     }
