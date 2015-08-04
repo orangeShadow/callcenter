@@ -184,14 +184,30 @@
             <div class="panel-body">
                 <div class="form-group">
                     <div class="col-lg-12">
-                        {!! Form::label('textA',Lang::get('client.textA')) !!}
-                        {!! Form::text('textA',$settings->textA,["class"=>"form-control"]) !!}
+                            {!! Form::label('textA',Lang::get('client.textA')) !!}
+                            {!! Form::text('textA',$settings->textA,["class"=>"form-control"]) !!}
                     </div>
                 </div>
                 <div class="form-group">
                     <div class="col-lg-12">
-                        {!! Form::label('textB',Lang::get('client.textB')) !!}
-                        {!! Form::text('textB',$settings->textB,["class"=>"form-control"]) !!}
+                            {!! Form::label('textB',Lang::get('client.textB')) !!}
+                            {!! Form::text('textB',$settings->textB,["class"=>"form-control"]) !!}
+                    </div>
+                </div>
+            </div>
+            <div class="panel-body">
+                <div class="form-group">
+                    <div class="col-lg-12">
+                        @if(empty($settings->audioIdA) && empty($settings->audioFileA))
+                            {!! Form::file('audioFileA') !!}
+                        @endif
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-lg-12">
+                        @if(empty($settings->audioIdB) && empty($settings->audioFileB))
+                            {!! Form::file('audioFileB') !!}
+                        @endif
                     </div>
                 </div>
             </div>

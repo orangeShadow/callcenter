@@ -27,8 +27,13 @@ class FormSetting extends Model {
         'phones',
         'textA',
         'textB',
+        'audioFileA',
+        'audioFileB',
+        'audioIdA',
+        'audioIdB',
         'defaultPhone',
-        'record'
+        'record',
+        'right'
     ];
 
     public function client()

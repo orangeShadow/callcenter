@@ -19,7 +19,7 @@
             @endif
 
 
-            {!! Form::model($settings,['route'=>['callback.settings.store'],'class'=>'form-horizontal']) !!}
+            {!! Form::model($settings,['route'=>['callback.settings.store'],'class'=>'form-horizontal','files' => true]) !!}
                 @include('callback.settings.form',["submit"=>Lang::get("client.save")],compact('settings'))
             {!! Form::close() !!}
         </div>

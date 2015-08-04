@@ -24,12 +24,14 @@ class CallbackHelper {
     {
         $colors = empty($client->settings->colors) ? 1: ($client->settings->colors);
         $top = empty($client->settings->top) ? "20%": ($client->settings->top)."%";
+        $right = empty($client->settings->right) ? "10px": ($client->settings->right)."px";
         $color = static::getColorScheme($colors);
         $server = "http://".$_SERVER['SERVER_NAME'];
         $css = file_get_contents(base_path()."/public/css/callback/$name.css");
         $css = preg_replace('/\[color2\]/','#566473',$css);
         $css = preg_replace('/\[color\]/',$color,$css);
         $css = preg_replace('/\[top\]/',$top,$css);
+        $css = preg_replace('/\[right\]/',$right,$css);
         $css = preg_replace('/\[server\]/',$server,$css);
         return $css;
     }

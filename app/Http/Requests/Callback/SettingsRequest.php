@@ -24,13 +24,14 @@ class SettingsRequest extends Request {
 		return [
 			'color'=>'numeric',
             'top'=>'required|numeric',
+            'right'=>'required|numeric',
             'sop_interval'=>'required|numeric',
             'swe_interval'=>'required|numeric',
             'page_count'=>'numeric',
             'visit_count'=>'numeric',
             'client_count_show'=>'numeric',
             'site_time'=>'numeric',
-            'defaultPhone'
+            'defaultPhone'=>'numeric'
 		];
 	}
 

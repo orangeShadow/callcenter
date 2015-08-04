@@ -5,9 +5,12 @@ use App\Http\Controllers\Controller;
 
 use Illuminate\Http\Request;
 use App\ACME\Model\Callback\FormSetting as Settings;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
 use Symfony\Component\HttpKernel\Exception\HttpException;
 use App\Http\Requests\Callback\SettingsRequest;
+use GuzzleHttp;
+use GuzzleHttp\Exception\RequestException;
 
 class SettingsController extends Controller {
 
@@ -85,12 +88,28 @@ class SettingsController extends Controller {
 	public function update($id,SettingsRequest $request)
 	{
         $settings = Settings::findOrFail($id);
-        //$fields = $request->except(['client_id']);
-        if( $settings->update($request->all()) ){
+        $fields = $request->except(['audioFileA','audioFileB']);
+        if($request->hasFile('audioFileA'))
+        {
+            preg_match_all('#\.([A-Za-z0-9]+)$#',$request->file('audioFileA')->getClientOriginalName(),$maches);
+            $ext = $maches[1][0];
+            $filePath = Auth::user()->id."_audioFileA.".$ext;
+            $request->file('audioFileA')->move(public_path().'/audio/', $filePath);
+            $fields['audioFileA'] ='/audio/'.$filePath;
+
+            $mtt = new \App\ACME\Helpers\MttAPI();
+            $res = $mtt->setCallBackPrompt($filePath);
+            $settings->setAttribute('audioFileA','/audio/'.$filePath);
+            $settings->setAttribute('audioIdA',$filePath);
+        }
+
+
+
+        if( $settings->update($fields) ){
             flash()->success('Заданы настройки для сайта: '.$settings->client->title);
             return redirect('callback/client');
         }
-        return \Redirect::back()->withInput($request);
+        //return \Redirect::back()->withInput($request);
 	}
 
 }

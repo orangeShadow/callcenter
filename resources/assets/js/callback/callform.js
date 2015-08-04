@@ -41,7 +41,7 @@
     };
 
     var HtmlEvent = {
-
+        timerId : 0,
         canPopupShow: function(initiator){
 
             if (initiator =='client-click') {
@@ -128,7 +128,7 @@
             }
             document.getElementById("cc-call").style.display = "none";
             document.getElementById("cc-call1").style.display = "inline-block";
-            setTimeout(HtmlEvent.timerDown,1000);
+            this.timerId = setTimeout(HtmlEvent.timerDown,1000);
             var r = new XMLHttpRequest();
             r.open("GET",url+"?phone="+phone+"&key="+key+"&initiator="+HtmlEvent.getPopupInitiator(), true);
             r.onreadystatechange = function () {
@@ -136,9 +136,11 @@
                 try{
                     var data = r.responseText;
                     data = JSON.parse(data);
-                    if(data.error==1)
+                    console.log(data);
+                    console.log(data.result);
+                    if( typeof data.result == "object" )
                     {
-                        alert(data.message);
+                        clearTimeout(HtmlEvent.timerId);
                     }
                 }catch(e)
                 {
@@ -150,9 +152,9 @@
 
         timerDown: function(){
             document.getElementById("cc-timer").style.color = color;
-            var timer = parseInt(document.getElementById("cc-timer").innerHTML);
-            document.getElementById("cc-timer").innerHTML = timer-1;
-            if(timer>1) setTimeout(HtmlEvent.timerDown,1000);
+            var timerCnt = parseInt(document.getElementById("cc-timer").innerHTML);
+            document.getElementById("cc-timer").innerHTML = timerCnt-1;
+            if(timerCnt>1) HtmlEvent.timerId=setTimeout(HtmlEvent.timerDown,1000);
         }
     };
 

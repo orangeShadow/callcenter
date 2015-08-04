@@ -2,7 +2,8 @@
 
 use GuzzleHttp;
 use GuzzleHttp\Exception\RequestException;
-
+use App\ACME\Model\Callback\PhoneLog;
+use Log;
 /**
  * Class Mtt
  * @package App\ACME\Helpers
@@ -25,10 +26,13 @@ use GuzzleHttp\Exception\RequestException;
  * URL: https://webapicommon.mtt.ru/index.php (порт 443)
  * CAPI реализован в виде POST-запросов в соответствии со спецификацией JSON-RPC (http://www.jsonrpc.org/specification).
  * Все тесты проводятся с тестового именем customer_name: " 883140779001041".
+ * MTT_login=CallBack_Test
+ * MTT_password=5udRA7ubuzEcUBru
+ * MTT_customer_name = 883140779001041
  */
 class MttAPI{
 
-    private $url="https://webapicommon.mtt.ru/index.php";
+    static protected $url="https://webapicommon.mtt.ru/index.php";
 
     static $id=1;
 
@@ -47,7 +51,7 @@ class MttAPI{
         $request = [
             'id'=>static::$id++,
             'jsonrpc'=>'2.0',
-            'method'=>'getCallBackFollowme',
+            'method'=>'setCallBackPrompt',
             'params'=>[
                 'customer_name'=>env('MTT_customer_name'),
                 'file_name' =>$filename
@@ -56,12 +60,24 @@ class MttAPI{
 
         $client = new GuzzleHttp\Client();
         try{
-            $res = $client->post($this->url, ['auth' => [env('MTT_login'), env('MTT_password')],'json'=>$request]);
-            return json_decode($res->getBody());
+            $res = $client->post(static::$url, ['auth' => [env('MTT_login'), env('MTT_password')],'json'=>$request]);
+
+            $json = json_decode($res->getBody())->result;
+            $client1 = new GuzzleHttp\Client();
+            Log::alert('setCallBackPrompt');
+            Log::info(json_encode($json));
+            $res1 = $client1->post($json->uploadURL,
+                [
+                    'auth' => [env('MTT_login'), env('MTT_password')],
+                    'verify'=>false,
+                    'body'=>file_get_contents(public_path()."/audio/".$filename)
+                ]);
+            return json_decode($res1->getBody());
         }catch (RequestException $e)
         {
             if ($e->hasResponse()) {
-                return $e->getResponse()->json();
+                Log::error($e->getResponse()->getBody()->getContents());
+                return $e->getResponse()->getBody()->getContents();
             }
         }
     }
@@ -75,7 +91,7 @@ class MttAPI{
      * @param $textB string  текст на стороне клиента
      * @return result stdObject
      */
-    function setCallBackFollowme($defaultBNumber,$phoneByOrder,$promo=false,$textA=null,$textB=null)
+    function setCallBackFollowme($defaultBNumber,$phoneByOrder,$textA=null,$textB=null,$promoA=false,$promoB=false)
     {
 
         $callBackFollowmeStruct = [];
@@ -84,12 +100,32 @@ class MttAPI{
 
         $order = 1;
 
-        if($promo!== false && $promo>0)
+        if($promoA!== false)
         {
-
+            $callBackFollowmeStruct[]=[
+                'order'=>$order,
+                'timeout'=>20,
+                'type'=>'file',
+                'value'=>$promoA,
+                'side'=> 'A'
+            ];
+            $order++;
         }
 
-        if(!empty($textA))
+        if($promoB!== false)
+        {
+            $callBackFollowmeStruct[]=[
+                'order'=>$order,
+                'timeout'=>20,
+                'type'=>'file',
+                'value'=>$promoB,
+                'side'=> 'B'
+            ];
+            $order++;
+        }
+
+        /*
+        if(!empty($textA) && $promoA==false)
         {
             $callBackFollowmeStruct[]=[
                 'order'=>$order,
@@ -101,7 +137,7 @@ class MttAPI{
             $order++;
         }
 
-        if(!empty($textB))
+        if(!empty($textB) && $promoB==false)
         {
             $callBackFollowmeStruct[]=[
                 'order'=>$order,
@@ -112,13 +148,14 @@ class MttAPI{
             ];
             $order++;
         }
+        */
 
         if(is_array($phoneByOrder))
         {
             foreach($phoneByOrder as $phone){
                 $callBackFollowmeStruct[] = [
                     'order'=>$order,
-                    'timeout'=>20,
+                    'timeout'=>120,
                     'redirect_number'=>$phone,
                     'type'=>'Ringall',
                 ];
@@ -137,16 +174,19 @@ class MttAPI{
             ]
         ];
 
-        print_r_pre($callBackFollowmeStruct);
+        Log::alert('setCallBackFollowme');
+        Log::info(json_encode($request));
 
         $client = new GuzzleHttp\Client();
         try{
-            $res = $client->post($this->url, ['auth' => [env('MTT_login'), env('MTT_password')],'json'=>$request]);
+            $res = $client->post(static::$url, ['auth' => [env('MTT_login'), env('MTT_password')],'json'=>$request]);
+            Log::info($res->getBody());
             return json_decode($res->getBody());
         }catch (RequestException $e)
         {
             if ($e->hasResponse()) {
-                return $e->getResponse()->json();
+                Log::error($e->getResponse()->getBody()->getContents());
+                return $e->getResponse()->getBody()->getContents();
             }
         }
     }
@@ -171,13 +211,11 @@ class MttAPI{
 
         $client = new GuzzleHttp\Client();
         try{
-            $res = $client->post($this->url, ['auth' => [env('MTT_login'), env('MTT_password')],'json'=>$request]);
-            return json_decode($res->getBody())->result;
+            $res = $client->post(static::$url, ['auth' => [env('MTT_login'), env('MTT_password')],'json'=>$request]);
+            return json_decode($res->getBody());
         }catch (RequestException $e)
         {
-            if ($e->hasResponse()) {
-                return $e->getResponse()->json();
-            }
+            return false;
         }
     }
 
@@ -196,15 +234,18 @@ class MttAPI{
                 'customer_name'=>env('MTT_customer_name'),
             ]
         ];
-
+        Log::alert('deleteCallBackFollowme');
+        Log::info(json_encode($request));
         $client = new GuzzleHttp\Client();
         try{
-            $res = $client->post($this->url, ['auth' => [env('MTT_login'), env('MTT_password')],'json'=>$request]);
+            $res = $client->post(static::$url, ['auth' => [env('MTT_login'), env('MTT_password')],'json'=>$request]);
+            Log::info($res->getBody());
             return json_decode($res->getBody());
         }catch (RequestException $e)
         {
             if ($e->hasResponse()) {
-                return $e->getResponse()->json();
+                Log::error($e->getResponse()->getBody()->getContents());
+                return $e->getResponse()->getBody()->getContents();
             }
         }
     }
@@ -216,7 +257,7 @@ class MttAPI{
      *
      * @return result stdObject
      */
-    function makeCallBackCallFollowme($b_number,$record=1)
+    function makeCallBackCallFollowme($b_number,$defaultPhone,$record=0)
     {
         $request = [
             'id'=>static::$id++,
@@ -225,20 +266,24 @@ class MttAPI{
             'params'=>[
                 'customer_name'=>env('MTT_customer_name'),
                 'b_number'=>$b_number,
-                'caller_id'=>'79094342294',
+                'caller_id'=>$defaultPhone,
                 'recordEnable'=>$record,
-                'duration'=>600,
+                'duration'=>600
             ]
         ];
 
         $client = new GuzzleHttp\Client();
+        Log::alert('makeCallBackCallFollowme');
+        Log::info(json_encode($request));
         try{
-            $res = $client->post($this->url, ['auth' => [env('MTT_login'), env('MTT_password')],'json'=>$request]);
+            $res = $client->post(static::$url, ['auth' => [env('MTT_login'), env('MTT_password')],'json'=>$request]);
+            Log::info($res->getBody());
             return json_decode($res->getBody());
         }catch (RequestException $e)
         {
             if ($e->hasResponse()) {
-                return $e->getResponse()->json();
+                Log::error($e->getResponse()->getBody()->getContents());
+                return json_decode($e->getResponse()->getBody()->getContents());
             }
         }
     }
@@ -247,12 +292,12 @@ class MttAPI{
     /**
      * Данная функция позволяет получить информацию об осуществленном CallBack вызове по его идентификатору.
      */
-    function getCallBackFollowmeCallInfo($callBackCall_id)
+    static  public function getCallBackFollowmeCallInfo($callBackCall_id)
     {
         $request = [
             'id'=>static::$id++,
             'jsonrpc'=>'2.0',
-            'method'=>'makeCallBackCallFollowme',
+            'method'=>'getCallBackFollowmeCallInfo',
             'params'=>[
                 'customer_name'=>env('MTT_customer_name'),
                 'callBackCall_id'=>$callBackCall_id,
@@ -261,34 +306,35 @@ class MttAPI{
 
         $client = new GuzzleHttp\Client();
         try{
-            $res = $client->post($this->url, ['auth' => [env('MTT_login'), env('MTT_password')],'json'=>$request]);
-            return json_decode($res->getBody());
+            $res = $client->post(static::$url, ['auth' => [env('MTT_login'), env('MTT_password')],'json'=>$request]);
+            return json_decode($res->getBody())->result->callBackFollowmeCallInfoStruct;
         }catch (RequestException $e)
         {
             if ($e->hasResponse()) {
-                return $e->getResponse()->json();
+                return json_decode($e->getResponse()->getBody()->getContents());
             }
         }
     }
 
 
-    static public function makeCall($client,$phone)
+
+    static public function makeCall($client,$phone,PhoneLog $phoneLog = null)
     {
         $mtt = new self();
-        $start = time();
-
         $res=$mtt->getCallBackFollowme();
-        if(empty($res->error->code))  $mtt->deleteCallBackFollowme();
+
+        if($res!==false)  $mtt->deleteCallBackFollowme();
 
         $phones = trim($client->settings->phones);
         $phones = empty($phones) ? [$client->settings->defaultPhone]:json_decode($client->settings->phones);
-        print_r_pre($phones);
-        $res   = $mtt->setCallBackFollowme($client->settings->defaultPhone,$phones,false,$client->settings->textA,$client->settings->textB);
-        print_r_pre($res);
-        $res = $mtt->makeCallBackCallFollowme($phone,$client->settings->record);
-        print_r_pre($res);
+        $res   = $mtt->setCallBackFollowme($client->settings->defaultPhone,$phones,$client->settings->textA,$client->settings->textB,!empty($client->settings->audioIdA) ? $client->settings->audioIdA:false,!empty($client->settings->audioIdB) ? $client->settings->audioIdB:false);
+        $resCall = $mtt->makeCallBackCallFollowme($phone,$client->settings->defaultPhone,$client->settings->record);
         $res = $mtt->deleteCallBackFollowme();
-        print_r_pre($res);
-        $finish = time();
+        if(!empty($resCall->result->callBackCall_id)){
+            $phoneLog->setAttribute('call_id',$resCall->result->callBackCall_id);
+            $phoneLog->save();
+        }
+
+        return $resCall;
     }
 }

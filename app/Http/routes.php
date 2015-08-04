@@ -59,11 +59,13 @@ Route::resource('property','PropertyController');
 
 Route::resource('destination','DestinationController');
 Route::resource('typicalDescription','TypicalDescriptionController');
+
 Route::resource('claimType','ClaimTypeController');
 
-
+Route::get('api/claims/','ApiController@getClaims');
 
 Route::resource('callback/client','Callback\ClientController');
+Route::resource('callback/logs','Callback\LogsController');
 Route::resource('callback/settings','Callback\SettingsController');
 Route::resource('callback/blacklist','Callback\BlacklistController');
 Route::resource('callback','Callback\CallbackController');
@@ -91,13 +93,6 @@ Route::get('externform',function(){
         $result = App()->CallbackHelper->getCallBackForm($client);
         return response ($result)->header('Content-Type','text/javascript');
     }
-});
-
-/**
- * Тестовая форма
- **/
-Route::get('getform',function(){
-    return view('home');
 });
 
 /**
@@ -130,30 +125,8 @@ Route::get('externcall',function(){
 
     if(!empty($phone))
     {
-        App\ACME\Helpers\MttAPI::makeCall($client,$phone);
-        /*$callerId = $sip;
-        $chanel   = "SIP/".$sip;
-        $oSocket = fsockopen(env('Asterisk_host'), env('Asterisk_port'), $errnum, $errdesc,50) or die("Connection to host failed");
-
-        fputs($oSocket, "Action: Login\r\n");
-        fputs($oSocket, "Username: ".env('Asterisk_user')."\r\n");
-        fputs($oSocket, "Secret: ".env('Asterisk_secret')."\r\n\r\n");
-
-
-        fputs($oSocket, "Action: originate\r\n");
-        fputs($oSocket, "Channel: ".$chanel."\r\n");
-        fputs($oSocket, "Timeout: ".env('Asterisk_timeout')."\r\n");
-        fputs($oSocket, "CallerId: ".$callerId."\r\n");
-        fputs($oSocket, "Exten: ".$phone."\r\n");
-        fputs($oSocket, "Context: ".env('Asterisk_context')."\r\n");
-        fputs($oSocket, "Priority: ".env('Asterisk_priority')."\r\n\r\n");
-        fputs($oSocket, "Action: Logoff\r\n\r\n");
-
-        sleep (1);
-        fclose($oSocket);
-        return response($phone)->header('Access-Control-Allow-Origin', '*');
-        //return response($phone)->header('Access-Control-Allow-Origin', $client->href);
-        */
+        $resCall =  App\ACME\Helpers\MttAPI::makeCall($client,$phone,$phoneLog);
+        return response()->json($resCall)->header('Access-Control-Allow-Origin', '*');
     }else{
         return response('Не введен номер')->header('Access-Control-Allow-Origin', 'all');
     }
@@ -226,27 +199,31 @@ Route::get('formback',function(){
     }
 });
 
-
-
-Route::get('api/claims/','ApiController@getClaims');
-
-Route::get('mtt/test',function(){
-    $mtt = new App\ACME\Helpers\MttAPI();
-    $start = time();
-    //$res = $mtt->deleteCallBackFollowme();
-    //print_r_pre($res);
-    $res   = $mtt->setCallBackFollowme('79094342294',['79258404777'],false,'Для ушей Ольги.','Миша мой уши чаще.');
-    print_r_pre($res);
-    $res = $mtt->makeCallBackCallFollowme('79265352196');
-    print_r_pre($res);
-    $res = $mtt->deleteCallBackFollowme();
-    print_r_pre($res);
-    $finish = time();
-    echo $finish - $start;
-    //$res = $mtt->getCallBackFollowme();
-    //$res = $mtt->deleteCallBackFollowme();
-    //
-
-
+/**
+ * Тестовая форма
+ **/
+Route::get('getform',function(){
+    $client = App\ACME\Model\Callback\Client::first();
+    return view('home')->with(compact('client'));
 });
 
+
+Route::get('mtt/test',function(){
+     dd(App\ACME\Helpers\MttAPI::getCallBackFollowmeCallInfo('b979f9b95dd8cf627ead2134a186e167'));
+});
+
+Route::get('mtt/upload',function(){
+    $client = new GuzzleHttp\Client();
+    $res = $client->post('https://fuds1.mtt.ru/status/dd79f972c2b9afa1bd5247aefa0d8fb4',
+        [
+            'auth' => [env('MTT_login'), env('MTT_password')],
+            'verify'=>false,
+            'multipart'=>[
+                [
+                    'name' => '1_audioFileA.mp3',
+                    'contents' => file_get_contents(public_path().'/audio/1_audioFileA.mp3')
+                ]
+            ]
+        ]);
+    dd($res);
+});
