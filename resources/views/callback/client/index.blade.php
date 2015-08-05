@@ -16,56 +16,34 @@
                     <div class="dataTable_wrapper">
                         <div id="dataTables-example_wrapper"
                              class="dataTables_wrapper form-inline dt-bootstrap no-footer">
-                            <!--<div class="row">
-                                <div class="col-sm-6">
-                                    <div class="">
-                                        <label>Show
-                                            <select name="dataTables-example_length"
-                                                    aria-controls="dataTables-example"
-                                                    class="form-control input-sm">
-                                                <option value="10">10</option>
-                                                <option value="25">25</option>
-                                                <option value="50">50</option>
-                                                <option value="100">100</option>
-                                            </select> entries
-                                        </label>
-                                    </div>
-                                </div>
-                                <div class="col-sm-6">
-                                    <div id="dataTables-example_filter" class="dataTables_filter">
-                                        <label>Search:
-                                            <input type="search" class="form-control input-sm" placeholder="" aria-controls="dataTables-example">
-                                        </label>
-                                    </div>
-                                </div>
-                            </div>-->
                             <div class="row">
                                 <div class="col-sm-12">
                                     <table class="table table-striped table-bordered table-hover  no-footer"
                                             role="grid">
                                         <thead>
                                         <tr role="row">
-                                            <th>Активность</th>
+                                            <th class="hidden-xs hidden-sm hidden-md">Активность</th>
                                             <th>Название</th>
-                                            <th>Ссылка</th>
-                                            <th>Линия</th>
-                                            <th>Дата Создания</th>
+                                            <th class="hidden-xs hidden-sm hidden-md">Ссылка</th>
+                                            <th class="hidden-xs hidden-sm hidden-md">Линия</th>
+                                            <th class="hidden-xs hidden-sm hidden-md">Дата Создания</th>
                                             <th>Ключ</th>
-                                            <th width="130"><a href="{{url('callback/client/create')}}" class="btn btn-success"><i class="fa fa-plus"></i></a></th>
+                                            <th width="166"><a href="{{url('callback/client/create')}}" class="btn btn-success" style="width:100%"><i class="fa fa-plus"></i></a></th>
                                         </tr>
                                         </thead>
                                         <tbody>
                                             @foreach($clients as $client)
                                                 <tr>
-                                                    <th>{{$client->active? 'Да':'Нет'}}</th>
+                                                    <th class="hidden-xs hidden-sm hidden-md">{{$client->active? 'Да':'Нет'}}</th>
                                                     <th>{{$client->title}}</th>
-                                                    <th>{{$client->href}}</th>
-                                                    <th>{{$client->sip}}</th>
-                                                    <th>{{$client->created_at->format('d.m.Y H:i:s')}}</th>
-                                                    <th>{{$client->key}}</th>
+                                                    <th class="hidden-xs hidden-sm hidden-md">{{$client->href}}</th>
+                                                    <th class="hidden-xs hidden-sm hidden-md">{{$client->sip}}</th>
+                                                    <th class="hidden-xs hidden-sm hidden-md">{{$client->created_at->format('d.m.Y H:i:s')}}</th>
+                                                    <th class="">{{$client->key}}</th>
                                                     <th>
                                                         <a href="{{url('callback/client',['id'=>$client->id,'edit'])}}" class="btn btn-sm btn-primary"><i class="fa fa-pencil"></i></a>
                                                         <a href="{{url('callback/settings',['id'=>$client->id,'edit'])}}" class="btn btn-sm btn-primary"><i class="fa fa-gears"></i></a>
+                                                        <a href="{{url('callback/logs?id='.$client->id)}}" class="btn btn-sm btn-primary"><i class="fa fa-area-chart"></i></a>
                                                         {!! Form::open(['method'=>'DELETE','action'=>["Callback\ClientController@destroy",$client->id],'style'=>'display:inline']) !!}<button title="{{Lang::get('project.remove')}}"  type="submit" class="btn btn-sm btn-danger"><i class="glyphicon glyphicon-remove"></i></button>{!!Form::close()!!}
                                                     </th>
                                                 </tr>

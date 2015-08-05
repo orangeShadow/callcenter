@@ -9,7 +9,6 @@ use App\Claim;
 use App\Property;
 
 
-
 class Reports extends Command {
 
 	/**

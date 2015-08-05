@@ -6,7 +6,7 @@
 </div>
 @endsection
 @section('endbody')
-    <script src="/externform?key=xVIwnDonavgX"></script>
+    <script src="/externform?key={{$client->key}}"></script>
     <script type="text/javascript">
         /*var validNavigation = false;
 

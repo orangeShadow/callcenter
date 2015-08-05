@@ -5,9 +5,12 @@ use App\Http\Controllers\Controller;
 
 use Illuminate\Http\Request;
 use App\ACME\Model\Callback\FormSetting as Settings;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
 use Symfony\Component\HttpKernel\Exception\HttpException;
 use App\Http\Requests\Callback\SettingsRequest;
+use GuzzleHttp;
+use GuzzleHttp\Exception\RequestException;
 
 class SettingsController extends Controller {
 
@@ -85,10 +88,54 @@ class SettingsController extends Controller {
 	public function update($id,SettingsRequest $request)
 	{
         $settings = Settings::findOrFail($id);
-        //$fields = $request->except(['client_id']);
-        if( $settings->update($request->all()) ){
+        $fields = $request->except(['audioFileA','audioFileB']);
+        if($request->hasFile('audioFileA'))
+        {
+            preg_match_all('#\.([A-Za-z0-9]+)$#',$request->file('audioFileA')->getClientOriginalName(),$maches);
+            $ext = $maches[1][0];
+            $filePath = Auth::user()->id."_audioFileA.".$ext;
+            $request->file('audioFileA')->move(public_path().'/audio/', $filePath);
+            $fields['audioFileA'] ='/audio/'.$filePath;
+            $audioId  = Auth::user()->id."_audioFileB";
+            $mtt = new \App\ACME\Helpers\MttAPI();
+            $res = $mtt->setCallBackPrompt($filePath);
+            $settings->setAttribute('audioFileA','/audio/'.$filePath);
+            $settings->setAttribute('audioIdA',$audioId);
+        }
+
+        if($request->hasFile('audioFileB'))
+        {
+            preg_match_all('#\.([A-Za-z0-9]+)$#',$request->file('audioFileB')->getClientOriginalName(),$maches);
+            $ext = $maches[1][0];
+            $audioId  = Auth::user()->id."_audioFileB.";
+            $filePath = Auth::user()->id."_audioFileB.".$ext;
+            $request->file('audioFileB')->move(public_path().'/audio/', $filePath);
+            $fields['audioFileB'] ='/audio/'.$filePath;
+            $audioId  = Auth::user()->id."_audioFileB";
+            $mtt = new \App\ACME\Helpers\MttAPI();
+            $res = $mtt->setCallBackPrompt($filePath);
+            $settings->setAttribute('audioFileB','/audio/'.$filePath);
+            $settings->setAttribute('audioIdB',$audioId);
+        }
+
+        if($request->has('delAudioA'))
+        {
+            unlink(public_path().$settings->audioFileA);
+            $settings->setAttribute('audioFileA',null);
+            $settings->setAttribute('audioIdA',null);
+        }
+
+        if($request->has('delAudioB'))
+        {
+            unlink(public_path().$settings->audioFileB);
+            $settings->setAttribute('audioFileB',null);
+            $settings->setAttribute('audioIdB',null);
+        }
+
+
+        if( $settings->update($fields) ){
             flash()->success('Заданы настройки для сайта: '.$settings->client->title);
-            return redirect('callback/client');
+            return redirect()->back();
         }
         return \Redirect::back()->withInput($request);
 	}
