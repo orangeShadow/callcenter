@@ -11,7 +11,7 @@ class GeoAPI{
     {
         $curl =  new GuzzleHttp\Client();
         try {
-            $res = $curl->get(static::$url);
+            $res = $curl->get(static::$url.$ip);
             return json_decode($res->getBody()->getContents());
         }catch (RequestException $e)
         {
