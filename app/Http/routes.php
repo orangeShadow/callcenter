@@ -209,7 +209,14 @@ Route::get('getform',function(){
 
 
 Route::get('mtt/test',function(){
-     dd(App\ACME\Helpers\MttAPI::getCallBackFollowmeCallInfo('b979f9b95dd8cf627ead2134a186e167'));
+    $client = App\ACME\Model\Callback\Client::first();
+
+    $mtt = new \App\ACME\Helpers\MttAPI();
+    $mtt->setCallBackFollowme('79094342294',['9094342294'],false,false,'1_audioFileA.mp3');
+    $res = $mtt->getCallBackFollowme();
+    print_r_pre($res);
+
+     //dd(App\ACME\Helpers\MttAPI::getCallBackFollowmeCallInfo('b979f9b95dd8cf627ead2134a186e167'));
 });
 
 Route::get('mtt/upload',function(){

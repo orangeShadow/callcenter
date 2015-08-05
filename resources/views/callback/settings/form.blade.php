@@ -181,6 +181,7 @@
             <div class="panel-heading">
                 Голосовое приветствие роботом
             </div>
+            <!--
             <div class="panel-body">
                 <div class="form-group">
                     <div class="col-lg-12">
@@ -195,18 +196,25 @@
                     </div>
                 </div>
             </div>
+            -->
             <div class="panel-body">
                 <div class="form-group">
                     <div class="col-lg-12">
+                        {!! Form::label('textA',Lang::get('client.textA')) !!}
                         @if(empty($settings->audioIdA) && empty($settings->audioFileA))
                             {!! Form::file('audioFileA') !!}
+                        @else
+                            {{ $settings->audioIdA }} {!! Form::submit('Удалить',["class"=>'btn btn-danger',"name"=>'delAudioA']) !!}
                         @endif
                     </div>
                 </div>
                 <div class="form-group">
                     <div class="col-lg-12">
+                        {!! Form::label('textB',Lang::get('client.textB')) !!}
                         @if(empty($settings->audioIdB) && empty($settings->audioFileB))
                             {!! Form::file('audioFileB') !!}
+                        @else
+                            {{ $settings->audioIdB }} {!! Form::submit('Удалить',["class"=>'btn btn-danger',"name"=>'delAudioB']) !!}
                         @endif
                     </div>
                 </div>
@@ -283,8 +291,6 @@
 
         var phones = $('input[name="phones"]').val();
 
-        //console.log(phones);
-
         if(phones.length==0)
         {
             phones=[];
@@ -292,7 +298,8 @@
             phones = JSON.parse(phones);
         }
 
-        $('input[name="phones"]').val(JSON.stringify(phones.slice(k,1)));
+        phones.splice(k,1);
+        $('input[name="phones"]').val(JSON.stringify(phones));
 
         $(this).parents('tr').remove();
     });

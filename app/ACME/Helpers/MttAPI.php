@@ -72,6 +72,7 @@ class MttAPI{
                     'verify'=>false,
                     'body'=>file_get_contents(public_path()."/audio/".$filename)
                 ]);
+            Log::info($res1->getBody());
             return json_decode($res1->getBody());
         }catch (RequestException $e)
         {
