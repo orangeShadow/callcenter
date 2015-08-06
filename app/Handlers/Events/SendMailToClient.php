@@ -1,7 +1,7 @@
 <?php namespace App\Handlers\Events;
 
 use App\Events\ClaimCreate;
-
+use Log;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldBeQueued;
 
@@ -48,8 +48,9 @@ class SendMailToClient {
                         $emails[] = trim($item);
                     }
                 }
-
-                $message->to($emails, 'Callcenter №1')->subject('Круглосуточный call-центр №1');
+                Log::alert('Отправка письма '.$event->claim->id.", email:".$event->project->client->send_email.", ".$event->claim->project->client->email);
+                $res = $message->to($emails, 'Callcenter №1')->subject('Круглосуточный call-центр №1');
+                Log::info($res);
             });
         }
 
