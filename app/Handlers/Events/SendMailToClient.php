@@ -48,7 +48,7 @@ class SendMailToClient {
                         $emails[] = trim($item);
                     }
                 }
-                Log::alert('Отправка письма '.$event->claim->id.", email:".$event->project->client->send_email.", ".$event->claim->project->client->email);
+                Log::alert('Отправка письма '.$event->claim->id.", email:".$event->claim->project->client->send_email.", ".$event->claim->project->client->email);
                 $res = $message->to($emails, 'Callcenter №1')->subject('Круглосуточный call-центр №1');
                 Log::info($res);
             });
