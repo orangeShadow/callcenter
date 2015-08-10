@@ -13,7 +13,8 @@ class CallbackHelper {
         6=>"#ededed",
         7=>"#e5dc8f",
         8=>"#ae6467",
-        9=>"#BF00E1"
+        9=>"#BF00E1",
+        10=>"#7a0093"
     ];
 
     /**
