@@ -313,7 +313,7 @@ class MttAPI{
         }catch (RequestException $e)
         {
             if ($e->hasResponse()) {
-                return json_decode($e->getResponse()->getBody()->getContents());
+                return (array)json_decode($e->getResponse()->getBody()->getContents())->error;
             }
         }
     }

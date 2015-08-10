@@ -42,9 +42,11 @@
                                 <th>Подробно о звонке</th>
                                 <td>
                                     <ul>
-                                    @foreach($detail as $key=>$val)
-                                        <li>{{$key}}:{{$val}}</li>
-                                    @endforeach
+                                        @foreach($detail as $key=>$val)
+                                            @if(!is_array($val))
+                                                <li>{{$key}}:{{$val}}</li>
+                                            @endif
+                                        @endforeach
                                     </ul>
                                 </td>
                             </tr>
