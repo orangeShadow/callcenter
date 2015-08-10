@@ -142,8 +142,8 @@
                 <div class="row form-horizontal">
                     <div class="col-lg-12">
                         {!! Form::label('record',Lang::get('client.record')) !!}
-                        {!! Form::hidden('record',0); !!}
-                        {!! Form::checkbox('record',$settings->record,["class"=>"form-control"]) !!}
+                        {!! Form::hidden('record',0) !!}
+                        {!! Form::checkbox('record',1,["class"=>"form-control"]) !!}
                     </div>
                 </div>
                 <br>
