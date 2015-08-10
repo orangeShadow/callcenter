@@ -227,6 +227,23 @@
 </div>
 
 <div class="row">
+    <div class="col-lg-6 col-md-12 col-sm-12">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                Код для клиента:
+            </div>
+            <div class="panel-body">
+                <span>
+                   <math>
+                       <![CDATA[<script src="http://{{$_SERVER["SERVER_NAME"]}}/externform?key={{$settings->client->key}}"></script>]]>
+                   </math>
+                </span>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
     <div class="col-lg-12">
         <div class="form-group">
             <div class="setting-submit">

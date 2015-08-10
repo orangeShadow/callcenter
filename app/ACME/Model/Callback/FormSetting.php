@@ -41,5 +41,10 @@ class FormSetting extends Model {
        return $this->belongsTo('App\ACME\Model\Callback\Client','client_id','id');
     }
 
+    public function setAttributeRecord($value)
+    {
+        if($value=="On") $this->attributes["record"] = 1;
+        else $this->attributes["record"] = 0;
+    }
 
 }

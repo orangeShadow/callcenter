@@ -267,6 +267,7 @@ class MttAPI{
             'params'=>[
                 'customer_name'=>env('MTT_customer_name'),
                 'b_number'=>$b_number,
+                'client_caller_id'=>$b_number,
                 'caller_id'=>$defaultPhone,
                 'recordEnable'=>$record,
                 'duration'=>600
@@ -335,8 +336,9 @@ class MttAPI{
         if(!empty($resCall->result->callBackCall_id)){
             $phoneLog->setAttribute('call_id',$resCall->result->callBackCall_id);
             $phoneLog->save();
-            $result["success"]="y";
-            $result["call_id"]=$resCall->result->callBackCall_id;
+            $result = $resCall;
+            //$result["success"]="y";
+            //$result["call_id"]=$resCall->result->callBackCall_id;
         }else{
             $result["success"]="n";
         }
