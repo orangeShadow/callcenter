@@ -121,28 +121,31 @@ Route::get('externcall',function(){
     $phoneLog->save();
 
     $blacklists  = \App\ACME\Model\Callback\Blacklist::where('phone','=',$phone)->get()->count();
-    if($blacklists>0) return response()->json(['error'=>1,'message'=>'You are on blacklist'])->header('Access-Control-Allow-Origin', '*');
+    if($blacklists>0) return response()->json(['success'=>'n','error'=>1,'message'=>'You are on blacklist'])->header('Access-Control-Allow-Origin', '*');
 
     if(!empty($phone))
     {
-        //$resCall =  App\ACME\Helpers\MttAPI::makeCall($client,$phone,$phoneLog);
-        //return response()->json($resCall)->header('Access-Control-Allow-Origin', '*');
-        $callerId = $sip;
-        $chanel   = "SIP/".$sip;
-        $oSocket = fsockopen(env('Asterisk_host'), env('Asterisk_port'), $errnum, $errdesc,50) or die("Connection to host failed");
-        fputs($oSocket, "Action: Login\r\n");
-        fputs($oSocket, "Username: ".env('Asterisk_user')."\r\n");
-        fputs($oSocket, "Secret: ".env('Asterisk_secret')."\r\n\r\n");
-        fputs($oSocket, "Action: originate\r\n");
-        fputs($oSocket, "Channel: ".$chanel."\r\n");
-        fputs($oSocket, "Timeout: ".env('Asterisk_timeout')."\r\n");
-        fputs($oSocket, "CallerId: ".$callerId."\r\n");
-        fputs($oSocket, "Exten: ".$phone."\r\n");
-        fputs($oSocket, "Context: ".env('Asterisk_context')."\r\n");fputs($oSocket, "Priority: ".env('Asterisk_priority')."\r\n\r\n");
-        fputs($oSocket, "Action: Logoff\r\n\r\n");
-        sleep (1);
-        fclose($oSocket);
-        return response()->json(["success"=>"y"])->header('Access-Control-Allow-Origin', '*');
+        if( empty($client->sip) ){
+            $resCall =  App\ACME\Helpers\MttAPI::makeCall($client,$phone,$phoneLog);
+            return response()->json($resCall)->header('Access-Control-Allow-Origin', '*');
+        }else{
+            $callerId = $sip;
+            $chanel   = "SIP/".$sip;
+            $oSocket = fsockopen(env('Asterisk_host'), env('Asterisk_port'), $errnum, $errdesc,50) or die("Connection to host failed");
+            fputs($oSocket, "Action: Login\r\n");
+            fputs($oSocket, "Username: ".env('Asterisk_user')."\r\n");
+            fputs($oSocket, "Secret: ".env('Asterisk_secret')."\r\n\r\n");
+            fputs($oSocket, "Action: originate\r\n");
+            fputs($oSocket, "Channel: ".$chanel."\r\n");
+            fputs($oSocket, "Timeout: ".env('Asterisk_timeout')."\r\n");
+            fputs($oSocket, "CallerId: ".$callerId."\r\n");
+            fputs($oSocket, "Exten: ".$phone."\r\n");
+            fputs($oSocket, "Context: ".env('Asterisk_context')."\r\n");fputs($oSocket, "Priority: ".env('Asterisk_priority')."\r\n\r\n");
+            fputs($oSocket, "Action: Logoff\r\n\r\n");
+            sleep (1);
+            fclose($oSocket);
+            return response()->json(["success"=>"y"])->header('Access-Control-Allow-Origin', '*');
+        }
     }else{
         return response('Не введен номер')->header('Access-Control-Allow-Origin', 'all');
     }

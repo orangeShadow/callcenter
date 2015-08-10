@@ -34,6 +34,9 @@
             </div>
             <div class="panel-body">
                 {!! Form::hidden('client_id',$settings->client_id) !!}
+                @if(!empty($settings->client->sip))
+                {!! Form::hidden('sip',$settings->client->sip) !!}
+                @endif
                 <div class="form-group">
                     <div class="col-lg-12">
                     {!! Form::label('colors',Lang::get('client.color')) !!}

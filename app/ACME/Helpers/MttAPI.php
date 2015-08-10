@@ -331,11 +331,16 @@ class MttAPI{
         $res   = $mtt->setCallBackFollowme($client->settings->defaultPhone,$phones,$client->settings->textA,$client->settings->textB,!empty($client->settings->audioIdA) ? $client->settings->audioIdA:false,!empty($client->settings->audioIdB) ? $client->settings->audioIdB:false);
         $resCall = $mtt->makeCallBackCallFollowme($phone,$client->settings->defaultPhone,$client->settings->record);
         $res = $mtt->deleteCallBackFollowme();
+        $result = [];
         if(!empty($resCall->result->callBackCall_id)){
             $phoneLog->setAttribute('call_id',$resCall->result->callBackCall_id);
             $phoneLog->save();
+            $result["success"]="y";
+            $result["call_id"]=$resCall->result->callBackCall_id;
+        }else{
+            $result["success"]="n";
         }
 
-        return $resCall;
+        return $result;
     }
 }

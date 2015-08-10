@@ -24,7 +24,7 @@ class ClientRequest extends Request {
 		return [
 			'title'=>'required',
             'href'=>'required|url',
-            'sip'=>'required|numeric',
+            'sip'=>'numeric',
             'active'=>'boolean'
 		];
 	}

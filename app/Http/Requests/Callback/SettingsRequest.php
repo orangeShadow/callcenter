@@ -31,7 +31,8 @@ class SettingsRequest extends Request {
             'visit_count'=>'numeric',
             'client_count_show'=>'numeric',
             'site_time'=>'numeric',
-            'defaultPhone'=>'numeric'
+            'defaultPhone'=>'required_without:sip',
+            'phones'=>'required_without:sip'
 		];
 	}
 
@@ -47,7 +48,8 @@ class SettingsRequest extends Request {
             'visit_count.numeric'=>"Поле".\Lang::get('client.visit_count')." должно быть числом",
             'client_count_show.numeric'=>"Поле".\Lang::get('client.client_count_show')." должно быть числом",
             'site_time.numeric'=>"Поле".\Lang::get('client.site_time')." должно быть числом",
-
+            'defaultPhone.required_without'=>"Для сервиса MTT необходимо заполнить номер телефона по умолчанию",
+            'phones.required_without'=>"Для сервиса MTT необходимо заполнить номера дозвона"
         ];
     }
 
