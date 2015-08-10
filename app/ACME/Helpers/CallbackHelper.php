@@ -12,7 +12,8 @@ class CallbackHelper {
         5=>"#d4d752",
         6=>"#ededed",
         7=>"#e5dc8f",
-        8=>"#ae6467"
+        8=>"#ae6467",
+        9=>"#ae6467"
     ];
 
     /**
