@@ -3,16 +3,17 @@
 @color2: [color2];
 @color: [color];
 @server: [server];
-
+@button_size: [button_size]px;
+@button_size_half : [button_size_half]px;
 @border: 2px solid;
 
 #cc-phone-button-wrap{
-  width:160px;
-  height:160px;
+  width:@button_size;
+  height:@button_size;
   position: fixed;
   top: @top;
   right:@right;
-  margin-top: -80px;
+  margin-top: @button_size_half;
   text-align: center;
   vertical-align: middle;
   z-index: 1000;
@@ -23,11 +24,11 @@
   display: block;
   border-radius: 100%;
   position: absolute;
-  top: 50px;
-  left: 50px;
+  top: 0;
+  left: 0;
   z-index: 1000;
-  width:60px;
-  height:60px;
+  width: @button_size;
+  height: @button_size;
   cursor:pointer;
   background: url("@{server}/i/phone.png") no-repeat center;
   background-color: @color;

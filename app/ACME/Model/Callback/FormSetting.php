@@ -33,7 +33,9 @@ class FormSetting extends Model {
         'audioIdB',
         'defaultPhone',
         'record',
-        'right'
+        'right',
+        'color_code',
+        'button_size'
     ];
 
     public function client()

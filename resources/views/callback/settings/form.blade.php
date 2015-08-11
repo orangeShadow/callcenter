@@ -50,6 +50,12 @@
                 </div>
                 <div class="form-group">
                     <div class="col-lg-12">
+                        {!! Form::label('color_code',Lang::get('client.color_code')) !!}
+                        {!! Form::text('color_code',$settings->color_code,["class"=>"form-control color"]) !!}
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-lg-12">
                         {!! Form::label('top',Lang::get('client.top')) !!}
                         {!! Form::text('top',$settings->top,["class"=>"form-control"]) !!}
                     </div>
@@ -58,6 +64,12 @@
                     <div class="col-lg-12">
                         {!! Form::label('right',Lang::get('client.right')) !!}
                         {!! Form::text('right',$settings->right,["class"=>"form-control"]) !!}
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-lg-12">
+                        {!! Form::label('button_size',Lang::get('client.button_size')) !!}
+                        {!! Form::text('button_size',empty($settings->button_size) ? 60:$settings->button_size,["class"=>"form-control"]) !!}
                     </div>
                 </div>
             </div>
@@ -257,6 +269,7 @@
 
 
 @section('scripts')
+    <script type="text/javascript" src="/js/jscolor.js"></script>
     <script>
     $('select#colors').change(function(){
         var color = $('select#colors').find('option[value="'+$(this).val()+'"]').html();

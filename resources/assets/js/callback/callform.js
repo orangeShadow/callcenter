@@ -1,4 +1,9 @@
 ;(function(){
+
+    var BreakException = {
+        'message':'Foreach break'
+    };
+
     var style = '[style]',
         htmlInner  = '[html]',
         url = '[url]',
@@ -277,7 +282,31 @@
         CallCenterEvent.visitCountShow();
     }
 
+    document.getElementsByTagName('body')[0].addEventListener("click",function(e){
+        try{
+            console.log(e);
+            var path = e.path;
+            var exit = true;
+            if(document.getElementById('cc-popup').style.display=="none"){
+                exit = false;
+            }
 
+            var el = e.target.parentElement;
+            while(el.parentElement != null)
+            {
+                if(el.id=="cc-popup") {exit = false;  break;}
+                if(el.id=="cc-phone-button-wrap") {exit = false; break;}
+                el=el.parentElement;
+            }
+
+
+            if(exit){
+                HtmlEvent.popupClose();
+            }
+        }catch(e){
+            Helper.log(e);
+        }
+    });
 
     document.getElementById("cc-popup-shadow").style.height=height;
     document.getElementById("cc-phone-button").onclick = function(){HtmlEvent.popupOpen('client-click');};

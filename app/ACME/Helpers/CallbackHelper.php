@@ -27,10 +27,16 @@ class CallbackHelper {
         $colors = empty($client->settings->colors) ? 1: ($client->settings->colors);
         $top = empty($client->settings->top) ? "20%": ($client->settings->top)."%";
         $right = empty($client->settings->right) ? "10px": ($client->settings->right)."px";
-        $color = static::getColorScheme($colors);
+        $color = empty($client->settings->color_code) ? static::getColorScheme($colors): "#".$client->settings->color_code;
+        $button_size = !empty($client->settings->button_size) ? $client->settings->button_size : 60;
+
+
+
         $server = "http://".$_SERVER['SERVER_NAME'];
         $css = file_get_contents(base_path()."/public/css/callback/$name.css");
         $css = preg_replace('/\[color2\]/','#566473',$css);
+        $css = preg_replace('/\[button_size\]/',$button_size,$css);
+        $css = preg_replace('/\[button_size_half\]/',-round($button_size/2),$css);
         $css = preg_replace('/\[color\]/',$color,$css);
         $css = preg_replace('/\[top\]/',$top,$css);
         $css = preg_replace('/\[right\]/',$right,$css);
