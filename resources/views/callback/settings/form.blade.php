@@ -119,23 +119,23 @@
 
                         <div class="form-group">
                                 {!! Form::label('site_time',Lang::get('client.site_time'),array("class"=>"col-lg-9 col-md-8 lh")) !!}
-                                <div class="col-lg-3 col-md-4">{!! Form::text('site_time',$settings->site_time,["class"=>"form-control"]) !!}</div>
+                                <div class="col-lg-3 col-md-4">{!! Form::text('site_time',empty($settings->site_time) ? null : $settings->site_time,["class"=>"form-control"]) !!}</div>
                         </div>
                     </div>
                     <div class="col-lg-6">
                         <div class="form-group">
                                 {!! Form::label('client_count_show',Lang::get('client.client_count_show'),array("class"=>"col-lg-10 col-md-8 lh")) !!}
-                                <div class="col-lg-2 col-md-4">{!! Form::text('client_count_show',$settings->client_count_show,["class"=>"form-control"]) !!}</div>
+                                <div class="col-lg-2 col-md-4">{!! Form::text('client_count_show',empty($settings->client_count_show) ? null : $settings->client_count_show ,["class"=>"form-control"]) !!}</div>
                         </div>
 
                         <div class="form-group">
                                 {!! Form::label('visit_count',Lang::get('client.visit_count'),array("class"=>"col-lg-10 col-md-8 lh")) !!}
-                                <div class="col-lg-2 col-md-4">{!! Form::text('visit_count',$settings->visit_count,["class"=>"form-control"]) !!}</div>
+                                <div class="col-lg-2 col-md-4">{!! Form::text('visit_count',empty($settings->visit_count) ? null : $settings->visit_count,["class"=>"form-control"]) !!}</div>
                         </div>
 
                         <div class="form-group">
                                 {!! Form::label('page_count',Lang::get('client.page_count'),array("class"=>"col-lg-10 col-md-8 lh")) !!}
-                                <div class="col-lg-2 col-md-4">{!! Form::text('page_count',$settings->page_count,["class"=>"form-control"]) !!}</div>
+                                <div class="col-lg-2 col-md-4">{!! Form::text('page_count',empty($settings->page_count) ? null:$settings->page_count ,["class"=>"form-control"]) !!}</div>
                         </div>
                     </div>
                 </div>
