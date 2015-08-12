@@ -49,4 +49,27 @@ class FormSetting extends Model {
         else $this->attributes["record"] = 0;
     }
 
+
+    public function setPageCountAttribute($value)
+    {
+        if(empty($value)) $this->attributes["page_count"] = null;
+    }
+
+
+    public function setClientCountShowAttribute($value)
+    {
+        if(empty($value)) $this->attributes["client_count_show"] = null;
+    }
+
+
+    public function setVisitCountAttribute($value)
+    {
+        if(empty($value)) $this->attributes["visit_count"] = null;
+    }
+
+    public function setSiteTimeAttribute($value)
+    {
+        if(empty($value)) $this->attributes["site_time"] = null;
+    }
+
 }
