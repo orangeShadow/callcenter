@@ -86,13 +86,13 @@ Route::get('externform',function(){
     if(empty($client)) return;
 
     $dt = new DateTime();
-    if((int)$dt->format('H')<9 || (int)$dt->format('H')>21){
+    /*if((int)$dt->format('H')<9 || (int)$dt->format('H')>21){
         $result = App()->CallbackHelper->getSendBackForm($client);
         return response ($result)->header('Content-Type','text/javascript');
-    }else{
+    }else{*/
         $result = App()->CallbackHelper->getCallBackForm($client);
         return response ($result)->header('Content-Type','text/javascript');
-    }
+    //}
 });
 
 /**
@@ -101,11 +101,17 @@ Route::get('externform',function(){
 Route::get('externcall',function(){
 
     \Debugbar::disable();
+
     $key = Request::input('key',null);
 
     if(is_null($key)) return response()->json(['error'=>1,'message'=>'Key not found'])->header('Access-Control-Allow-Origin', '*');
 
     $client = \App\ACME\Model\Callback\Client::where('key','=',$key)->first();
+
+    $sitename = $client->title;
+    $name = Request::input('name',null);
+    $email = Request::input('email',null);
+    $text = Request::input('message',null);
 
     $phone = trim(Request::input('phone'));
     $sip   = Request::input('sip',$client->sip);
@@ -152,6 +158,35 @@ Route::get('externcall',function(){
 
 });
 
+
+
+Route::post('externcall',function(){
+    $key = Request::input('key',null);
+
+    if(is_null($key)) return response()->json(['error'=>1,'message'=>'Key not found'])->header('Access-Control-Allow-Origin', '*');
+
+    $client = \App\ACME\Model\Callback\Client::where('key','=',$key)->first();
+
+    $sitename = $client->title;
+
+
+    $request = Request::instance();
+    $content = $request->getContent();
+
+    parse_str($content);
+
+    if(empty($name) || empty($email) || empty($text)) {
+        return response()->json(["success"=>"n","message"=>"Заполнены не все поля."])->header('Access-Control-Allow-Origin', '*');
+    }
+
+    \Mail::send('emails.callbackmessage',compact('name','email','sitename','text'), function($message) use ($client)
+    {
+        $emails = json_decode($client->settings->emails);
+        $message->to($emails, 'Callcenter №1')->subject('Call-центр №1');
+    });
+    return response()->json(["success"=>"y"])->header('Access-Control-Allow-Origin', '*');
+
+});
 
 /**
  * Форма в CRM

@@ -35,7 +35,8 @@ class FormSetting extends Model {
         'record',
         'right',
         'color_code',
-        'button_size'
+        'button_size',
+        'emails'
     ];
 
     public function client()

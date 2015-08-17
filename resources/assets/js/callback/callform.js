@@ -18,6 +18,8 @@
         visit_count  = [visit_count],
         site_time  = [site_time];
 
+
+
     var body = document.body,
         html = document.documentElement,
         height = Math.max( body.scrollHeight, body.offsetHeight,html.clientHeight, html.scrollHeight, html.offsetHeight );
@@ -42,6 +44,10 @@
             if(debug){
                 console.log(data);
             }
+        },
+        validateEmail:function(email) {
+            var re = /^([\w-]+(?:\.[\w-]+)*)@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$/i;
+            return re.test(email);
         }
     };
 
@@ -143,16 +149,57 @@
                     data = JSON.parse(data);
                     console.log(data);
                     console.log(data.result);
+
                     if( typeof data.result == "object" )
                     {
-                        clearTimeout(HtmlEvent.timerId);
+                       //clearTimeout(HtmlEvent.timerId);
                     }
+
                 }catch(e)
                 {
                     Helper.log('Ошибка ' + e.name + ":" + e.message + "\n" + e.stack);
                 }
             };
             r.send();
+        },
+
+        sendMessage: function(){
+            document.getElementById("cc-message-error").innerHTML="";
+            var name =document.getElementById("cc-name").value.trim();
+            var email =document.getElementById("cc-email").value.trim();
+            var mess = document.getElementById("cc-message").value.trim();
+            if(!Helper.validateEmail(email)){
+                document.getElementById("cc-message-error").innerHTML="Неверный формат email.";
+                return false;
+            }
+
+            if(name.length==0 || email.length==0 || mess.length == 0){
+                document.getElementById("cc-message-error").innerHTML="Для отправки сообщения необходимо заполнить все поля.";
+                return false;
+            }
+            document.getElementById("cc-message-btn-send").style.display = "none";
+
+            var r = new XMLHttpRequest();
+            var body = "text="+mess+"&name="+name+"&email="+email;
+            r.open("POST",url+"?key="+key+"&initiator="+HtmlEvent.getPopupInitiator(), true);
+
+            r.onreadystatechange = function () {
+                if (r.readyState != 4 || r.status != 200) return;
+                try{
+                    var data = r.responseText;
+                    data = JSON.parse(data);
+                    console.log(data.success);
+                    if (typeof data.success != "undefined" && data.success=="y")
+                    {
+                        document.getElementsByClassName('cc-content-message')[0].innerHTML = '<p class="success">Ваше сообщение отправлено. Спасибо за обращение.</p>';
+                    }
+
+                }catch(e)
+                {
+                    Helper.log('Ошибка ' + e.name + ":" + e.message + "\n" + e.stack);
+                }
+            };
+            r.send(body);
         },
 
         timerDown: function(){
@@ -284,7 +331,6 @@
 
     document.getElementsByTagName('body')[0].addEventListener("click",function(e){
         try{
-            console.log(e);
             var path = e.path;
             var exit = true;
             if(document.getElementById('cc-popup').style.display=="none"){
@@ -311,7 +357,28 @@
     document.getElementById("cc-popup-shadow").style.height=height;
     document.getElementById("cc-phone-button").onclick = function(){HtmlEvent.popupOpen('client-click');};
     document.getElementById("cc-close").onclick = HtmlEvent.popupClose;
+
     document.getElementById("cc-call").onclick = HtmlEvent.sendCall;
+    document.getElementById('cc-message-btn-send').onclick = HtmlEvent.sendMessage;
+
+    document.getElementById('cc-message-btn').addEventListener('click',function(e){
+        console.log(e);
+        e.target.parentNode.style.display = "none";
+        e.target.parentNode.nextElementSibling.style.display = "block";
+        document.getElementsByClassName('cc-content')[0].style.display = "none";
+        document.getElementsByClassName('cc-content-message')[0].style.display = "block";
+    });
+
+
+
+
+    document.getElementById('cc-phone-btn').addEventListener('click',function(e){
+        console.log(e);
+        e.target.parentNode.style.display = "none";
+        e.target.parentNode.previousElementSibling.style.display = "block";
+        document.getElementsByClassName('cc-content')[0].style.display = "block";
+        document.getElementsByClassName('cc-content-message')[0].style.display = "none";
+    });
 
     if(typeof sop != 'undefined')
     {

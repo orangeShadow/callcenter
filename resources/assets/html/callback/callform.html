@@ -11,11 +11,42 @@
     <div class='cc-content'>
         <span class='cc-head'>Оставьте свой номер и мы перезвоним Вам<br> в течение <span class='cc-bold' id='cc-timer'>10</span> <span class='cc-bold'>секунд</span>! Засекайте!</span>
         <div class='cc-wrapper'>
-            <input id='cc-phone' type = 'text' value='+7'> <span id='cc-call' href='#'>Жду звонка</span><span id='cc-call1' href='#'>Жду звонка</span>
+            <input id='cc-phone' type = 'text' value='+7'> <span id='cc-call' >Жду звонка</span><span id='cc-call1'>Жду звонка</span>
             <div id='cc-error'></div>
         </div>
     </div>
+    <div class='cc-content-message'>
+        <table cellspacing='0' cellpadding='0'>
+            <tr>
+                <td width='50%' valign="top">
+                    <p style="margin: 0 10px;">
+                        <span style="display:block;margin-bottom:4px;">Текст сообщения</span>
+                        <textarea style="box-shadow: none; text-shadow: none; width:100%; height: 170px; border-radius:3px; resize: none; border: 1px solid #b2b2b2;" id='cc-message'></textarea>
+                    </p>
+                </td>
+                <td width='50%' valign="top">
+                    <p style="margin: 10px 10px; margin-top:0;">
+                        <span style="display:block;margin-bottom:4px;">Ваше Имя:</span>
+                        <input style="width:100%" type="text" id="cc-name">
+                    </p>
+                    <p style="margin: 10px;">
+                        <span style="display:block;margin-bottom:4px;">Ваш E-mail:</span>
+                        <input  style="width:100%" type="text" id="cc-email">
+                    </p>
+                    <p style="margin: 10px; margin-bottom: 0;">
+                        <span id="cc-message-btn-send">Отправить</span>
+                    </p>
+                </td>
+            </tr>
+        </table>
+        <p id="cc-message-error"></p>
+        <div class='cc-clear'></div>
+    </div>
     <div class='cc-footer'>
-        Call-центр №1
+        <div class='cc-message-block'>
+            <div id='cc-message-btn'><i class='cc-chat'></i> <span style="text-decoration: underline;">Оставить сообщение</span></div>
+            <div id='cc-phone-btn' style="display: none;"><i class='cc-phone'></i> <span style="text-decoration: underline;">Заказать звонок</span></div>
+        </div>
+        <div class='cc-copyright'>Call-центр №1</div>
     </div>
 </div>

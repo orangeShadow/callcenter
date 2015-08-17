@@ -99,8 +99,8 @@
   position: absolute;
   right: 0;
   top: 0;
-  width: 41px;
-  height:41px;
+  width: 37px;
+  height:37px;
   background: @color2 url("@{server}/i/close.png") no-repeat center;
   cursor: pointer;
   z-index:2000;
@@ -200,11 +200,94 @@
 #cc-popup .cc-footer{
   font-family: arial, Helvetica, sans-serif;
   font-size: 14px;
-  text-align: right;
   color: @color2;
   padding-top:8px;
   padding-right: 41px;
   background-color:#fff;
   height:37px;
   position:relative;
+}
+
+#cc-popup .cc-footer .cc-message-block {
+  position: absolute;
+  left:10px;
+  top:10px;
+}
+
+#cc-popup .cc-footer .cc-copyright {
+  position: absolute;
+  right:10px;
+  top:12px;
+}
+
+#cc-popup .cc-footer .cc-message-block .cc-chat{
+  display: inline-block;
+  width:15px;
+  height:15px;
+  background: url('../../i/chat.png') no-repeat;
+  background-size: cover;
+}
+
+#cc-popup .cc-footer .cc-message-block .cc-phone{
+  display: inline-block;
+  width:15px;
+  height:15px;
+  background: url('../../i/phone_s.png') no-repeat;
+  background-size: cover;
+}
+
+#cc-popup .cc-footer .cc-message-block #cc-message span{
+ text-decoration: underline;
+}
+
+
+#cc-popup .cc-footer .cc-message-block{
+  cursor: pointer;
+}
+
+#cc-popup .cc-content-message{
+  display: none;
+  height:259px;
+  background-color: #ededed;
+  padding: 0 35px;
+  padding-top: 25px;
+
+}
+
+#cc-popup .cc-content-message table{
+  width:100%;
+}
+
+#cc-popup #cc-message-btn-send{
+  font-family: arial, Helvetica, sans-serif;
+  font-size: 18px;
+  color: #fff;
+  border: 1px solid #b2b2b2;
+  background-color: @color2;
+  text-align: center;
+  text-decoration: none;
+  border-radius: 3px;
+  padding: 10px 0;
+  width:188px;
+  display: inline-block;
+  vertical-align:top;
+  cursor:pointer;
+}
+
+
+
+#cc-popup #cc-message-btn-send:hover{
+  background-color: @color;
+}
+
+#cc-popup .cc-content-message  #cc-message-error{
+  color:#f00;
+  padding: 10px;
+}
+
+#cc-popup .cc-content-message p.success{
+  text-align: center;
+  padding-top: 90px;
+  color: #339966;
+  font-size: 20px;
 }

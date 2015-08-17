@@ -53,7 +53,7 @@ class CallbackHelper {
     {
         $key = $client->key;
         $colors = empty($client->settings->colors) ? 1: ($client->settings->colors);
-        $color = static::getColorScheme($colors);
+        $color  = empty($client->settings->color_code) ? static::getColorScheme($colors): "#".$client->settings->color_code;
         $url = ($name=="callform") ? url('externcall'):url('formback');
 
         $yandex_cn = empty($client->settings->yandex_cn) ? "undefined":$client->settings->yandex_cn ;
@@ -69,7 +69,7 @@ class CallbackHelper {
         $content = file_get_contents(base_path()."/public/js/callback/$name.js");
         $content = preg_replace('/\[key\]/',$key,$content);
         $content = preg_replace('/\[style\]/',$style,$content);
-        $content = preg_replace('/\[html\]/',$html,$content);
+        $content = preg_replace('/\[html\]/',addslashes($html),$content);
         $content = preg_replace('/\[color\]/',$color,$content);
 
         $content = preg_replace('/\[url\]/',$url,$content);
@@ -141,4 +141,5 @@ class CallbackHelper {
         $result = $this->getFormJS($client,$style,$html,'backform');
         return $result;
     }
+
 }

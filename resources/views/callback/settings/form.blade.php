@@ -78,6 +78,34 @@
     <div class="col-lg-4 col-sm-12">
         <div class="panel panel-default">
             <div class="panel-heading">
+                Настройки email для обращения с сайта
+            </div>
+            <div class="panel-body">
+                <div class="row form-horizontal">
+                    <div class="col-lg-12">
+                        <table id="emailsTable" class="table table-stripped">
+                            <tbody>
+                            <tr>
+                                <th><input id="email" placeholder="" class="form-control"></th><th><a id="emailAdd" class="btn btn-primary"><i class="fa fa-plus"></i></a></th>
+                                {!! Form::hidden('emails',$settings->emails,["class"=>"form-control"]) !!}
+                            </tr>
+                            </tbody>
+                            <tfoot>
+                            @if(!empty($settings->emails))
+                                @foreach(json_decode($settings->emails) as $k=>$email)
+                                    <tr><td>{{$k+1}}: {{$email}}</td><td><a data-id="{{$k}}" class="btn btn-danger emailDelete"><i class="fa fa-trash"></i></a></td></tr>
+                                @endforeach
+                            @endif
+                            </tfoot>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-4 col-sm-12">
+        <div class="panel panel-default">
+            <div class="panel-heading">
                 Настройка WEB аналитики
             </div>
             <div class="panel-body">
@@ -196,22 +224,6 @@
             <div class="panel-heading">
                 Голосовое приветствие роботом
             </div>
-            <!--
-            <div class="panel-body">
-                <div class="form-group">
-                    <div class="col-lg-12">
-                            {!! Form::label('textA',Lang::get('client.textA')) !!}
-                            {!! Form::text('textA',$settings->textA,["class"=>"form-control"]) !!}
-                    </div>
-                </div>
-                <div class="form-group">
-                    <div class="col-lg-12">
-                            {!! Form::label('textB',Lang::get('client.textB')) !!}
-                            {!! Form::text('textB',$settings->textB,["class"=>"form-control"]) !!}
-                    </div>
-                </div>
-            </div>
-            -->
             <div class="panel-body">
                 <div class="form-group">
                     <div class="col-lg-12">
@@ -336,5 +348,66 @@
 
         $(this).parents('tr').remove();
     });
+
+
+    $('#emailAdd').click(function(){
+        var error = false;
+        var curEmail =$('#email').val().trim();
+
+        if ( !/^([\w-]+(?:\.[\w-]+)*)@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$/i.test(curEmail))    error = true;
+
+        if(error)
+        {
+            $('#email').parent('th').addClass('has-error');
+            return error;
+        }
+
+        var emails = $('input[name="emails"]').val();
+
+
+        if(emails.length==0)
+        {
+            emails=[];
+        }else{
+            emails = JSON.parse(emails);
+        }
+
+
+        if(emails.indexOf(curEmail))
+        {
+            emails.push(curEmail);
+        }
+
+
+        var tfoot = '';
+        for(var k in emails)
+        {
+            tfoot+='<tr><td>'+(parseInt(k)+1)+': '+emails[k]+'</td><td><a data-id="'+k+'" class="btn btn-danger emailDelete"><i class="fa fa-trash"></i></a></td></tr>';
+        }
+
+        $('#emailsTable tfoot').html(tfoot);
+        $('input[name="emails"]').val(JSON.stringify(emails));
+        $('#email').val('');
+        $('#email').parent('th').removeClass('has-error');
+    });
+
+    $(document).on('click','.emailDelete',function(){
+        var k = $(this).data('id');
+
+        var emails = $('input[name="emails"]').val();
+
+        if(emails.length==0)
+        {
+            emails=[];
+        }else{
+            emails = JSON.parse(emails);
+        }
+
+        emails.splice(k,1);
+        $('input[name="emails"]').val(JSON.stringify(emails));
+
+        $(this).parents('tr').remove();
+    });
+
     </script>
 @stop
