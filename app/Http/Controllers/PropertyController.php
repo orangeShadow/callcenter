@@ -95,7 +95,7 @@ class PropertyController extends Controller {
 	public function destroy($id)
 	{
         Property::destroy($id);
-        PropertyValue::where('property_id','=',$id)->delete();
+        //PropertyValue::where('property_id','=',$id)->delete();
 	}
 
 }

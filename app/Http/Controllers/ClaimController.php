@@ -266,6 +266,8 @@ class ClaimController extends Controller {
 	 */
 	public function destroy($id)
 	{
+
+        /*
         $claim =Claim::findOrFail($id);
 
         $propertyIDs = PropertyValue::propertiesClaim($claim)->get();
@@ -279,6 +281,7 @@ class ClaimController extends Controller {
         $claim->delete();
 
         return redirect('/claim');
+        */
 	}
 
 

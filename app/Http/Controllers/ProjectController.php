@@ -130,6 +130,7 @@ class ProjectController extends Controller {
 	 */
 	public function destroy($id)
 	{
+        /*
         try
         {
             $project=Project::findOrFail($id);
@@ -155,6 +156,7 @@ class ProjectController extends Controller {
 
         $project->delete();
         return redirect('/project');
+        */
 	}
 
 }

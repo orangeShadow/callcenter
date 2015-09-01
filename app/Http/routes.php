@@ -72,7 +72,7 @@ Route::resource('callback','Callback\CallbackController');
 
 
 /**
- * Тестовая форма
+ * Подгрузка значка и формы обратного звонка
  **/
 Route::get('externform',function(){
     \Debugbar::disable();
@@ -96,7 +96,7 @@ Route::get('externform',function(){
 });
 
 /**
- *  Запуска звонока
+ *  Запуск звонока
  **/
 Route::get('externcall',function(){
 
@@ -159,7 +159,9 @@ Route::get('externcall',function(){
 });
 
 
-
+/**
+ * Отправка письма
+ */
 Route::post('externcall',function(){
     $key = Request::input('key',null);
 
@@ -175,8 +177,24 @@ Route::post('externcall',function(){
 
     parse_str($content);
 
+
     if(empty($name) || empty($email) || empty($text)) {
         return response()->json(["success"=>"n","message"=>"Заполнены не все поля."])->header('Access-Control-Allow-Origin', '*');
+    }
+
+    if(!empty($client->sip) && $client->sip==101 )
+    {
+        $text  = strip_tags($text);
+        $name  = strip_tags($name);
+        $email = strip_tags($email);
+        $out = App\ACME\Helpers\CRMHelper::sendClaim(445,12,2,
+            [
+                "comment"=>"Сайт:".$client->title.". ".$text,
+                "fio"=>$name,
+                "email"=>$email
+            ]
+        );
+        return response()->json(["success"=>"y"])->header('Access-Control-Allow-Origin', '*');
     }
 
     \Mail::send('emails.callbackmessage',compact('name','email','sitename','text'), function($message) use ($client)
@@ -207,43 +225,17 @@ Route::get('formback',function(){
     $time  = Request::input('time');
     $timeSelect = array(1=>"9:00-12:00",2=>"12:00-16:00",3=>"16:00-19:00",4=>"19:00-21:00");
 
-    $object  = new stdClass();
-    $object->Questions = array();
-
-    $question = new stdClass();
-    $question->questionID = 445;
-    $question->questionType = 12;
-    $question->questionDirection = 2;
-    $question->questionComment =$timeSelect[$time];
-
-    $object->Questions[] = $question;
-
-    $object->countryId= 1;
-    $object->statusId = 1;
-    $object->abonTypeId  = 2;
-    $object->username="bitrix-site";
-
-    $object->contactData = array(
-        array('name'=>'372','id'=>1),
-        array('name'=>$phone,'id'=>2),
-        array('name'=>$client->title,'id'=>3),
-    );
-
-    $post_q['query'] = json_encode($object);
-    $post = http_build_query($post_q);
     $result = new stdClass();
     $result->error = 0;
 
+    $out = App\ACME\Helpers\CRMHelper::sendClaim(445,12,2,
+                [
+                    "comment"=>$timeSelect[$time],
+                    "fio"=>$client->title,
+                    "phone"=>$phone
+                ]
+            );
 
-    $curl = curl_init();
-    curl_setopt($curl, CURLOPT_URL, 'http://crm.roumingu.net/system/ajax/zayavka.php');
-    curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false);
-    curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, false);
-    curl_setopt($curl, CURLOPT_RETURNTRANSFER,true);
-    curl_setopt($curl, CURLOPT_POST, true);
-    curl_setopt($curl, CURLOPT_POSTFIELDS, $post);
-
-    $out = curl_exec($curl);
     if ($out!='0'){
         $result->id=$out;
         return response()->json($result)->header('Access-Control-Allow-Origin', '*');

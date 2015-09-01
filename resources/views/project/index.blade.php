@@ -50,7 +50,7 @@
                                 <a title="{{Lang::get('project.view')}}" href="{!! url('project/'.$project->id) !!}" class="btn btn-sm btn-info"><i class="glyphicon glyphicon-eye-open"></i></a>
                                 @if (Auth::user()->checkRole(['manager','admin']))
                                     <a title="{{Lang::get('project.editProject')}}" href="{!! url('project/'.$project->id.'/edit') !!}" class="btn btn-sm btn-warning"><i class="glyphicon glyphicon-pencil"></i></a>
-                                    {!! Form::open(['method'=>'DELETE','action'=>["ProjectController@destroy",$project->id],'style'=>'display:inline']) !!}<button title="{{Lang::get('project.remove')}}"  type="submit" class="btn btn-sm btn-danger"><i class="glyphicon glyphicon-remove"></i></button>{!!Form::close()!!}
+                                    <!--{!! Form::open(['method'=>'DELETE','action'=>["ProjectController@destroy",$project->id],'style'=>'display:inline']) !!}<button title="{{Lang::get('project.remove')}}"  type="submit" class="btn btn-sm btn-danger"><i class="glyphicon glyphicon-remove"></i></button>{!!Form::close()!!}-->
                                 @endif
                             </div>
                         </th>
