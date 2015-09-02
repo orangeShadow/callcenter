@@ -86,7 +86,7 @@ Route::get('externform',function(){
     if(empty($client)) return;
 
     $dt = new DateTime();
-    if((int)$dt->format('H')<9 || (int)$dt->format('H')>21){
+    if( !empty($client->sip) && (int)$dt->format('H')<9 || (int)$dt->format('H')>=21){
         $result = App()->CallbackHelper->getSendBackForm($client);
         return response ($result)->header('Content-Type','text/javascript');
     }else{
