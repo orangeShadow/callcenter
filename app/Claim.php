@@ -201,7 +201,7 @@ class Claim extends Model {
 
     public function statusT()
     {
-        return $this->belongsTo('App\StatusClaim','claims.status','code');
+        return $this->belongsTo('App\StatusClaim','status','code');
     }
 
     public function typeR()
