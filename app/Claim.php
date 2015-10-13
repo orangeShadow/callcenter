@@ -169,7 +169,7 @@ class Claim extends Model {
             {
                 $join->on('claims.project_id', '=', 'projects.id')->where('projects.reports_type','=',\DB::raw('weekly'));
             })
-            ->whereRaw('YEARWEEK(claims.created_at)=YEARWEEK(NOW())')->select('claims.*');;
+            ->whereRaw('YEARWEEK(claims.created_at)=YEARWEEK(NOW())');
         return $query;
     }
 
@@ -189,7 +189,7 @@ class Claim extends Model {
         {
             $join->on('claims.project_id', '=', 'projects.id')->where('projects.reports_type','=',\DB::raw('monthly'));
         })
-            ->whereRaw('EXTRACT(YEAR_MONTH FROM claims.created_at)='.$target_year_month)->select('claims.*');;
+            ->whereRaw('EXTRACT(YEAR_MONTH FROM claims.created_at)='.$target_year_month);
         return $query;
     }
 
