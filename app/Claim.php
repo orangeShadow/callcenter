@@ -157,7 +157,7 @@ class Claim extends Model {
             $join->on('claims.project_id', '=', 'projects.id')
                 ->where('projects.reports_type','=',\DB::raw('daily'))
                 ->where('projects.hour_start','=',\DB::raw($hour));
-        });
+        })->select('claims.*');
 
         return $query;
     }
