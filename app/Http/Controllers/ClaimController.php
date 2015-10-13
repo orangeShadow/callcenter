@@ -4,9 +4,10 @@ use App\Claim;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 
+use Event;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 
-use App\Events\ClaimCreate;
+//use App\Events\ClaimCreate;
 
 use App\Property;
 use App\ACME\Model\PropertyTypes;
@@ -117,12 +118,16 @@ class ClaimController extends Controller {
 
 
         $claim->save($request);
+
         foreach($propertyList as $pr){
             $pr->element_id = $claim->id;
             $pr->save();
         }
+
         flash()->success('Обращение Создано, № '.$claim->id);
-        \Event::fire(new ClaimCreate($claim,$destinations));
+
+        \Event::fire(new  \App\Events\ClaimCreate($claim,$destinations));
+
         return redirect('project');
 	}
 
