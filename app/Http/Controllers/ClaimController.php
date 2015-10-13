@@ -70,66 +70,71 @@ class ClaimController extends Controller {
 	 */
 	public function store(Requests\CreateClaimRequest $request)
 	{
+        try{
+            $destinations = $request->get('destination');
 
-        $destinations = $request->get('destination');
-
-        $request = $request->except('destination');
-        $request['operator_id'] = Auth::user()->id;
-        $request['status']='N';
-        $claim = new Claim($request);
-        $propertyList = array();
-        $errors =new Support\MessageBag();
-        if(!empty($request["property"]))
-        {
-            $properties  = Property::getPropertyByModel($claim);
-
-            foreach($properties as $property)
+            $request = $request->except('destination');
+            $request['operator_id'] = Auth::user()->id;
+            $request['status']='N';
+            $claim = new Claim($request);
+            $propertyList = array();
+            $errors =new Support\MessageBag();
+            if(!empty($request["property"]))
             {
-                try{
-                    if(isset($request["property"][$property->id]))
-                    {
-                        $attributes = [
-                            'value'=>$request["property"][$property->id],
-                            'property_id'=>$property->id
-                        ];
-                        if($property->type=='date')
+                $properties  = Property::getPropertyByModel($claim);
+
+                foreach($properties as $property)
+                {
+                    try{
+                        if(isset($request["property"][$property->id]))
                         {
-                            $pr = new PropertyTypes\DateProperty($attributes,$property->title);
-                        }elseif($property->type=='number'){
-                            $pr = new PropertyTypes\NumberProperty($attributes,$property->title);
+                            $attributes = [
+                                'value'=>$request["property"][$property->id],
+                                'property_id'=>$property->id
+                            ];
+                            if($property->type=='date')
+                            {
+                                $pr = new PropertyTypes\DateProperty($attributes,$property->title);
+                            }elseif($property->type=='number'){
+                                $pr = new PropertyTypes\NumberProperty($attributes,$property->title);
+                            }
+                            else{
+                                $pr = new PropertyTypes\TextProperty();
+                                $pr->value = $request["property"][$property->id];
+                                $pr->property_id = $property->id;
+                            }
                         }
-                        else{
-                            $pr = new PropertyTypes\TextProperty();
-                            $pr->value = $request["property"][$property->id];
-                            $pr->property_id = $property->id;
-                        }
+                        $propertyList[] = $pr;
+                    }catch(ValidationException $e){
+                        $errors->merge($e->errors());
                     }
-                    $propertyList[] = $pr;
-                }catch(ValidationException $e){
-                    $errors->merge($e->errors());
                 }
             }
-        }
-        if($errors->count()>0)
+            if($errors->count()>0)
+            {
+                return \Redirect::back()->withInput($request)->withErrors($errors);
+            }
+
+
+
+            $claim->save($request);
+
+            foreach($propertyList as $pr){
+                $pr->element_id = $claim->id;
+                $pr->save();
+            }
+
+            flash()->success('Обращение Создано, № '.$claim->id);
+            \Log::info('Создал  flash');
+
+            \Event::fire(new  \App\Events\ClaimCreate($claim,$destinations));
+
+            return redirect('project');
+        }catch(\Exception $e)
         {
-            return \Redirect::back()->withInput($request)->withErrors($errors);
+            print_r_pre($e);
         }
 
-
-
-        $claim->save($request);
-
-        foreach($propertyList as $pr){
-            $pr->element_id = $claim->id;
-            $pr->save();
-        }
-
-        flash()->success('Обращение Создано, № '.$claim->id);
-        \Log::inf('Создал  flash');
-
-        \Event::fire(new  \App\Events\ClaimCreate($claim,$destinations));
-
-        return redirect('project');
 	}
 
 	/**
