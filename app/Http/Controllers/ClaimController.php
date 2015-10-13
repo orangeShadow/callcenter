@@ -125,6 +125,7 @@ class ClaimController extends Controller {
         }
 
         flash()->success('Обращение Создано, № '.$claim->id);
+        \Log::inf('Создал  flash');
 
         \Event::fire(new  \App\Events\ClaimCreate($claim,$destinations));
 
