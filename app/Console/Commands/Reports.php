@@ -44,6 +44,8 @@ class Reports extends Command {
 	{
         $projects = [];
 
+        \Log::info('Log reports console Type:'.$this->argument('type'));
+
         if($this->argument('type')=="daily")
         {
             foreach(Claim::daily()->get() as $claim)
@@ -68,6 +70,7 @@ class Reports extends Command {
             }
         }
 
+        \Log::info('Log reports console $projects:'.json_encode($projects));
 
         $this->drawTable($projects);
 
