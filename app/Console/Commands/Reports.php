@@ -126,7 +126,7 @@ class Reports extends Command {
                 $table.="<td $styleTd>$claim->phone</td>";
                 $table.="<td $styleTd>$claim->text</td>";
                 $table.="<td $styleTd>$claim->backcall_at</td>";
-                if(!empty($claim->statusT->title)){
+                if(!empty($claim->statusT()->title)){
                     $table.="<td $styleTd>".$claim->statusT->title."</td>";
                 }else{
                     $table.="<td $styleTd></td>";
