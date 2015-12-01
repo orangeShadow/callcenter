@@ -76,6 +76,7 @@ class ClaimController extends Controller {
             $request = $request->except('destination');
             $request['operator_id'] = Auth::user()->id;
             $request['status']='N';
+
             $claim = new Claim($request);
             $propertyList = array();
             $errors =new Support\MessageBag();
@@ -125,8 +126,6 @@ class ClaimController extends Controller {
             }
 
             flash()->success('Обращение Создано, № '.$claim->id);
-            \Log::info('Создал  flash');
-
             \Event::fire(new  \App\Events\ClaimCreate($claim,$destinations));
 
             return redirect('project');

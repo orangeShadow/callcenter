@@ -54,6 +54,23 @@
                 @endif
             </div>
         @endforeach
+
+        <div class="form-group">
+            {!! Form::label('missed_call',Lang::get('claim.missed_call')) !!}
+            {!!Form::hidden('missed_call',0)!!}
+            {!!Form::checkbox('missed_call',1,$claim->missed_call)!!}
+
+        </div>
+
+
+        <div class="form-group">
+            {!! Form::label('without_contacts',Lang::get('claim.without_contacts')) !!}
+            {!!Form::hidden('without_contacts',0)!!}
+            {!!Form::checkbox('without_contacts',1,$claim->without_contacts)!!}
+        </div>
+
+
+
         @if(isset($createStatus))
             {!! Form::hidden('status','N') !!}
         @else

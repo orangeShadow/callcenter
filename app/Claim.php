@@ -16,6 +16,8 @@ class Claim extends Model {
         'operator_id',
         'update_by',
         'status',
+        'missed_call',
+        'without_contacts',
         'type_request',
         'send_mail'
     ];
