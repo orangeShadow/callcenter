@@ -116,6 +116,7 @@ class ClaimController extends Controller {
                 return \Redirect::back()->withInput($request)->withErrors($errors);
             }
 
+            \Log::info("Создагие заявки",$request);
 
 
             $claim->save($request);
@@ -131,6 +132,7 @@ class ClaimController extends Controller {
             return redirect('project');
         }catch(\Exception $e)
         {
+            \Log::error($e);
             print_r_pre($e);
         }
 
