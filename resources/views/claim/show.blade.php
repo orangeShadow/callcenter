@@ -75,6 +75,13 @@
                     {{ $claim->backcall_at }}
                 </div>
             </div>
+            @if(!empty($claim->missed_call))<br>
+                <div class="alert alert-danger" role="alert">Звонок сорвался</div>
+            @endif
+            @if(!empty($claim->without_contacts))<br>
+                    <div class="alert alert-warning" role="alert">Клиент отказался оставлять контакты</div>
+            @endif
+
             @if(!empty($claim->note))
             <div class="row">
                 <div class="col-lg-2"><b>{{ Lang::get('claim.note') }}</b></div>

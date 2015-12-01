@@ -33,6 +33,20 @@
                     </div>
                 </div>
                 @endif
+                <div class="@if(\Auth::user()->checkRole(['manager','admin'])) col-lg-3 @else col-lg-6 @endif">
+                    <div class="form-group">
+                        <label>Звонок сорвался</label>
+                        {!!Form::hidden('missed_call',0)!!}
+                        {!!Form::checkbox('missed_call',1,Request::get('missed_call'))!!}
+                    </div>
+                </div>
+                <div class="@if(\Auth::user()->checkRole(['manager','admin'])) col-lg-3 @else col-lg-6 @endif">
+                    <div class="form-group">
+                        <label>Контакты отсутствуют</label>
+                        {!!Form::hidden('without_contacts',0)!!}
+                        {!!Form::checkbox('without_contacts',1,Request::get('without_contacts'))!!}
+                    </div>
+                </div>
             </div>
             <div class="row">
                 {!! Form::hidden('filter',true) !!}

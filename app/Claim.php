@@ -81,6 +81,18 @@ class Claim extends Model {
             $query->where('claims.phone','like',"%".$request['phone']."%");
         }
 
+        if(!empty($request['missed_call']))
+        {
+
+            $query->where('claims.missed_call','=',$request['missed_call']);
+        }
+
+        if(!empty($request['without_contacts']))
+        {
+            $query->where('claims.without_contacts','=',$request['without_contacts']);
+        }
+
+
         $query->join('projects', function($join)
         {
             $join->on('claims.project_id', '=', 'projects.id')->where('projects.client_id','=',\Auth::user()->id);
@@ -123,6 +135,17 @@ class Claim extends Model {
             $query->where('phone','like',"%".$request['phone']."%");
         }
 
+
+        if(!empty($request['missed_call']))
+        {
+
+            $query->where('claims.missed_call','=',$request['missed_call']);
+        }
+
+        if(!empty($request['without_contacts']))
+        {
+            $query->where('claims.without_contacts','=',$request['without_contacts']);
+        }
 
         if(!empty($request['status']))
         {
