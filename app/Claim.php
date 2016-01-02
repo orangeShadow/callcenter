@@ -210,7 +210,7 @@ class Claim extends Model {
         }else{
             $target_year_month = $year.( $month-1<10 ? "0".($month-1):($month-1));
         }
-        echo $target_year_month;
+
         $query->Join('projects', function($join)
         {
             $join->on('claims.project_id', '=', 'projects.id')->where('projects.reports_type','=',\DB::raw('monthly'));
@@ -222,7 +222,16 @@ class Claim extends Model {
 
     public function scopeMonth($query)
     {
-        $query->whereRaw('MONTH(created_at)=(MONTH(NOW())-1)');
+        $dt = new \DateTime();
+        $month = intval($dt->format('n'));
+        $year  = intval($dt->format('Y'));
+        $target_year_month = null;
+        if($month == 1){
+            $target_year_month = ($year-1).'12';
+        }else{
+            $target_year_month = $year.( $month-1<10 ? "0".($month-1):($month-1));
+        }
+        $query->whereRaw('EXTRACT(YEAR_MONTH FROM claims.created_at)='.$target_year_month);
         return $query;
     }
 
