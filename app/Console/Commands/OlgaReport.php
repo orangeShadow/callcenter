@@ -101,7 +101,7 @@ class OlgaReport extends Command {
 
             \Mail::send('emails.reports',compact('table','title'), function($message) use ($project)
             {
-                $emails = ['alexeev.sker@gmail.com','o.artemova@goodline.ru'];
+                $emails = ['o.artemova@goodline.ru','info@goodline.ru'];
                 /*
                 $emails[] = $project->client->email;
                 if(!empty($project->client->send_email)){
