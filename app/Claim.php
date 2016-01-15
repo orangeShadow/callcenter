@@ -235,6 +235,17 @@ class Claim extends Model {
         return $query;
     }
 
+
+    public function scopeCurMonth($query)
+    {
+        $dt = new \DateTime();
+        $month = intval($dt->format('n'));
+        $year  = intval($dt->format('Y'));
+        $target_year_month = $year.$month;
+        $query->whereRaw('EXTRACT(YEAR_MONTH FROM claims.created_at)='.$target_year_month);
+        return $query;
+    }
+
     public function statusT()
     {
         return $this->belongsTo('App\StatusClaim','status','code');

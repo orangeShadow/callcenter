@@ -14,6 +14,8 @@ class Kernel extends ConsoleKernel {
 		'App\Console\Commands\Inspire',
         'App\Console\Commands\Reports',
         'App\Console\Commands\OlgaReport',
+        'App\Console\Commands\monthReport',
+
 	];
 
 	/**
