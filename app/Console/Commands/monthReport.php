@@ -41,7 +41,7 @@ class monthReport extends Command {
     public function fire()
     {
         $projects = [];
-        foreach(Claim::curMonth()->whereProjectId($this->argument('project'))->get() as $claim)
+        foreach(Claim::curMonth()->where('project_id','=',$this->argument('project'))->get() as $claim)
         {
             $projects[$claim->project_id][] = $claim;
         }
