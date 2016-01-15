@@ -240,7 +240,7 @@ class Claim extends Model {
     {
         $dt = new \DateTime();
 
-        $query->whereBetween("created_at",[$dt->foramt("Y-m-01 00:00:00"),$dt->format("Y-m-d 23:59:59")]);
+        $query->whereBetween("created_at",[$dt->format("Y-m-01 00:00:00"),$dt->format("Y-m-d 23:59:59")]);
         return $query;
     }
 
