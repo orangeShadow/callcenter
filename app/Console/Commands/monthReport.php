@@ -45,7 +45,7 @@ class monthReport extends Command {
         {
             $projects[$claim->project_id][] = $claim;
         }
-
+        dd($projects);
         foreach($projects as $key=>$claims)
         {
             $project = Project::find($key);
