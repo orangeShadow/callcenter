@@ -239,10 +239,8 @@ class Claim extends Model {
     public function scopeCurMonth($query)
     {
         $dt = new \DateTime();
-        $month = intval($dt->format('n'));
-        $year  = intval($dt->format('Y'));
-        $target_year_month = $year.$month;
-        $query->whereRaw('EXTRACT(YEAR_MONTH FROM claims.created_at)='.$target_year_month);
+
+        $query->whereBetween("created_at",[$dt->foramt("Y-m-01 00:00:00"),$dt->format("Y-m-d 23:59:59")]);
         return $query;
     }
 
