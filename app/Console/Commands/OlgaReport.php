@@ -52,8 +52,8 @@ class OlgaReport extends Command {
 
             $styleTd = 'style="border:1px solid #000;"';
 
-            $table= '<table cellpadding="2" cellspacing="0" style="margin: 0;  width:100%;">';
-            $table.= "<tr><td $styleTd>id</td><td $styleTd>Дата</td><td $styleTd>Клиент</td><td $styleTd>Контактный телефон</td><td $styleTd>Описание</td><td $styleTd>Дата обратного звонка</td><td $styleTd>Статус</td><td>Сорвавшийся звонок</td>";
+            $table = '<table cellpadding="2" cellspacing="0" style="margin: 0;  width:100%;">';
+            $table.= "<tr><td $styleTd>id</td><td $styleTd>Дата</td><td $styleTd>Клиент</td><td $styleTd>Контактный телефон</td><td $styleTd>Описание</td><td $styleTd>Дата обратного звонка</td><td $styleTd>Статус</td><td>Сорвавшийся звонок</td><td>Отказ давать контакты.</td>";
 
             $propertiesPR = Property::where('model_initiator','=','project')->where('link_id','=',$key)->orderBy('sort')->get();
             foreach ($propertiesPR as $property) {
@@ -72,6 +72,8 @@ class OlgaReport extends Command {
                 $table.="<td $styleTd>$claim->backcall_at</td>";
                 $table.="<td $styleTd>".$claim->statusT->title."</td>";
                 $table.="<td $styleTd>".$claim->missed_call."</td>";
+                $table.="<td $styleTd>".$claim->without_contacts."</td>";
+
                 $propertiesByTitle =[];
                 $properties = \App\Property::showPropertyValue($claim);
                 foreach($properties as $prop)
