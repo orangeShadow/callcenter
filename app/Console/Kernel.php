@@ -26,9 +26,9 @@ class Kernel extends ConsoleKernel {
 	 */
 	protected function schedule(Schedule $schedule)
 	{
-        $schedule->command('callcenter:reports',['type'=>'daily'])->hourly();
-        $schedule->command('callcenter:reports',['type'=>'weekly'])->weeklyOn(6,"23:30");
-        $schedule->command('callcenter:reports',['type'=>'monthly'])->monthly();
+        $schedule->command('callcenter:reports daily')->hourly();
+        $schedule->command('callcenter:reports weekly')->weeklyOn(6,"23:30");
+        $schedule->command('callcenter:reports monthly')->monthly();
 	}
 
 }

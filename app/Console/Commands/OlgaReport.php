@@ -53,7 +53,7 @@ class OlgaReport extends Command {
             $styleTd = 'style="border:1px solid #000;"';
 
             $table = '<table cellpadding="2" cellspacing="0" style="margin: 0;  width:100%;">';
-            $table.= "<tr><td $styleTd>id</td><td $styleTd>Дата</td><td $styleTd>Клиент</td><td $styleTd>Контактный телефон</td><td $styleTd>Описание</td><td $styleTd>Дата обратного звонка</td><td $styleTd>Статус</td><td>Сорвавшийся звонок</td><td>Отказ давать контакты.</td>";
+            $table.= "<tr><td $styleTd>id</td><td $styleTd>Дата</td><td $styleTd>Клиент</td><td $styleTd>Контактный телефон</td><td $styleTd>Описание</td><td $styleTd>Дата обратного звонка</td><td $styleTd>Статус</td><td $styleTd>Сорвавшийся звонок</td><td $styleTd>Отказ давать контакты.</td>";
 
             $propertiesPR = Property::where('model_initiator','=','project')->where('link_id','=',$key)->orderBy('sort')->get();
             foreach ($propertiesPR as $property) {
