@@ -93,11 +93,23 @@ class Claim extends Model {
         }
 
 
+        $projects_id = \Auth::user()->projects->lists('id');
+        $createdProjects = \Auth::user()->createProject->lists('id');
+        if(!empty($request["project_id"]) && in_array($request["project_id"],array_merge($projects_id,$createdProjects)))
+        {
+            $query->where('claims.project_id','=',(int)$request["project_id"]);
+        }else{
+            $query->whereIn('claims.project_id',array_merge($projects_id,$createdProjects));
+        }
+
+
+
+        /*
         $query->join('projects', function($join)
         {
             $join->on('claims.project_id', '=', 'projects.id')->where('projects.client_id','=',\Auth::user()->id);
         });
-
+        */
         $query->orderBy('claims.id','desc')->get(["claims.*"]);
     }
 

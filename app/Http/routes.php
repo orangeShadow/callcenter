@@ -53,6 +53,8 @@ Route::resource('project','ProjectController');
 Route::resource('claim','ClaimController');
 Route::post('claim/statuschange','ClaimController@postStatuschange');
 
+Route::post('user/{id}/projects','UserController@postProjects');
+Route::delete('user/{id}/projects','UserController@deleteProjects');
 Route::resource('user','UserController');
 
 Route::resource('property','PropertyController');

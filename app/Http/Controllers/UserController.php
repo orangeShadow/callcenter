@@ -2,9 +2,10 @@
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
+use App\Project;
 use App\User;
-//use Illuminate\Http\Request;
 use Request;
+
 
 class UserController extends Controller {
 
@@ -79,7 +80,17 @@ class UserController extends Controller {
 	public function edit($id)
 	{
         $user=User::findOrFail($id);
-        return view('user.edit',compact('user'));
+
+        $projectList = Project::where('client_id','<>',$user->id)->lists('title','id');
+        $projects  = array();
+        $hasUser = $user->projects->lists('id');
+
+        foreach($projectList as $key=>$value)
+        {
+            if(!in_array($key,$hasUser))
+                $projects[] = ["value"=>$key,'label'=>$value];
+        }
+        return view('user.edit',compact('user','projects'));
 	}
 
 	/**
@@ -109,5 +120,28 @@ class UserController extends Controller {
 		User::destroy($id);
         return redirect (url('user'));
 	}
+
+    public function postProjects($id)
+    {
+        $user = User::find($id);
+        if(empty($user)) abort('500','User Not Found');
+        $project_id = Request::get('project_id');
+        $project = Project::find($project_id);
+        if(empty($project)) abort('500','Project Not Found');
+
+        $id = $user->projects()->attach($project_id);
+
+        return response()->json(["success"=>1,'id'=>$id]);
+    }
+
+    public function deleteProjects($id)
+    {
+        $user = User::find($id);
+        if(empty($user)) abort('500','User Not Found');
+        $project_id = Request::get('project_id');
+        $result = $user->projects()->detach($project_id);
+
+        return response()->json(["success"=>1,'id'=>$result]);
+    }
 
 }

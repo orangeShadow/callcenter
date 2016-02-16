@@ -32,7 +32,19 @@
                         {!! Form::select('project_id',[0=>'Выберите проект']+\App\Project::orderBy('title','asc')->get(['id','title'])->lists('title','id'),Request::get('project_id'),['class'=>'form-control']) !!}
                     </div>
                 </div>
+                @else
+                    <div class="@if(\Auth::user()->checkRole(['manager','admin'])) col-lg-3 @else col-lg-6 @endif">
+                        <div class="form-group">
+                            <?php
+                            $projects_id = \Auth::user()->projects->lists('title','id');
+                            $createdProjects = \Auth::user()->createProject->lists('title','id');
+                                $result_array = [0=>'Выберите проект'] + $projects_id + $createdProjects;
+                            ?>
+                            {!! Form::select('project_id',$result_array,Request::get('project_id'),['class'=>'form-control']) !!}
+                        </div>
+                    </div>
                 @endif
+
                 <div class="@if(\Auth::user()->checkRole(['manager','admin'])) col-lg-3 @else col-lg-6 @endif">
                     <div class="form-group">
                         <label>Звонок сорвался</label>
@@ -47,6 +59,7 @@
                         {!!Form::checkbox('without_contacts',1,Request::get('without_contacts'))!!}
                     </div>
                 </div>
+
             </div>
             <div class="row">
                 {!! Form::hidden('filter',true) !!}
