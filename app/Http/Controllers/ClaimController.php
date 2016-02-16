@@ -155,8 +155,10 @@ class ClaimController extends Controller {
             abort(404);
         }
 
+        $projects_id = \Auth::user()->projects->lists('id');
+        $createdProjects = \Auth::user()->createProject->lists('id');
 
-        if(Auth::user()->checkRole('client') && Auth::user()->id != $claim->project->client_id) abort(404);
+        if(Auth::user()->checkRole('client') && !in_array($claim->project_id,array_merge($projects_id,$createdProjects)) ) abort(404);
 
         return view('claim.show',compact('claim'));
 	}
