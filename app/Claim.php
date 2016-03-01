@@ -263,7 +263,7 @@ class Claim extends Model {
 
     public function typeR()
     {
-        return $this->belongsTo('App\ClaimType','type_request','id')->first();
+        return $this->belongsTo('App\ClaimType','type_request','id');
     }
 
 
