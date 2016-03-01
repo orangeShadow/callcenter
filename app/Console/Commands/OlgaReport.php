@@ -73,7 +73,7 @@ class OlgaReport extends Command {
                 $table.="<td $styleTd>".$claim->statusT->title."</td>";
                 $table.="<td $styleTd>".$claim->missed_call."</td>";
                 $table.="<td $styleTd>".$claim->without_contacts."</td>";
-                $table.="<td $styleTd>".$claim->typeR->title."</td>";
+                $table.="<td $styleTd>".(!empty($claim->typeR) ? $claim->typeR->title: '')."</td>";
 
                 $propertiesByTitle =[];
                 $properties = \App\Property::showPropertyValue($claim);
