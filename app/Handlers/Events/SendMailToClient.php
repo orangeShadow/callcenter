@@ -32,11 +32,10 @@ class SendMailToClient {
         $rType = $event->claim->typeR;
         if(!empty($rType))
         {
-
             $send = $rType->send_mail;
         }
-        //if($send==1)
-        //{
+        if($send==1)
+        {
             \Mail::send('emails.claimcreate',compact('claim','properties'), function($message) use ($event)
             {
                 $emails = [];
@@ -52,7 +51,7 @@ class SendMailToClient {
                 $res = $message->to($emails, 'Callcenter №1')->subject('Круглосуточный call-центр №1')->from('robot@goodline.ru');
                 //Log::info(json_encode($res));
             });
-        //}
+        }
 
         if(!empty($event->claim->missed_call))
         {
