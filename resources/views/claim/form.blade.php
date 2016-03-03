@@ -90,14 +90,14 @@
 
 
 @section('scripts')
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.devbridge-autocomplete/1.2.24/jquery.autocomplete.min.js"></script>
+    <script src="{{url('js/autocomplite.js')}}"></script>
     <script>
     (function(){
         var cities = JSON.parse('{!!json_encode($cities)!!}');
         $('.city').autocomplete({
             lookup:cities,
-            onSelect: function (suggestion) {
-
+            lookupFilter: function (suggestion, originalQuery, queryLowerCase) {
+                return suggestion.value.toLowerCase().indexOf(queryLowerCase) == 0;
             }
         });
     }())
