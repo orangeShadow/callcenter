@@ -49,6 +49,8 @@
                 {!! Form::label('title',$property->title) !!}
                 @if($property->type=='date')
                     {!! Form::input('text','property['.$property->id.']',Request::get('property['.$property->id.']',$property->value),["class"=>"form-control datepicker"]) !!}
+                @elseif($property->code = 'CITY_FROM' || $property->code = 'CITY_TO' || $property->code = 'CITY')
+                    {!! Form::input('text','property['.$property->id.']',Request::get('property['.$property->id.']',$property->value),["class"=>"form-control city"]) !!}
                 @else
                     {!! Form::input('text','property['.$property->id.']',Request::get('property['.$property->id.']',$property->value),["class"=>"form-control"]) !!}
                 @endif
@@ -85,3 +87,20 @@
         </div>
     </div>
 </div>
+
+
+@section('scripts')
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.devbridge-autocomplete/1.2.24/jquery.autocomplete.min.js"></script>
+    <script>
+    (function(){
+        var cities = JSON.parse('{!!json_encode($cities)!!}');
+        $('.city').autocomplete({
+            lookup:cities,
+            onSelect: function (suggestion) {
+
+            }
+        });
+    }())
+    </script>
+@stop
+

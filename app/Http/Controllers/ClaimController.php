@@ -16,6 +16,7 @@ use Auth;
 use Illuminate\Contracts\Validation\ValidationException;
 use Illuminate\Support;
 use Request;
+use App\City;
 
 class ClaimController extends Controller {
 
@@ -53,14 +54,16 @@ class ClaimController extends Controller {
 	{
 		$claim = new Claim();
         $properties = [];
+
         if(Request::get('project_id'))
         {
             $claim->project_id = (int)Request::get('project_id');
             $properties  = Property::getPropertyByModel($claim);
+            $cities = City::where("country_id",'=',3159)->get()->lists('name');
         }else{
             abort(404);
         }
-        return view('claim.create',compact('claim','properties'));
+        return view('claim.create',compact('claim','properties','cities'));
 	}
 
 	/**
