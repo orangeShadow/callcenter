@@ -25,7 +25,7 @@ class ApiController extends Controller {
 
         $projects = $user->projects();
 
-        \Log::alert('Обращение к API',['user'=>$user->toArray(),'request'=>$request->all(),'project'=>$projects->toArray()]);
+        \Log::alert('Обращение к API',['user'=>$user->toArray(),'request'=>$request->all(),'project'=>$projects]);
 
         $claims= [];
 
