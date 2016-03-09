@@ -92,7 +92,7 @@ class ApiController extends Controller {
             //return response($excel,200,['Content-Type'=>'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet']);
         }else{
             $response = new KodiResponse();
-            return $response->createResponse($claims,200);
+            return $response->createResponse($projectClaims,200);
         }
     }
 
