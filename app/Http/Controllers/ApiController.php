@@ -52,7 +52,7 @@ class ApiController extends Controller {
                 $claimCollection= $claimCollection->where('created_at','<=',$dteObj->format('Y-m-d H:i:s'));
             }else{
                 $dt = new DateTime();
-                $claimCollection= $claimCollection->where('created_at','>=',$dt->format('Y-m-d 23:59:59'));
+                $claimCollection= $claimCollection->where('created_at','<=',$dt->format('Y-m-d 23:59:59'));
             }
 
 
