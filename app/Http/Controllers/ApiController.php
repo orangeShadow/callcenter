@@ -78,18 +78,11 @@ class ApiController extends Controller {
             return \Excel::create('Filename', function($excel) use($projectClaims) {
 
                 // Set the title
-                $excel->setTitle('Our new awesome title');
-
-                // Chain the setters
-                $excel->setCreator('Maatwebsite')
-                    ->setCompany('Maatwebsite');
-
-                // Call them separately
-                $excel->setDescription('A demonstration to change the file properties');
+                $excel->setTitle('Отчет');
 
                 foreach($projectClaims as $key=>$claims)
                 {
-                    $excel->sheet($key,function($sheet) use ($claims) {
+                    $excel->sheet(htmlspecialchars($key),function($sheet) use ($claims) {
                        $sheet->fromArray($claims);
                     });
                 }
