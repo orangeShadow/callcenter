@@ -150,7 +150,7 @@ return [
          */
         'Barryvdh\Debugbar\ServiceProvider',
         'Laracasts\Flash\FlashServiceProvider',
-
+		'Maatwebsite\Excel\ExcelServiceProvider',
 	],
 
 	/*
@@ -201,7 +201,8 @@ return [
         'Form'      => 'Illuminate\Html\FormFacade',
         'Html'      => 'Illuminate\Html\HtmlFacade',
         'Debugbar' => 'Barryvdh\Debugbar\Facade',
-        'Flash'    => 'Laracasts\Flash\Flash'
+        'Flash'    => 'Laracasts\Flash\Flash',
+		'Excel' => 'Maatwebsite\Excel\Facades\Excel'
 	],
 
 ];
