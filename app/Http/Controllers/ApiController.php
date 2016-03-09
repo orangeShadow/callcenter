@@ -23,7 +23,7 @@ class ApiController extends Controller {
 
         if(is_null($user)) abort('500','User with this key not found');
 
-        $projects = $user->projects();
+        $projects = $user->projects;
 
         \Log::alert('Обращение к API',['user'=>$user->toArray(),'request'=>$request->all(),'project'=>$projects]);
 
