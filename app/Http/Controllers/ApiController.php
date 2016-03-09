@@ -42,7 +42,7 @@ class ApiController extends Controller {
                 if(get_class($dtsObj)!=="DateTime") abor(500,'Wrong date format');
                 $claimCollection= $claimCollection->where('created_at','>=',$dtsObj->format('Y-m-d H:i:s'));
             }else{
-                $dt = new DateTime();
+                $dt = new \DateTime();
                 $claimCollection= $claimCollection->where('created_at','>=',$dt->format('Y-m-d 00:00:00'));
             }
 
@@ -51,7 +51,7 @@ class ApiController extends Controller {
                 if(get_class($dteObj)!=="DateTime") abor(500,'Wrong date format');
                 $claimCollection= $claimCollection->where('created_at','<=',$dteObj->format('Y-m-d H:i:s'));
             }else{
-                $dt = new DateTime();
+                $dt = new \DateTime();
                 $claimCollection= $claimCollection->where('created_at','<=',$dt->format('Y-m-d 23:59:59'));
             }
 
