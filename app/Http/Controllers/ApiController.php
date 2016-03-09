@@ -80,6 +80,7 @@ class ApiController extends Controller {
 
         if(!$request->has('type')){
 
+            if(empty($projectClaims)) return response('Проектов не найдено.');
             return \Excel::create('Filename', function($excel) use($projectClaims) {
 
                 // Set the title
