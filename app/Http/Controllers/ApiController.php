@@ -82,7 +82,8 @@ class ApiController extends Controller {
 
                 foreach($projectClaims as $key=>$claims)
                 {
-                    $excel->sheet(substr(str_slug(htmlspecialchars($key),0,25)),function($sheet) use ($claims) {
+                    $title = substr(str_slug(htmlspecialchars($key)),0,25);
+                    $excel->sheet($title,function($sheet) use ($claims) {
                        $sheet->fromArray($claims);
                     });
                 }
