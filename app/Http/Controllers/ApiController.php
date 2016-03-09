@@ -72,7 +72,7 @@ class ApiController extends Controller {
                 }
                 $claims[] = $claimEl;
             }
-
+            if(empty($claims)) continue;
             $projectClaims[$project->title] = $claims;
         }
 
