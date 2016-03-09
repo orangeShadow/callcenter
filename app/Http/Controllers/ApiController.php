@@ -20,9 +20,13 @@ class ApiController extends Controller {
 
         $user = User::where('apikey','=',$request->input('key'))->first();
 
+
+
         if(is_null($user)) abort('500','User with this key not found');
 
         $projects = Project::where('client_id','=',$user->id)->get();
+
+        \Log::alert('Обращение к API',['user'=>$user->toArray(),'request'=>$request->all(),'project'=>$projects->toArray()]);
 
         $claims= [];
 
