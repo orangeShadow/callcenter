@@ -160,7 +160,6 @@ Route::get('externcall',function(){
 
 });
 
-
 /**
  * Отправка письма
  */

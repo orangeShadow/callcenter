@@ -44,12 +44,13 @@
             {!! Form::label('text',Lang::get('claim.backcall_at')) !!}
             {!! Form::text('backcall_at',$claim->backcall_at,["class"=>"form-control"]) !!}
         </div>
+
         @foreach($properties as $property)
             <div class="form-group">
                 {!! Form::label('title',$property->title) !!}
-                @if($property->type=='date')
+                @if($property->type == 'date')
                     {!! Form::input('text','property['.$property->id.']',Request::get('property['.$property->id.']',$property->value),["class"=>"form-control datepicker"]) !!}
-                @elseif($property->code = 'CITY_FROM' || $property->code = 'CITY_TO' || $property->code = 'CITY')
+                @elseif($property->code == 'CITY_FROM' || $property->code == 'CITY_TO' || $property->code == 'CITY')
                     {!! Form::input('text','property['.$property->id.']',Request::get('property['.$property->id.']',$property->value),["class"=>"form-control city"]) !!}
                 @else
                     {!! Form::input('text','property['.$property->id.']',Request::get('property['.$property->id.']',$property->value),["class"=>"form-control"]) !!}

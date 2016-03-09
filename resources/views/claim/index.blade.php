@@ -21,6 +21,7 @@
                         <th>{{Lang::get('claim.client')}}</th>
                         <th>{{Lang::get('claim.phone')}}</th>
                         <th>{{Lang::get('claim.status')}}</th>
+                        <th>{{Lang::get('claim.text')}}</th>
                         <th>{{Lang::get('claim.created_at')}}</th>
                         <th style="width:1px;">
                          {{--
@@ -39,6 +40,7 @@
                                 <td>{{$claim->name}}</td>
                                 <td>{{$claim->phone}}</td>
                                 <td>{{!empty($claim->statusT->title) ? $claim->statusT->title:''}}</td>
+                                <td>{{!empty($claim->text) ? $claim->text: ''}}</td>
                                 <td>{{$claim->created_at->format("d.m.Y H:i:s")}}</td>
                                 <th>
                                     <div style="white-space: nowrap;">
