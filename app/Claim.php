@@ -105,6 +105,7 @@ class Claim extends Model
 
     public function scopeApi($query, $request)
     {
+
         if (!empty($request['created_at_from']) && !empty($request['created_at_to'])) {
             $dtFrom = new \DateTime($request['created_at_from']);
             $dtTo = new \DateTime($request['created_at_to']);
@@ -117,7 +118,7 @@ class Claim extends Model
             $dtFrom = new \DateTime($request['created_at_to']);
             $dtTo = new \DateTime('created_at_to');
             $query->whereBetween('claims.created_at', [$dtFrom->format('Y-m-d 00:00:00'), $dtTo->format('Y-m-d 23:59:59')]);
-        } elseif ( empty($request['created_at_from']) && empty($request["created_at_to"]) ) {
+        } else {
             $dt = new \DateTime();
             $query->whereBetween('claims.created_at', [$dt->format('Y-m-d 00:00:00'), $dt->format('Y-m-d 23:59:59')]);
         }
