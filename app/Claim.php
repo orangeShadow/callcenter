@@ -103,7 +103,7 @@ class Claim extends Model
         $query->orderBy('claims.id', 'desc')->get(["claims.*"]);
     }
 
-    public function scopeClientApi($query, $request)
+    public function scopeApi($query, $request)
     {
         if (!empty($request['created_at_from']) && !empty($request['created_at_to'])) {
             $dtFrom = new \DateTime($request['created_at_from']);

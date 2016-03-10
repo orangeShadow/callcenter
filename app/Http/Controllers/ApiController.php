@@ -34,7 +34,7 @@ class ApiController extends Controller {
 
             $requestArray["project_id"] = $project->id;
 
-            $claimCollection = Claim::scopeClientApi($requestArray);
+            $claimCollection = Claim::api($requestArray);
 
             foreach($claimCollection as $claim)
             {
