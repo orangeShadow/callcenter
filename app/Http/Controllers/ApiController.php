@@ -26,15 +26,15 @@ class ApiController extends Controller {
 
         $projectClaims = array();
 
-        $request = $request->all();
+        $requestArray = $request->all();
 
         foreach($projects as $project)
         {
             $claims= [];
 
-            $request["project_id"] = $project->id;
+            $requestArray["project_id"] = $project->id;
 
-            $claimCollection = Claim::scopeClientApi($request)->get();
+            $claimCollection = Claim::scopeClientApi($requestArray)->get();
 
             foreach($claimCollection as $claim)
             {
