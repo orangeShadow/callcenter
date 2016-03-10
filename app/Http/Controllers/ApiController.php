@@ -20,43 +20,22 @@ class ApiController extends Controller {
 
         $user = User::where('apikey','=',$request->input('key'))->first();
 
-
         if(is_null($user)) abort('500','User with this key not found');
 
         $projects = $user->projects;
-        //$projects = Project::whereClientId($user->id)->get();
-
-        //\Log::alert('Обращение к API',['user'=>$user->toArray(),'request'=>$request->all(),'project'=>$projects]);
 
         $projectClaims = array();
 
-
+        $request = $request->all();
 
         foreach($projects as $project)
         {
             $claims= [];
 
-            $claimCollection = Claim::where('project_id','=',$project->id);
-            if($request->has('dts')){
-                $dtsObj = new \DateTime($request->input('dts'));
-                if(get_class($dtsObj)!=="DateTime") abor(500,'Wrong date format');
-                $claimCollection= $claimCollection->where('created_at','>=',$dtsObj->format('Y-m-d 00:00:00'));
-            }else{
-                $dt = new \DateTime();
-                $claimCollection= $claimCollection->where('created_at','>=',$dt->format('Y-m-d 00:00:00'));
-            }
+            $request["project_id"] = $project->id;
 
-            if($request->has('dte')){
-                $dteObj = new \DateTime($request->input('dte'));
-                if(get_class($dteObj)!=="DateTime") abor(500,'Wrong date format');
-                $claimCollection= $claimCollection->where('created_at','<=',$dteObj->format('Y-m-d 23-59-59'));
-            }else{
-                $dt = new \DateTime();
-                $claimCollection= $claimCollection->where('created_at','<=',$dt->format('Y-m-d 23:59:59'));
-            }
+            $claimCollection = Claim::scopeClientApi($request)->get();
 
-
-            $claimCollection  = $claimCollection->orderBy('created_at',"DESC")->get();
             foreach($claimCollection as $claim)
             {
                 $claimEl["id"] = $claim->id;
@@ -66,7 +45,6 @@ class ApiController extends Controller {
                 $claimEl["Телефон"] = $claim->phone;
                 $claimEl["Перезвонить"] = $claim->backcall_at;
                 $claimEl["Статус"] = $claim->statusT->title;
-                //$claimEl['properties'] = [];
                 foreach(\App\Property::showPropertyValue($claim) as $property){
                     $claimEl[$property["title"]] = $property['value'];
                 }
@@ -78,7 +56,7 @@ class ApiController extends Controller {
 
 
 
-        if(!$request->has('type')){
+        if( !$request->has('type') ) {
 
             if(empty($projectClaims)) return response('Проектов не найдено.');
             return \Excel::create('Filename', function($excel) use($projectClaims) {
@@ -96,8 +74,7 @@ class ApiController extends Controller {
 
             })->download('xlsx');
 
-            //return response($excel,200,['Content-Type'=>'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet']);
-        }else{
+        } else {
             $response = new KodiResponse();
             return $response->createResponse($projectClaims,200);
         }

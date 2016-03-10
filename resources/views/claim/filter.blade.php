@@ -63,12 +63,18 @@
             </div>
             <div class="row">
                 {!! Form::hidden('filter',true) !!}
+                @if ( !empty( \Auth::user()->apikey ) )
+                    {!! Form::hidden( 'key', \Auth::user()->apikey ) !!}
+                @endif
             </div>
 
             <div class="row">
                 <div class="col-lg-12">
                     <div class="form-group">
                         {!! Form::submit(Lang::get('claim.filtering'),["class"=>"btn btn-primary"]) !!}
+                        @if (!empty(\Auth::user()->apikey))
+                            {!! Form::button('Печать XLS',["class"=>"btn btn-success","id"=>"sendAPI"]) !!}
+                        @endif
                     </div>
                 </div>
             </div>
@@ -76,3 +82,41 @@
         </div>
     </div>
 </div>
+
+
+@section('scripts');
+    <script>
+        (function(){
+
+            serialize = function(obj) {
+                var str = [];
+                for(var p in obj)
+                    if (obj.hasOwnProperty(p)) {
+                        str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
+                    }
+                return str.join("&");
+            }
+
+            $('#sendAPI').click(function(e){
+                e.preventDefault();
+                var objURL = {};
+
+                if ($('input[name="created_at_from"]').val().length>0 ){
+                    objURL.created_at_from = $('input[name="created_at_from"]').val();
+                }
+
+                if ($('input[name="created_at_to"]').val().length>0 ){
+                    objURL.created_at_to   = $('input[name="created_at_to"]').val();
+                }
+
+                if ($('input[name="key"]').val().length>0 ){
+                    objURL.key = $('input[name="key"]').val();
+                }
+
+
+                location.href = '/api/claims?'+serialize(objURL);
+            });
+
+        }());
+    </script>
+@stop
