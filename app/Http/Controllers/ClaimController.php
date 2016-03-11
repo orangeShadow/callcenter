@@ -195,7 +195,9 @@ class ClaimController extends Controller {
                 $property->value = '';
         }
 
-        return view('claim.edit',compact('claim','properties'));
+        $cities = City::where("country_id",'=',3159)->get()->lists('name');
+
+        return view('claim.edit',compact('claim','properties','cities'));
 	}
 
 	/**

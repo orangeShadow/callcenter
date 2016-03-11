@@ -39,6 +39,7 @@ class ApiController extends Controller {
             foreach($claimCollection as $claim)
             {
                 $claimEl["id"] = $claim->id;
+                $claimEl["Имя"] = $claim->name;
                 $claimEl["Дата создания"] = $claim->created_at->format('Y-m-d H:i:s');
                 $claimEl["Проект"] = $project->title;
                 $claimEl["Комментарий"] = $claim->text;
