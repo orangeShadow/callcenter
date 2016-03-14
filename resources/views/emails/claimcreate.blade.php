@@ -18,6 +18,16 @@
 <p>
     <strong>Статус:</strong> {{$claim->statusT->title}}
 </p>
+@if(!empty($claim->typeR->title))
+    <p>
+        <strong>Тип обращения:</strong> {{$claim->typeR->title}}
+    </p>
+@endif
+<p>
+    <strong>Статус:</strong> {{$claim->statusT->title}}
+</p>
+
+
 @foreach($properties as $property)
     <p>
         <strong>{{$property["title"]}}:</strong> {!! $property["value"] !!}

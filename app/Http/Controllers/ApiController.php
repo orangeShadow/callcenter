@@ -46,6 +46,7 @@ class ApiController extends Controller {
                 $claimEl["Телефон"] = $claim->phone;
                 $claimEl["Перезвонить"] = $claim->backcall_at;
                 $claimEl["Статус"] = $claim->statusT->title;
+                $claimEl["Тип Обращения"] = !empty($claim->typeR->title) ? $claim->typeR->title:'';
                 foreach(\App\Property::showPropertyValue($claim) as $property){
                     $claimEl[$property["title"]] = $property['value'];
                 }
