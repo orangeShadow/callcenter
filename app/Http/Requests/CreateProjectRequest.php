@@ -24,7 +24,8 @@ class CreateProjectRequest extends Request {
         return [
             'title'     =>'required',
             'text'      =>'required',
-            'client_id' =>'required'
+            'client_id' =>'required',
+            'sort'      =>'numeric'
         ];
 	}
 

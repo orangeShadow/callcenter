@@ -32,9 +32,9 @@ class ProjectController extends Controller {
 
         if(Auth::user()->checkRole(['operator']))
         {
-            $projects = Project::operator(Request::all())->paginate(50);
+            $projects = Project::operator(Request::all())->orderBy("sort","asc")->orderBy('id','asc')->paginate(50);
         }else{
-            $projects = Project::search(Request::all())->paginate(50);
+            $projects = Project::search(Request::all())->orderBy("sort","asc")->orderBy('id','asc')->paginate(50);
         }
 
 

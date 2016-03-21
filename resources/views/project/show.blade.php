@@ -5,6 +5,12 @@
     <div class="row">
         <div class="col-lg-12">
             <div class="row">
+                <div class="col-lg-1"><b>{{ Lang::get('project.sort') }}</b></div>
+                <div class="col-lg-5">
+                    {{ $project->sort }}
+                </div>
+            </div>
+            <div class="row">
                 <div class="col-lg-1"><b>{{ Lang::get('project.manager') }}</b></div>
                 <div class="col-lg-5">
                     {{ $project->manager()->first()->name }}

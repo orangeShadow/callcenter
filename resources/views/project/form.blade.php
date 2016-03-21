@@ -1,6 +1,10 @@
 <div class="row">
     <div class="col-lg-12">
         <div class="form-group">
+            {!! Form::label('sort',Lang::get('project.sort')) !!}
+            {!! Form::text('sort',1000,["class"=>"form-control"])!!}
+        </div>
+        <div class="form-group">
             {!! Form::label('title',Lang::get('project.title')) !!}
             {!!Form::text('title',null,["class"=>"form-control"])!!}
         </div>

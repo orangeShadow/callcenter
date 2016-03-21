@@ -15,7 +15,8 @@ class Project extends Model {
         'manager_id',
         'update_by',
         'reports_type',
-        'hour_start'
+        'hour_start',
+        'sort'
     ];
 
     public function setHourStartAttribute($value)
