@@ -29,7 +29,7 @@
                     <div class="form-group">
                         {!! Form::select('operator_id',[0=>'Кем создана']+\App\User::whereIn('role_id',[2,3])->orderBy('name','asc')->get(['id','name'])->lists('name','id'),Request::get('operator_id'),['class'=>'form-control']) !!}
                         <br>
-                        {!! Form::select('project_id',[0=>'Выберите проект']+\App\Project::orderBy('title','asc')->get(['id','title'])->lists('title','id'),Request::get('project_id'),['class'=>'form-control']) !!}
+                        {!! Form::select('project_id',[0=>'Выберите проект']+\App\Project::orderBy('title','asc')->get(['id','title'])->lists('title','id'),Request::get('project_id'),['class'=>'selectpicker', 'data-live-search'=>"true"]) !!}
                     </div>
                 </div>
                 @else
@@ -83,10 +83,20 @@
     </div>
 </div>
 
+@section("css")
+    <link rel="stylesheet" href="/css/bootstrap-select.min.css">
+@stop
+
 
 @section('scripts');
+    <script src="/js/bootstrap-select.min.js"></script>
+    <script src="/js/defaults-ru_RU.min.js"></script>
+
     <script>
         (function(){
+
+            $('.selectpicker').selectpicker();
+
 
             serialize = function(obj) {
                 var str = [];
