@@ -78,3 +78,20 @@
         </div>
     @endif
 @stop
+
+@section("css")
+    <link rel="stylesheet" href="/css/bootstrap-select.min.css">
+@stop
+
+
+@section('scripts');
+<script src="/js/bootstrap-select.min.js"></script>
+<script src="/js/defaults-ru_RU.min.js"></script>
+
+<script>
+    (function() {
+
+        $('.selectpicker').selectpicker();
+    }());
+</script>
+@stop

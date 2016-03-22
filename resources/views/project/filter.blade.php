@@ -13,9 +13,10 @@
             </div>
             <div class="col-lg-3">
                 <div class="form-group">
-                    {!! Form::text('title',Request::get('title'),['class'=>'form-control','placeholder'=>'Название']) !!}
-                    <br>
+
                     {!! Form::text('id',Request::get('id'),['class'=>'form-control','placeholder'=>'Номер']) !!}
+                    <br>
+                    {!! Form::select('id',[0=>'Выберите проект']+\App\Project::orderBy('title','asc')->get(['id','title'])->lists('title','id'),Request::get('id'),['class'=>'form-control selectpicker', 'data-live-search'=>"true"]) !!}
                 </div>
             </div>
             <div class="col-lg-3">
