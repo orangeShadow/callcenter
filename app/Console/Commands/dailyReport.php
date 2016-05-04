@@ -43,7 +43,7 @@ class dailyReport extends Command {
 	public function fire()
 	{
 		$projects = [];
-		foreach(Claim::yesterday()->where('project_id','=',$this->argument('project'))->get() as $claim)
+		foreach(Claim::yesterday()->get() as $claim)
 		{
 			$projects[$claim->project_id][] = $claim;
 		}
