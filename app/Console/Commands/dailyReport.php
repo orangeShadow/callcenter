@@ -123,7 +123,9 @@ class dailyReport extends Command {
 	 */
 	protected function getArguments()
 	{
+		return [
 
+		];
 	}
 
 	/**
@@ -133,7 +135,9 @@ class dailyReport extends Command {
 	 */
 	protected function getOptions()
 	{
+		return [
 
+		];
 	}
 
 }
