@@ -15,7 +15,7 @@ class Kernel extends ConsoleKernel {
         'App\Console\Commands\Reports',
         'App\Console\Commands\OlgaReport',
         'App\Console\Commands\monthReport',
-
+		'App\Console\Commands\dailyReport',
 	];
 
 	/**
@@ -26,7 +26,8 @@ class Kernel extends ConsoleKernel {
 	 */
 	protected function schedule(Schedule $schedule)
 	{
-        $schedule->command('callcenter:reports daily')->hourly();
+        //$schedule->command('callcenter:reports daily')->hourly();
+		$schedule->command('callcenter:dailyReport')->dailyAt('8:00');
         $schedule->command('callcenter:reports weekly')->weeklyOn(6,"23:30");
         $schedule->command('callcenter:reports monthly')->monthly();
 	}

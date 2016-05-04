@@ -266,6 +266,16 @@ class Claim extends Model
         return $query;
     }
 
+    public function scopeYesterday($query)
+    {
+        $dt = new Carbon();
+        $dt = $dt->subDay(1);
+
+        $query->whereBetween("created_at", [$dt->format("Y-m-d 00:00:00"), $dt->format("Y-m-d 23:59:59")]);
+
+        return $query;
+    }
+
     public function statusT()
     {
         return $this->belongsTo('App\StatusClaim', 'status', 'code');
