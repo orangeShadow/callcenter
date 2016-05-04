@@ -11,14 +11,14 @@ class dailyReport extends Command {
 	 *
 	 * @var string
 	 */
-	protected $name = 'command:name';
+	protected $name = 'callcenter:dailyReport';
 
 	/**
 	 * The console command description.
 	 *
 	 * @var string
 	 */
-	protected $description = 'Command description.';
+	protected $description = 'Отправка отчета за прошлый день';
 
 	/**
 	 * Create a new command instance.
