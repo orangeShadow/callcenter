@@ -3,7 +3,11 @@
 use Illuminate\Console\Command;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Input\InputArgument;
-use App\Calim;
+
+use App\Project;
+use App\Claim;
+use App\Property;
+
 
 class dailyReport extends Command {
 
