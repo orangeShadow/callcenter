@@ -123,9 +123,7 @@ class dailyReport extends Command {
 	 */
 	protected function getArguments()
 	{
-		return [
-			['example', InputArgument::REQUIRED, 'An example argument.'],
-		];
+
 	}
 
 	/**
@@ -135,9 +133,7 @@ class dailyReport extends Command {
 	 */
 	protected function getOptions()
 	{
-		return [
-			['example', null, InputOption::VALUE_OPTIONAL, 'An example option.', null],
-		];
+
 	}
 
 }
