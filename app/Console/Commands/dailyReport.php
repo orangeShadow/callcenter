@@ -56,7 +56,7 @@ class dailyReport extends Command {
 			$styleTd = 'style="border:1px solid #000;"';
 
 			$table= '<table cellpadding="2" cellspacing="0" style="margin: 0;  width:100%;">';
-			$table.= "<tr><td $styleTd>id</td><td $styleTd>Дата</td><td $styleTd>Клиент</td><td $styleTd>Контактный телефон</td><td $styleTd>Описание</td><td $styleTd>Дата обратного звонка</td><td $styleTd>Статус</td>";
+			$table.= "<tr><td $styleTd>id</td><td $styleTd>Дата</td><td $styleTd>Клиент</td><td $styleTd>Контактный телефон</td><td $styleTd>Описание</td><td $styleTd>Дата обратного звонка</td><td $styleTd>Статус</td><td $styleTd>Сорвавшийся звонок</td><td $styleTd>Отказ давать контакты.</td><td $styleTd>Тип запроса</td>";
 
 			$propertiesPR = Property::where('model_initiator','=','project')->where('link_id','=',$key)->orderBy('sort')->get();
 			foreach ($propertiesPR as $property) {
@@ -74,6 +74,9 @@ class dailyReport extends Command {
 				$table.="<td $styleTd>$claim->text</td>";
 				$table.="<td $styleTd>$claim->backcall_at</td>";
 				$table.="<td $styleTd>".$claim->statusT->title."</td>";
+				$table.="<td $styleTd>".$claim->missed_call."</td>";
+				$table.="<td $styleTd>".$claim->without_contacts."</td>";
+				$table.="<td $styleTd>".(!empty($claim->typeR) ? $claim->typeR->title: '')."</td>";
 
 				$propertiesByTitle =[];
 				$properties = \App\Property::showPropertyValue($claim);
