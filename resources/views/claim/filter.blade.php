@@ -66,14 +66,18 @@
                 @if ( !empty( \Auth::user()->apikey ) )
                     {!! Form::hidden( 'key', \Auth::user()->apikey ) !!}
                 @endif
+
             </div>
 
             <div class="row">
                 <div class="col-lg-12">
                     <div class="form-group">
                         {!! Form::submit(Lang::get('claim.filtering'),["class"=>"btn btn-primary"]) !!}
-                        @if (!empty(\Auth::user()->apikey))
+                        @if (!empty(\Auth::user()->apikey) )
                             {!! Form::button('Печать XLS',["class"=>"btn btn-success","id"=>"sendAPI"]) !!}
+                        @endif
+                        @if ( !empty( \Auth::user()->checkRole(['admin','manager'])) )
+                            {!! Form::button('Печать XLS',["class"=>"btn btn-success","id"=>"sendAPIProject"]) !!}
                         @endif
                     </div>
                 </div>
@@ -125,6 +129,26 @@
 
 
                 location.href = '/api/claims?'+serialize(objURL);
+            });
+
+            $('#sendAPIProject').click(function(e){
+                e.preventDefault();
+                var objURL = {};
+
+                if ($('input[name="created_at_from"]').val().length>0 ){
+                    objURL.created_at_from = $('input[name="created_at_from"]').val();
+                }
+
+                if ($('input[name="created_at_to"]').val().length>0 ){
+                    objURL.created_at_to   = $('input[name="created_at_to"]').val();
+                }
+
+                if ($('select[name="project_id"]').val().length>0 ){
+                    objURL.project_id = $('select[name="project_id"]').val();
+                }
+
+
+                location.href = '/api/claims/'+objURL.project_id+'?'+serialize(objURL);
             });
 
         }());
