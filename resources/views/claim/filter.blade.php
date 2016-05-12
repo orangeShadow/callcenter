@@ -77,7 +77,7 @@
                             {!! Form::button('Печать XLS',["class"=>"btn btn-success","id"=>"sendAPI"]) !!}
                         @endif
                         @if ( !empty( \Auth::user()->checkRole(['admin','manager'])) )
-                            {!! Form::button('Печать XLS',["class"=>"btn btn-success","id"=>"sendAPIProject"]) !!}
+                            {!! Form::button('XLS по проекту',["class"=>"btn btn-success","id"=>"sendAPIProject"]) !!}
                         @endif
                     </div>
                 </div>
@@ -135,18 +135,12 @@
                 e.preventDefault();
                 var objURL = {};
 
-                if ($('input[name="created_at_from"]').val().length>0 ){
-                    objURL.created_at_from = $('input[name="created_at_from"]').val();
-                }
+                objURL.created_at_from = $('input[name="created_at_from"]').val();
+                objURL.created_at_to   = $('input[name="created_at_to"]').val();
+                objURL.project_id = $('select[name="project_id"]').val();
 
-                if ($('input[name="created_at_to"]').val().length>0 ){
-                    objURL.created_at_to   = $('input[name="created_at_to"]').val();
-                }
-
-                if ($('select[name="project_id"]').val().length>0 ){
-                    objURL.project_id = $('select[name="project_id"]').val();
-                }
-
+                if(objURL.project_id.length==0 || objURL.project_id==0) return alert('Выберите проект');
+                if(objURL.created_at_from.length==0 && objURL.created_at_to.length==0) return alert('Задайте период времени');
 
                 location.href = '/api/claims/'+objURL.project_id+'?'+serialize(objURL);
             });
