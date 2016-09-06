@@ -24,8 +24,9 @@ class ApiController extends Controller {
 
         $projects = $user->projects;
 
-        \Log::alert('Проекты',['user'=>$user,'projects'=>$projects->lists('id','title')]);
+        //\Log::alert('Проекты',['user'=>$user,'projects'=>$projects->lists('id','title')]);
         $createdProject = \Auth::user()->createProject();
+        \Log::alert('Проекты',['user'=>$user,'createProjects'=>$createdProject]);
         $projects->merge($createdProject);
 
         $projectClaims = array();
