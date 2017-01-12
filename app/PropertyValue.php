@@ -12,6 +12,11 @@ class PropertyValue extends Model
     public $fillable = ["property_id", "value", "element_id"];
 
 
+    public function property()
+    {
+        return $this->belongsTo('App\Property');
+    }
+
     public function getPropertyTitle()
     {
         return $this->propertyTitle;

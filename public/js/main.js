@@ -57,6 +57,7 @@ var app = angular.module('project', [], function($interpolateProvider) {
 
 app.controller('propertyController', function($scope, $http) {
 
+
     $scope.properties = [];
     $scope.loading = false;
 
@@ -67,13 +68,14 @@ app.controller('propertyController', function($scope, $http) {
 
     $scope.init = function() {
         $scope.loading = true;
-        $http.get('/property/?model='+$scope.model_initiator+'&link_id='+$scope.link_id).
-            success(function(data, status, headers, config) {
-                $scope.properties = data;
-                $scope.loading = false;
+        $http.get('/property/?model=' + $scope.model_initiator + '&link_id=' + $scope.link_id).success(function (data, status, headers, config) {
+            $scope.properties = data;
+            $scope.loading = false;
 
-            });
-    }
+        });
+
+
+    };
 
     $scope.addProperty = function() {
         $scope.loading = true;
@@ -93,6 +95,7 @@ app.controller('propertyController', function($scope, $http) {
             model_goal: $scope.model_goal,
             link_id:$scope.link_id,
             sort:$scope.property.sort,
+            values:[],
             _token:$('input[name="_token"]').val()
         }
         $http({
@@ -117,16 +120,31 @@ app.controller('propertyController', function($scope, $http) {
         $scope.loading = true;
 
         var property = $scope.properties[index];
-        console.log(property);
 
         $http.delete('/property/' + property.id)
             .success(function() {
                 $scope.properties.splice(index, 1);
                 $scope.loading = false;
 
-            });;
+            });
     };
 
+
+    $scope.addValues = function(index) {
+        $scope.properties[index].values.push('');
+    };
+
+
+    $scope.changeValue= function(property,$index) {
+        console.log(property,$index);
+    }
+
+    $scope.saveValues = function(index) {
+        $http.put('/property/' + $scope.properties[index].id,$scope.properties[index])
+            .success(function() {
+                console.log(index);
+            });
+    };
 
     $scope.init();
 

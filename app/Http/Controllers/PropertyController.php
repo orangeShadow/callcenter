@@ -22,7 +22,8 @@ class PropertyController extends Controller {
     protected  $propertiesType = [
                 "text"=>'текстовое',
                 "number"=>'числовое',
-                "date"  =>'дата'
+                "date"  =>'дата',
+                "select" => 'список'
             ];
 
 	/**
@@ -84,6 +85,22 @@ class PropertyController extends Controller {
             dd($e);
         }
 	}
+
+
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @return Response
+     */
+    public function update($property,Request $request)
+    {
+
+        $property = Property::find($property);
+        $property->update(['values'=>$request->get('values')]);
+
+        return response($property);
+
+    }
 
 
 	/**

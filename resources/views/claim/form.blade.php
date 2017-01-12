@@ -52,6 +52,8 @@
                     {!! Form::input('text','property['.$property->id.']',Request::get('property['.$property->id.']',$property->value),["class"=>"form-control datepicker"]) !!}
                 @elseif($property->code == 'CITY_FROM' || $property->code == 'CITY_TO' || $property->code == 'CITY')
                     {!! Form::input('text','property['.$property->id.']',Request::get('property['.$property->id.']',$property->value),["class"=>"form-control city"]) !!}
+                @elseif($property->type=='select')
+                    {!! Form::select('property['.$property->id.']',$property->values,Request::get('property['.$property->id.']',$property->value),["class"=>"form-control"]) !!}
                 @else
                     {!! Form::input('text','property['.$property->id.']',Request::get('property['.$property->id.']',$property->value),["class"=>"form-control"]) !!}
                 @endif

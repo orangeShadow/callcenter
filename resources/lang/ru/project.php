@@ -25,6 +25,7 @@ return [
     'propertyText' => 'Текстовое',
     'propertyNumber'=> 'Числовое',
     'propertyDate' => 'Дата',
+    'propertySelect' => 'Выпадающий список',
     'destinationTitle'=>'Имя Адресата',
     'destinationEmail'=>'Email',
     'sort'=>'Сортировка',
@@ -35,7 +36,7 @@ return [
     'reports_type'=>"Тип отчетности",
     'hour_start'=>'Начало периода',
     'hour_end'=>'Конец периода',
-    'sort' => 'Индекс Сортировки'
+    'sort' => 'Индекс Сортировки',
 
 ];
 ?>

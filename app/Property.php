@@ -1,6 +1,7 @@
 <?php namespace App;
 
 use App\ACME\Model\PropertyTypes\DateProperty;
+use App\ACME\Model\PropertyTypes\SelectProperty;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Response;
 
@@ -55,7 +56,11 @@ class Property extends Model
             if ($property->type == "date") {
                 $res = DateProperty::where('property_id', '=', $property->id)->where('element_id', "=",
                     $model->id)->first();
-            } else {
+            }else if ($property->type == "select") {
+                $res = SelectProperty::where('property_id', '=', $property->id)->where('element_id', "=",
+                    $model->id)->first();
+            }
+            else {
                 $res = \App\PropertyValue::where('property_id', '=', $property->id)->where('element_id', "=",
                     $model->id)->first();
             }
@@ -67,4 +72,17 @@ class Property extends Model
         return $propertyValues;
     }
 
+
+    public function getValuesAttribute() {
+        if(empty($this->attributes['values'])) return [];
+        return json_decode($this->attributes['values']) ;
+    }
+
+
+
+    public function setValuesAttribute($value) {
+
+        $this->attributes['values'] =  json_encode($value);
+
+    }
 }

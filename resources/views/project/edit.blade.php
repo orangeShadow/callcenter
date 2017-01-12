@@ -42,6 +42,7 @@
                                             <option value="text">{{Lang::get('project.propertyText')}}</option>
                                             <option value="number">{{Lang::get('project.propertyNumber')}}</option>
                                             <option value="date">{{Lang::get('project.propertyDate')}}</option>
+                                            <option value="select">{{Lang::get('project.propertySelect')}}</option>
                                         </select>
                                     </div>
                                 </div>
@@ -54,7 +55,40 @@
                             <div class="property-list row">
                                 <div class="col-lg-12">
                                     <ol>
-                                        <li   ng-repeat='property in properties'><% property.title %>, <% property.type %>,[<% property.code %>] <% property.sort %> <a ng-click="deleteProperty($index)" class="text-danger"><i class="glyphicon glyphicon-remove"></i></a> </li>
+                                        <li  ng-repeat='property in properties' ng-inut="parent_id = $index">
+                                            <% property.title %>, <% property.type %>,[<% property.code %>] <% property.sort %>
+                                            <a data-toggle="modal" data-target="#modal-<%$index%>" ng-if="property.type =='список' || property.type =='select'"><i class="glyphicon glyphicon-edit"></i></a>
+
+                                            <div id="<% 'modal-' + $index %>"  class="modal fade" tabindex="-1" role="dialog">
+                                                <div class="modal-dialog" role="document">
+                                                    <div class="modal-content">
+                                                        <div class="modal-header">
+                                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                                            <h4 class="modal-title"><%property.title%>, укажите возможные варианты ответа</h4>
+                                                        </div>
+                                                        <form>
+                                                        <div class="modal-body">
+
+                                                            <div class="property-select">
+                                                                <div ng-repeat="itemP in property.values track by $index" class="form-group">
+                                                                    <input class="form-control" type="text" ng-model="property.values[$index]" type="text">
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="modal-footer">
+                                                            <button type="button" class="btn btn-default" data-dismiss="modal">Закрыть</button>
+                                                            <button ng-click="addValues($index)"  type="button" class="btn btn-success">Добавить строку</button>
+                                                            <button ng-click="saveValues($index)"    type="button" class="btn btn-primary">Сохранить</button>
+                                                        </div>
+                                                        </form>
+                                                    </div><!-- /.modal-content -->
+                                                </div><!-- /.modal-dialog -->
+                                            </div>
+
+
+
+                                            <a ng-click="deleteProperty($index)" class="text-danger"><i class="glyphicon glyphicon-remove"></i></a>
+                                        </li>
                                     </ol>
                                 </div>
                             </div>
