@@ -135,14 +135,10 @@ app.controller('propertyController', function($scope, $http) {
     };
 
 
-    $scope.changeValue= function(property,$index) {
-        console.log(property,$index);
-    }
-
     $scope.saveValues = function(index) {
         $http.put('/property/' + $scope.properties[index].id,$scope.properties[index])
             .success(function() {
-                console.log(index);
+                $('#modal-'+index).hide();
             });
     };
 
