@@ -11,7 +11,6 @@ use Illuminate\Database\Eloquent\ModelNotFoundException;
 
 use App\Property;
 use App\ACME\Model\PropertyTypes;
-use App\PropertyValue;
 use Auth;
 use Illuminate\Contracts\Validation\ValidationException;
 use Illuminate\Support;
@@ -101,6 +100,8 @@ class ClaimController extends Controller {
                                 $pr = new PropertyTypes\DateProperty($attributes,$property->title);
                             }elseif($property->type=='number'){
                                 $pr = new PropertyTypes\NumberProperty($attributes,$property->title);
+                            } elseif($property->type=='select'){
+                                $pr = new PropertyTypes\SelectProperty($attributes,$property->title,$property->values);
                             }
                             else{
                                 $pr = new PropertyTypes\TextProperty();
