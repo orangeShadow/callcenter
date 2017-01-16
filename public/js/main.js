@@ -142,6 +142,10 @@ app.controller('propertyController', function($scope, $http) {
             });
     };
 
+    $scope.removePropertyValue = function(index,propertyIndex) {
+        $scope.properties[propertyIndex].values.splice(index,1);
+    };
+
     $scope.init();
 
 });

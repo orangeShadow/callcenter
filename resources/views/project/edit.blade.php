@@ -70,8 +70,8 @@
                                                         <div class="modal-body">
 
                                                             <div class="property-select">
-                                                                <div ng-repeat="itemP in property.values track by $index" class="form-group">
-                                                                    <input class="form-control" type="text" ng-model="property.values[$index]" type="text">
+                                                                <div ng-repeat="itemP in property.values track by $index" class="form-group" style="position: relative;">
+                                                                    <input class="form-control" type="text" ng-model="property.values[$index]" type="text"> <i ng-click="removePropertyValue($index,$parent.$index)" style="position:absolute;top:10px;right:10px;color:#F00;" class="glyphicon glyphicon-remove"></i>
                                                                 </div>
                                                             </div>
                                                         </div>
