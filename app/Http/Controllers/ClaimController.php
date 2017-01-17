@@ -58,6 +58,12 @@ class ClaimController extends Controller {
         {
             $claim->project_id = (int)Request::get('project_id');
             $properties  = Property::getPropertyByModel($claim);
+
+            $properties  = array_filter($properties,function($item){
+                if($item->active==0) return false;
+                return true;
+            });
+
             $cities = City::where("country_id",'=',3159)->get()->lists('name');
         }else{
             abort(404);
@@ -85,6 +91,11 @@ class ClaimController extends Controller {
             if(!empty($request["property"]))
             {
                 $properties  = Property::getPropertyByModel($claim);
+
+                $properties  = array_filter($properties,function($item){
+                    if($item->active==0) return false;
+                    return true;
+                });
 
                 foreach($properties as $property)
                 {

@@ -116,8 +116,26 @@ app.controller('propertyController', function($scope, $http) {
     };
 
 
+    $scope.activeProperty = function(index) {
+        $scope.loading = true;
+
+        var property = $scope.properties[index];
+        $scope.properties[index].active= $scope.properties[index].active==1 ? 0:1;
+
+        $http.put('/property/' + property.id,property)
+            .success(function() {
+                $scope.loading = false;
+            })
+            .error(function(err) {
+                alert('При попытке изменения произошла ошибка');
+                $scope.properties[index].active= $scope.properties[index].active==1 ? 0:1;
+            });
+    };
+
     $scope.deleteProperty = function(index) {
         $scope.loading = true;
+
+        if(!confirm('Вы действительно хотите удалить это свойство ?')) return false;
 
         var property = $scope.properties[index];
 

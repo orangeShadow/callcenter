@@ -96,7 +96,10 @@ class PropertyController extends Controller {
     {
 
         $property = Property::find($property);
-        $property->update(['values'=>$request->get('values')]);
+        $property->update([
+            'values'=>$request->get('values'),
+            'active'=>$request->get('active',1)
+        ]);
 
         return response($property);
 

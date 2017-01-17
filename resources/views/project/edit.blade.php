@@ -57,9 +57,9 @@
                                     <ol>
                                         <li  ng-repeat='property in properties' ng-inut="parent_id = $index">
                                             <% property.title %>, <% property.type %>,[<% property.code %>] <% property.sort %>
-                                            <a data-toggle="modal" data-target="#modal-<%$index%>" ng-if="property.type =='список' || property.type =='select'"><i class="glyphicon glyphicon-edit"></i></a>
+                                            <a style="margin-right: 5px;" data-toggle="modal" data-target="#modal-<%$index%>" ng-if="property.type =='список' || property.type =='select'"><i class="glyphicon glyphicon-edit"></i></a>
 
-                                            <div id="<% 'modal-' + $index %>"  class="modal fade" tabindex="-1" role="dialog">
+                                            <div ng-if="property.type =='список' || property.type =='select'" id="<% 'modal-' + $index %>"  class="modal fade" tabindex="-1" role="dialog">
                                                 <div class="modal-dialog" role="document">
                                                     <div class="modal-content">
                                                         <div class="modal-header">
@@ -85,8 +85,10 @@
                                                 </div><!-- /.modal-dialog -->
                                             </div>
 
-
-
+                                            <a style="margin-right: 5px;" ng-click="activeProperty($index)" ng-class="{'text-warning':property.active==1,'text-success':property.active==0}">
+                                                <i ng-if="property.active==0" title="Отображать свойство" class="glyphicon glyphicon-eye-open"></i>
+                                                <i ng-if="property.active==1" title="Скрыть свойство" class="glyphicon glyphicon-eye-close"></i>
+                                            </a>
                                             <a ng-click="deleteProperty($index)" class="text-danger"><i class="glyphicon glyphicon-remove"></i></a>
                                         </li>
                                     </ol>
