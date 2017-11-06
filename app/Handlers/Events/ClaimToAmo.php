@@ -22,7 +22,6 @@ class ClaimToAmo
         $claim = $event->claim;
         Log::error('Перехват события создания заявки', [
             'claim'           => $claim,
-            'type_request_id' => $claim->type_request->id,
             'type_request'    => $claim->type_request
         ]);
         try {
@@ -30,7 +29,7 @@ class ClaimToAmo
 
             if ($claim->project_id !== 128) return false;
 
-            if ($claim->type_request->id !== 361) return false;
+            if ($claim->type_request !== 361) return false;
 
             $properties = Property::showPropertyValue($claim);
 
