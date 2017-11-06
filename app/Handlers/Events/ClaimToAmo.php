@@ -57,7 +57,7 @@ class ClaimToAmo
             //Заполнение полей модели
             $lead['name'] = "Заявка в call-№1";
 
-            $lead->addCustomField(144969, config('app.url') . $claim->id);
+            $lead->addCustomField(144969, config('app.url').'/claim/' . $claim->id);
 
             $lead->addCustomMultiField(145047, [config('amoconf.products')[ $model ]]);
             $lead->addCustomMultiField(145063, [config('amoconf.colors')[ $color ]]);
