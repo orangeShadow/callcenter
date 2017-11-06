@@ -14,33 +14,38 @@ class ClaimToAmo
      */
     public function __construct()
     {
-        //
+
     }
 
     public function handle(ClaimCreate $event)
     {
-        try{
-            $claim = $event->claim;
+        $claim = $event->claim;
+        Log::error('Перехват события создания заявки', [
+            'claim'           => $claim,
+            'type_request_id' => $claim->type_request->id,
+            'type_request'    => $claim->type_request
+        ]);
+        try {
 
-            if($claim->project_id !== 128) return false;
 
-            if($claim->type_request->id !== 361 ) return false;
+            if ($claim->project_id !== 128) return false;
 
-            $properties  = Property::showPropertyValue($claim);
+            if ($claim->type_request->id !== 361) return false;
+
+            $properties = Property::showPropertyValue($claim);
 
             $model = null;
             $color = null;
 
-            foreach ($properties as  $key => $property) {
-                if($key === 127) {
+            foreach ($properties as $key => $property) {
+                if ($key === 127) {
                     $model = $property['value'];
                 }
 
-                if($key === 129) {
+                if ($key === 129) {
                     $color = $property['value'];
                 }
             }
-
 
 
             $amo = new AMO(env('AMO_HOST'), env('AMO_LOGIN'), env('AMO_API_KEY'));
@@ -51,24 +56,24 @@ class ClaimToAmo
             //Заполнение полей модели
             $lead['name'] = "Заявка в call-№1";
 
-            $lead->addCustomField(144969, config('app.url').$claim->id);
+            $lead->addCustomField(144969, config('app.url') . $claim->id);
 
-            $lead->addCustomMultiField(145047, [ config('amoconf.products')[$model] ]);
-            $lead->addCustomMultiField(145063, [ config('amoconf.colors')[$color] ]);
+            $lead->addCustomMultiField(145047, [config('amoconf.products')[ $model ]]);
+            $lead->addCustomMultiField(145063, [config('amoconf.colors')[ $color ]]);
 
             $lead_id = $lead->apiAdd();
 
 
             $contact = $amo->contact;
 
-            $contact['name']  = $claim->name;
+            $contact['name'] = $claim->name;
             $contact['linked_leads_id'] = $lead_id;
             $contact->addCustomField(87299, $claim->phone, 'MOB');
             $contact_id = $contact->apiAdd();
 
 
         } catch (\Exception $e) {
-            \og::error('Ошибка при создании заявки и отправлении в AMO',array('error'=>$e->getMessage()));
+            \Log::error('Ошибка при создании заявки и отправлении в AMO', array('error' => $e->getMessage()));
         }
     }
 }
