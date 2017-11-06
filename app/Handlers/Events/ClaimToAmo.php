@@ -20,16 +20,18 @@ class ClaimToAmo
     public function handle(ClaimCreate $event)
     {
         $claim = $event->claim;
-        Log::error('Перехват события создания заявки', [
+
+        Log::alert('Перехват события создания заявки', [
             'claim'           => $claim,
             'type_request'    => $claim->type_request
         ]);
+
         try {
 
 
-            if ($claim->project_id !== 128) return false;
+            if ($claim->project_id != 128) return false;
 
-            if ($claim->type_request !== 361) return false;
+            if ($claim->type_request != 361) return false;
 
             $properties = Property::showPropertyValue($claim);
 
