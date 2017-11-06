@@ -17,7 +17,8 @@ class EventServiceProvider extends ServiceProvider {
 		],
 
         'App\Events\ClaimCreate'=>[
-            'App\Handlers\Events\SendMailToClient'
+            'App\Handlers\Events\SendMailToClient',
+            'App\Handlers\Events\ClaimToAmo'
         ]
 	];
 
