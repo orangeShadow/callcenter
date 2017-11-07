@@ -39,7 +39,7 @@ class ClaimToAmo
             $color = null;
 
             foreach ($properties as $key => $property) {
-                if ($key === 127) {
+                if ($key === 127 && $property['value']!="Общая инфрмация") {
                     $model = $property['value'];
                 }
 
