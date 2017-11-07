@@ -61,11 +61,16 @@ class ClaimToAmo
             $lead->addCustomField(145597,$claim->text);
 
 
-            $lead->addCustomMultiField(145047, [config('amoconf.products')[ $model ]]);
-            $lead->addCustomMultiField(145063, [config('amoconf.colors')[ $color ]]);
+            if(!empty($model)){
+                $lead->addCustomMultiField(145047, [config('amoconf.products')[ $model ]]);
+            }
+
+            if(!empty($color)) {
+                $lead->addCustomMultiField(145063, [config('amoconf.colors')[ $color ]]);
+            }
+
 
             $lead_id = $lead->apiAdd();
-
 
             $contact = $amo->contact;
 
