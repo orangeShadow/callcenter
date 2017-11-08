@@ -36,9 +36,9 @@ class ClaimController extends Controller {
 	{
         $fluid = true;
         if(Auth::user()->checkRole('client')){
-            $claims = Claim::client(Request::all())->orderBy('created_at','desc')->paginate(30);
+            $claims = Claim::client(Request::all())->orderBy('created_at','desc')->paginate(10);
         }else{
-            $claims = Claim::search(Request::all())->orderBy('created_at','desc')->paginate(30);
+            $claims = Claim::search(Request::all())->orderBy('created_at','desc')->paginate(10);
         }
 
 		return view('claim.index',compact('claims','fluid'));
