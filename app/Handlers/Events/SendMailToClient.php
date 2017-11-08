@@ -87,7 +87,7 @@ class SendMailToClient {
             \Log::error('Ошибка при создании заявки',array('error'=>$e->getMessage()));
         }
 
-
+        return true;
 	}
 
 }

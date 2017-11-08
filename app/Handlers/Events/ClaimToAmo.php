@@ -29,9 +29,9 @@ class ClaimToAmo
         try {
 
 
-            if ($claim->project_id != 128) return false;
+            if ($claim->project_id != 128) return true;
 
-            if ($claim->type_request != 361) return false;
+            if ($claim->type_request != 361) return true;
 
             $properties = Property::showPropertyValue($claim);
 
@@ -83,5 +83,7 @@ class ClaimToAmo
         } catch (\Exception $e) {
             \Log::error('Ошибка при создании заявки и отправлении в AMO', array('error' => $e->getMessage()));
         }
+
+        return true;
     }
 }
