@@ -21,10 +21,6 @@ class ClaimToAmo
     {
         $claim = $event->claim;
 
-        Log::alert('Перехват события создания заявки', [
-            'claim'           => $claim,
-            'type_request'    => $claim->type_request
-        ]);
 
         try {
 

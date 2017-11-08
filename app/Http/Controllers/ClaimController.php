@@ -36,9 +36,9 @@ class ClaimController extends Controller {
 	{
         $fluid = true;
         if(Auth::user()->checkRole('client')){
-            $claims = Claim::client(Request::all())->orderBy('created_at','desc')->paginate(50);
+            $claims = Claim::client(Request::all())->orderBy('created_at','desc')->paginate(30);
         }else{
-            $claims = Claim::search(Request::all())->orderBy('created_at','desc')->paginate(50);
+            $claims = Claim::search(Request::all())->orderBy('created_at','desc')->paginate(30);
         }
 
 		return view('claim.index',compact('claims','fluid'));
@@ -131,7 +131,7 @@ class ClaimController extends Controller {
                 return \Redirect::back()->withInput($request)->withErrors($errors);
             }
 
-            \Log::info("Создагие заявки",$request);
+            //\Log::info("Создагие заявки",$request);
 
 
             $claim->save($request);
