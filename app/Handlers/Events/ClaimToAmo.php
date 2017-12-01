@@ -75,6 +75,7 @@ class ClaimToAmo
             $contact->addCustomField(87299, $claim->phone, 'MOB');
             $contact_id = $contact->apiAdd();
 
+            \Log::alert('Создал заявку', array('$contact_id' => $contact_id));
 
         } catch (\Exception $e) {
             \Log::error('Ошибка при создании заявки и отправлении в AMO', array('error' => $e->getMessage()));
