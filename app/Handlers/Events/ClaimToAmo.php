@@ -28,6 +28,7 @@ class ClaimToAmo
             if ( !in_array($claim->project_id, array(128,130)) ) return true;
 
             if ($claim->project_id ==128 && $claim->type_request != 361) return true;
+            if ($claim->project_id ==130 && $claim->type_request != 369) return true;
 
             $properties = Property::showPropertyValue($claim);
 
