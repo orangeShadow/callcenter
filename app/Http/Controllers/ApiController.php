@@ -105,22 +105,20 @@ class ApiController extends Controller
             $claimEl["id"] = $claim->id;
             $claimEl["Имя"] = $claim->name;
             $claimEl["Дата создания"] = $claim->created_at->format('Y-m-d H:i:s');
-            $claimEl["Проект"] = preg_replace('/-/m','',$project->title);
+            $claimEl["Проект"] = $project->title;
             $claimEl["Комментарий"] = $claim->text;
             $claimEl["Телефон"] = $claim->phone;
             $claimEl["Перезвонить"] = $claim->backcall_at;
             $claimEl["Статус"] = $claim->statusT->title;
             $claimEl["Тип Обращения"] = !empty($claim->typeR->title) ? $claim->typeR->title : '';
             foreach (\App\Property::showPropertyValue($claim) as $property) {
-                $value = preg_replace('/-/m','',$property['value']);
+                $value = preg_replace('/=/gm','',$property['value']);
                 $claimEl[ $property["title"] ] = $value;
             }
             $claims[] = $claimEl;
         }
 
-        $projectTitle = preg_replace('/-/m','',$project->title);
-
-        $projectClaims[$projectTitle ] = $claims;
+        $projectClaims[ $project->title ] = $claims;
 
         if (empty($claims)) return response('Список заявок пуст', 500);
 
