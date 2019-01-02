@@ -112,7 +112,7 @@ class ApiController extends Controller
             $claimEl["Статус"] = $claim->statusT->title;
             $claimEl["Тип Обращения"] = !empty($claim->typeR->title) ? $claim->typeR->title : '';
             foreach (\App\Property::showPropertyValue($claim) as $property) {
-                $value = preg_replace('/=/gm','',$property['value']);
+                $value = preg_replace('/=/m','',$property['value']);
                 $claimEl[ $property["title"] ] = $value;
             }
             $claims[] = $claimEl;
