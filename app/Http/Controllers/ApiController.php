@@ -103,14 +103,14 @@ class ApiController extends Controller
 
         foreach ($claimCollection as $claim) {
             $claimEl["id"] = $claim->id;
-            $claimEl["Имя"] = $claim->name;
+            $claimEl["Имя"] = preg_replace('/=/m','',$claim->name);
             $claimEl["Дата создания"] = $claim->created_at->format('Y-m-d H:i:s');
-            $claimEl["Проект"] = $project->title;
-            $claimEl["Комментарий"] = $claim->text;
-            $claimEl["Телефон"] = $claim->phone;
-            $claimEl["Перезвонить"] = $claim->backcall_at;
-            $claimEl["Статус"] = $claim->statusT->title;
-            $claimEl["Тип Обращения"] = !empty($claim->typeR->title) ? $claim->typeR->title : '';
+            $claimEl["Проект"] = preg_replace('/=/m','',$project->title);
+            $claimEl["Комментарий"] = preg_replace('/=/m','',$claim->text);
+            $claimEl["Телефон"] = preg_replace('/=/m','',$claim->phone);
+            $claimEl["Перезвонить"] = preg_replace('/=/m','',$claim->backcall_at);
+            $claimEl["Статус"] = preg_replace('/=/m','',$claim->statusT->title);
+            $claimEl["Тип Обращения"] = !empty($claim->typeR->title) ? preg_replace('/=/m','',$claim->typeR->title) : '';
             foreach (\App\Property::showPropertyValue($claim) as $property) {
                 $value = preg_replace('/=/m','',$property['value']);
                 $claimEl[ $property["title"] ] = $value;
