@@ -105,7 +105,7 @@ class ApiController extends Controller
             $claimEl["id"] = $claim->id;
             $claimEl["Имя"] = $claim->name;
             $claimEl["Дата создания"] = $claim->created_at->format('Y-m-d H:i:s');
-            $claimEl["Проект"] = $project->title;
+            $claimEl["Проект"] = preg_replace('/-/m','',$project->title);
             $claimEl["Комментарий"] = $claim->text;
             $claimEl["Телефон"] = $claim->phone;
             $claimEl["Перезвонить"] = $claim->backcall_at;
