@@ -11,16 +11,17 @@ use Faker\Provider\DateTime;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 
-class ApiController extends Controller {
+class ApiController extends Controller
+{
 
     public function getClaims(Request $request)
     {
 
-        if(!$request->has('key')) abort('500','Key not found');
+        if (!$request->has('key')) abort('500', 'Key not found');
 
-        $user = User::where('apikey','=',$request->input('key'))->first();
+        $user = User::where('apikey', '=', $request->input('key'))->first();
 
-        if(is_null($user)) abort('500','User with this key not found');
+        if (is_null($user)) abort('500', 'User with this key not found');
 
         $projects = $user->projects;
 
@@ -32,16 +33,14 @@ class ApiController extends Controller {
 
         $requestArray = $request->all();
 
-        foreach($projects as $project)
-        {
-            $claims= [];
+        foreach ($projects as $project) {
+            $claims = [];
 
             $requestArray["project_id"] = $project->id;
 
             $claimCollection = Claim::api($requestArray)->get();
 
-            foreach($claimCollection as $claim)
-            {
+            foreach ($claimCollection as $claim) {
                 $claimEl["id"] = $claim->id;
                 $claimEl["Имя"] = $claim->name;
                 $claimEl["Дата создания"] = $claim->created_at->format('Y-m-d H:i:s');
@@ -50,31 +49,30 @@ class ApiController extends Controller {
                 $claimEl["Телефон"] = $claim->phone;
                 $claimEl["Перезвонить"] = $claim->backcall_at;
                 $claimEl["Статус"] = $claim->statusT->title;
-                $claimEl["Тип Обращения"] = !empty($claim->typeR->title) ? $claim->typeR->title:'';
-                foreach(\App\Property::showPropertyValue($claim) as $property){
-                    $claimEl[$property["title"]] = $property['value'];
+                $claimEl["Тип Обращения"] = !empty($claim->typeR->title) ? $claim->typeR->title : '';
+                foreach (\App\Property::showPropertyValue($claim) as $property) {
+                    $claimEl[ $property["title"] ] = $property['value'];
                 }
                 $claims[] = $claimEl;
             }
-            if(empty($claims)) continue;
-            $projectClaims[$project->title] = $claims;
+            if (empty($claims)) continue;
+            $projectClaims[ $project->title ] = $claims;
         }
 
 
+        if (!$request->has('type')) {
 
-        if( !$request->has('type') ) {
+            if (empty($projectClaims)) return response('Проектов не найдено.');
 
-            if(empty($projectClaims)) return response('Проектов не найдено.');
-            return \Excel::create('Filename', function($excel) use($projectClaims) {
+            return \Excel::create('Filename', function ($excel) use ($projectClaims) {
 
                 // Set the title
                 $excel->setTitle('Отчет');
 
-                foreach($projectClaims as $key=>$claims)
-                {
-                    $title = substr(str_slug(htmlspecialchars($key)),0,strlen($key)>25? 25:strlen($key));
-                    $excel->sheet($title,function($sheet) use ($claims) {
-                       $sheet->fromArray($claims);
+                foreach ($projectClaims as $key => $claims) {
+                    $title = substr(str_slug(htmlspecialchars($key)), 0, strlen($key) > 25 ? 25 : strlen($key));
+                    $excel->sheet($title, function ($sheet) use ($claims) {
+                        $sheet->fromArray($claims);
                     });
                 }
 
@@ -82,13 +80,15 @@ class ApiController extends Controller {
 
         } else {
             $response = new KodiResponse();
-            return $response->createResponse($projectClaims,200);
+
+            return $response->createResponse($projectClaims, 200);
         }
     }
 
 
-    function  getClaimsByProjectId($project_id,Request $request) {
-        if( !\Auth::user()->checkRole(['admin','manager']) )   abort('500','Key not found');
+    function getClaimsByProjectId($project_id, Request $request)
+    {
+        if (!\Auth::user()->checkRole(['admin', 'manager'])) abort('500', 'Key not found');
 
         $requestArray = $request->all();
 
@@ -99,11 +99,9 @@ class ApiController extends Controller {
         $claimCollection = Claim::api($requestArray)->get();
 
 
-
         $claims = [];
 
-        foreach($claimCollection as $claim)
-        {
+        foreach ($claimCollection as $claim) {
             $claimEl["id"] = $claim->id;
             $claimEl["Имя"] = $claim->name;
             $claimEl["Дата создания"] = $claim->created_at->format('Y-m-d H:i:s');
@@ -112,31 +110,31 @@ class ApiController extends Controller {
             $claimEl["Телефон"] = $claim->phone;
             $claimEl["Перезвонить"] = $claim->backcall_at;
             $claimEl["Статус"] = $claim->statusT->title;
-            $claimEl["Тип Обращения"] = !empty($claim->typeR->title) ? $claim->typeR->title:'';
-            foreach(\App\Property::showPropertyValue($claim) as $property){
-                $claimEl[$property["title"]] = $property['value'];
+            $claimEl["Тип Обращения"] = !empty($claim->typeR->title) ? $claim->typeR->title : '';
+            foreach (\App\Property::showPropertyValue($claim) as $property) {
+                $value = mb_substr($property['value'], mb_stripos($project['value'], '--', 0, 'UTF-8'), 1, 'UTF-8');
+                $claimEl[ $property["title"] ] = $value;
             }
             $claims[] = $claimEl;
         }
 
-        $projectClaims[$project->title] = $claims;
+        $projectClaims[ $project->title ] = $claims;
 
-        if(empty($claims)) return response('Список заявок пуст',500);
+        if (empty($claims)) return response('Список заявок пуст', 500);
 
-        return \Excel::create('Filename', function($excel) use($projectClaims) {
+        return \Excel::create('Filename', function ($excel) use ($projectClaims) {
 
             // Set the title
             $excel->setTitle('Отчет');
 
-            foreach($projectClaims as $key=>$claims)
-            {
+            foreach ($projectClaims as $key => $claims) {
                 try {
-                    $title = substr(str_slug(htmlspecialchars($key)),0,strlen($key)>25? 25:strlen($key));
-                    $excel->sheet($title,function($sheet) use ($claims) {
+                    $title = substr(str_slug(htmlspecialchars($key)), 0, strlen($key) > 25 ? 25 : strlen($key));
+                    $excel->sheet($title, function ($sheet) use ($claims) {
                         $sheet->fromArray($claims);
                     });
-                } catch ( \Exception $exception ){
-                    \Log::error('Ошибка при выгрузке',['key'=> $key,'$claims'=>$claims]);
+                } catch (\Exception $exception) {
+                    \Log::error('Ошибка при выгрузке', ['key' => $key, '$claims' => $claims]);
                 }
             }
 
