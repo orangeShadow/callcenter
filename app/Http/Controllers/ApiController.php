@@ -118,7 +118,9 @@ class ApiController extends Controller
             $claims[] = $claimEl;
         }
 
-        $projectClaims[ $project->title ] = $claims;
+        $projectTitle = preg_replace('/-/m','',$project->title);
+
+        $projectClaims[$projectTitle ] = $claims;
 
         if (empty($claims)) return response('Список заявок пуст', 500);
 
