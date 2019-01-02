@@ -112,7 +112,7 @@ class ApiController extends Controller
             $claimEl["Статус"] = $claim->statusT->title;
             $claimEl["Тип Обращения"] = !empty($claim->typeR->title) ? $claim->typeR->title : '';
             foreach (\App\Property::showPropertyValue($claim) as $property) {
-                $value = mb_substr($property['value'], mb_stripos($project['value'], '--', 0, 'UTF-8'), 1, 'UTF-8');
+                $value = preg_replace('/-/gm','',$property['value']);
                 $claimEl[ $property["title"] ] = $value;
             }
             $claims[] = $claimEl;
@@ -134,7 +134,12 @@ class ApiController extends Controller
                         $sheet->fromArray($claims);
                     });
                 } catch (\Exception $exception) {
-                    \Log::error('Ошибка при выгрузке', ['key' => $key, '$claims' => $claims]);
+                    \Log::error('Ошибка при выгрузке', [
+                        'key'     => $key,
+                        'message' => $exception->getMessage(),
+                        'line'    => $exception->getLine(),
+                        'file'    => $exception->getFile()
+                    ]);
                 }
             }
 
