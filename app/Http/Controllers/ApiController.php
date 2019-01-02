@@ -136,6 +136,7 @@ class ApiController extends Controller
                 } catch (\Exception $exception) {
                     \Log::error('Ошибка при выгрузке', [
                         'key'     => $key,
+                        'claim'   => $claims,
                         'message' => $exception->getMessage(),
                         'line'    => $exception->getLine(),
                         'file'    => $exception->getFile()
